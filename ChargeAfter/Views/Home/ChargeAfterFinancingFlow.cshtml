@@ -1,0 +1,884 @@
+﻿
+@using ChargeAfter.ViewModel;
+@{
+    Layout = null;
+}
+
+@{
+            var item = (List<Item>)Session["cart"];
+            float subTot = 0;
+            float pay = 0;
+            if (item != null)
+            {
+                foreach (Item itemPro in (List<Item>)Session["cart"])
+                {
+                    float price = Convert.ToSingle(@itemPro.Pro.Price) * 1;
+                    subTot = subTot + price;
+                    Session["Subtotal"] = subTot;
+
+                }
+                pay = 100 + subTot;
+            }
+}
+<div class="non-bhc-methods relative" ng-class="{
+			'section':!state.isAddingOrCreatingMethod() &amp;&amp; methods().length === 1,
+			'shrink-width':showSplitBalance()
+		}" data-selenium="nonBhcMethods">
+    <div class="payment-methods-list payment-methods relative section clearfix ng-hide" ng-show="showAddedArea()" data-selenium="paymentMethods">
+        <div class="payment-method-list" ng-show="!state.isCreatingMethod()" data-selenium="paymentMethodList">
+            <!-- ngIf: showCupMessage() -->
+            <div class="ng-hide" ng-show="splitListHasBHC() &amp;&amp; hasNonBHCMethods()" data-selenium="splitListHasBhcAndhasNonBhcMethods">
+                <h3 class="fs24 light upper">Credit/Debit Cards</h3>
+                <div class="break"></div>
+                <div class="devider"></div>
+            </div>
+            <!-- ngRepeat: method in methods() | filter:{type:preferredMethod()} track by $index | orderBy : 'statusSort' -->
+        </div>
+        <!-- ngIf: preferredMethod() === 'CC' && !state.isCreatingAndNotAddingMethod() -->
+
+
+
+    </div>
+
+    <div class="relative section add-payment-method-area ng-scope showFormInAddingArea" ng-class="{
+				'creatingLayer':state.isCreatingAndNotAddingMethod(),
+				'showFormInAddingArea':showFormInAddingArea(method)
+			}" ng-if="showAddingArea()" bh-payment-method="" data-selenium="addPaymentMethodArea">
+
+        <div class="ng-scope ng-hide" ng-show="showListInAddingArea(method)" ng-include="'payment-method-tpl_CC_SAVED-LIST'" data-selenium="showListInAddingArea">
+            <h3 class="c1 fs26 light displayNone ng-scope" data-selenium="selectCardSplitPaymentHeader">SELECT A CARD FOR SPLIT PAYMENT</h3>
+            <div bh-saved-cards="" class="saved-payment-method-list ng-scope" data-selenium="savedPaymentMethodList">
+                <p class="tax-exemt-billing-cc-only ng-hide" ng-show="order.isUsingTaxExempt" data-selenium="taxExemtBillingCcOnly">Due to the Tax Exempt status of your account, purchases can only be made with credit cards associated with your tax exempt Billing Address on file.</p>
+                <div class="fs18 center-align cursor-pointer add-new-card" ng-show="!state.isCreatingMethod()" ng-click="newMethod()" data-selenium="addNewCard">
+                    <svg class="bh-icon bh-icon-plus" style="height:16px; width:16px; fill:#595959;" data-selenium="plus"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#plus"></use></svg> New Card
+                </div>
+                <!-- ngRepeat: savedMethod in savedMethodsOfPreferred() -->
+                <svg class="bh-icon bh-icon-x cursor-pointer icon-close displayNone absolute" style="height:18px; width:18px; fill:#b0b0b0;" ng-click="state.cancel()" data-selenium="x"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#x"></use></svg>
+            </div>
+        </div>
+        <div name="methodform" class="section ng-pristine ng-valid ng-scope" ng-if="showFormInAddingArea(method)" ng-include="formTemplate()" ng-submit="createMethod()" ng-model-options="{allowInvalid: true}" bh-payment-form="inAddingArea" ng-class="{
+					'cc-error-row-one-visible': vm.ccIframeStatus.visibleErrorRows[0],
+					'cc-error-row-two-visible': vm.ccIframeStatus.visibleErrorRows[1]
+				}" novalidate="" data-selenium="formInAddingArea">
+            <div id="JAfinancingPane" style="display: block; height: 100% !important;">
+                <!--?xml version="1.0" encoding="utf-16"?-->
+                <span id="BreadCrumbsPane" class="BreadCrumbs"></span>
+                <div style="height:100% !important">
+
+
+
+                    <form id="msform">
+                        <!-- progressbarr -->
+                        <ul id="progressbarr">
+                            <li class="active">PERSONAL Info</li>
+                            <li>More Details</li>
+                            <li>Offers</li>
+                            <li>Confirm</li>
+                        </ul>
+                        <!-- fieldsets -->
+                        <fieldset style="margin-left:auto; margin-right:auto">
+                            <div>
+                                <link href="/Content/Style.css" rel="stylesheet">
+
+                                @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">*@
+                                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+                                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+                                <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+                                <!-- Isolated Version of Bootstrap, not needed if your site already uses Bootstrap -->
+                                <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css">
+
+                                <!-- Bootstrap Date-Picker Plugin -->
+                                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+                                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css">
+                                <div id="partial1" ng-hide="order.isUsingTaxExempt" class="ng-scope" data-selenium="isNotUsingTaxExempt">
+
+                                    <div class="break"></div>
+                                    <div style="margin-left:auto; margin-right:auto">
+                                        <div style="width:65%; height:100%; margin-left:auto; margin-right:auto">
+                                            <div style="padding:10px; text-align:center">
+                                                <b style="">B&H Financing Application Powered by ChargeAfter</b>
+                                                <p style="font-size:initial;  text-align:center; padding:0; padding:5px">
+                                                    Pay over time for your purchase.<br>
+
+                                                </p>
+                                            </div>
+
+                                            <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+                                            <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+                                            <script type="text/javascript">
+                                        function Validate() {
+                                            var mobile = document.getElementById("ssn").value;
+                                            var pattern = /^\d{9}$/;
+                                            if (pattern.test(mobile)) {
+                                                $("#ssnError").text("");
+                                                $("#ssnErrorS").text("Just Perfect!");
+
+                                                return true;
+                                            }
+                                            else {
+                                                $("#ssnErrorS").text("");
+                                                $("#ssnError").text("It is not valid Social Security number.input 9 digits number!");
+                                            }
+                                            return false;
+                                        }
+                                            </script>
+
+
+                                            <div style="padding:20px; background-color:rgba(193, 193, 193, 0.38); padding-bottom:30px; padding-top:30px">
+
+
+                                                <div class="form-group" style="padding:5px; margin-bottom:5px">
+                                                    <input type="text" class="form-control" placeholder="John Doe" value="" title="Your Name" name="name" style="height: 40px; padding: 0 0 0 10px; border: 1px solid #ddd; border-radius: 4px; color: #4c4c4c;">
+                                                </div>
+                                                <div class="form-group" style="padding:5px; margin-bottom:5px">
+                                                    <input type="email" title="Email" value="" placeholder="johndoe@gmail.com" name="email" class="form-control" id="mail" style="height: 40px; padding: 0 0 0 10px; border: 1px solid #ddd; border-radius: 4px; color: #4c4c4c;">
+                                                </div>
+                                                <div class="form-group" style="padding:5px; margin-bottom:5px">
+                                                    <input type="text" title="Phone Number" style="height: 40px; padding: 0 0 0 10px; border: 1px solid #ddd; border-radius: 4px; color: #4c4c4c;" name="mobile" required="" min="10" placeholder="Mobile Phone Number" maxlength="10" pattern="[1-9]{1}[0-9]{9}" minlength="10" value="" class="form-control" id="mobile">
+                                                </div>
+                                                <div class="form-group input-append date" style="padding:5px; margin-bottom:5px" id="dateRangePicker">
+                                                    <input type="text" required="" name="dob" title="Date of Birth" onfocus="(this.type='date')" onblur="(this.type='text')" id="date" placeholder="Birthday(mm/dd/yyyy)" class="form-control" style="height: 40px; padding: 0 0 0 10px; border: 1px solid #ccc; border-radius: 4px; color: #4c4c4c;
+height: 40px;padding: 0 0 0 10px;border: 1px solid #ddd;border-radius: 4px;color: #4c4c4c;width: 100%;">
+                                                </div>
+                                                <script>
+                                            $('input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="time"], input[type="week"]').each(function () {
+                                                var el = this, type = $(el).attr('type');
+                                                if ($(el).val() == '') $(el).attr('type', 'text');
+                                                $(el).focus(function () {
+                                                    $(el).attr('type', type);
+                                                    el.click();
+                                                });
+                                                $(el).blur(function () {
+                                                    if ($(el).val() == '') $(el).attr('type', 'text');
+                                                });
+                                            });
+                                                </script>
+
+                                                <div class="form-group" style="padding:5px; margin-bottom:5px">
+                                                    <input type="text" name="ssn" placeholder="Social Security Number(XXX-XXX-XXX)" class="form-control" id="ssn" data-validation-required-error-msg="Please Enter Your Social Security Number." title="Social Security Number" required="" maxlength="9" minlength="9" pattern="\d{9}" onkeyup="return Validate()" style="height: 40px; padding: 0 0 0 10px; border: 1px solid #ddd; border-radius: 4px; color: #4c4c4c;">
+                                                    <span id="ssnError" style="font:bold;color:red"></span>
+                                                    <span id="ssnErrorS" style="font:bold;color:green"></span>
+                                                </div>
+                                            </div>
+                                            <div style="padding-left:20px;padding-right:20px; font-size:14px; padding-bottom:10px">
+                                                <p style="text-align: center;margin-top:20px !important;">
+                                                    Please ensure that all the information provided is your own. It will be used to verify
+                                                    your Identity.
+                                                </p>
+                                                <p style="text-align:center;">
+                                                    By creating an account. I authorize ChargeAfter to obtain my credit reports, and I
+                                                    agree to the <a style="color:blue;">ChargeAfter Terms of Service and Electronic Disclosures.</a>
+                                                </p>
+                                            </div>
+                                            <p style="font-size:16px; text-align:center; padding-top:10px; padding-bottom:10px; font-weight:700">
+                                                <b> Checking your eligibility will not effect your credit score.</b>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <script>
+    $(document).ready(function(){
+      var date_input=$('input[name="date"]'); //our date input has the name "date"
+      var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+      var options={
+        format: 'mm/dd/yyyy',
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+      };
+      date_input.datepicker(options);
+    })
+                                </script>
+                            </div>
+
+
+                            <input type="button" name="next" class="next action-button fs18 cursor-pointer c18 noUnderline center-align next-btn" style="padding: 20px; padding-left:30px; padding-right:30px; background: #0692CC; margin-bottom:20px" value="Create Account">
+                            <br>
+                        </fieldset>
+                        <fieldset style="background-color:#fff">
+                            <div name="methodform" class="section ng-pristine ng-valid ng-scope" ng-if="showFormInAddingArea(method)" ng-include="formTemplate()" ng-submit="createMethod()" ng-model-options="{allowInvalid: true}" bh-payment-form="inAddingArea" ng-class="{
+					'cc-error-row-one-visible': vm.ccIframeStatus.visibleErrorRows[0],
+					'cc-error-row-two-visible': vm.ccIframeStatus.visibleErrorRows[1]
+				}" novalidate="" data-selenium="formInAddingArea">
+                                <div style="padding:10px; text-align:center; padding-bottom:0px; margin-top:30px">
+                                    <b style="padding:5px">B&H Financing Application Powered by ChargeAfter</b>
+
+                                    <h3 style="font-size:x-large; font-weight:bold; text-align:center">Easy Monthly Payments</h3>
+
+                                </div>
+                                <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+                                <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+                                <div ng-hide="order.isUsingTaxExempt" class="ng-scope" data-selenium="isNotUsingTaxExempt">
+                                    <div style="padding:30px; padding-bottom:10px;padding-top:10px; margin-bottom:25px; margin-top:30px">
+                                        <div style="width:50%; float:left">
+
+                                            <div style="padding:20px; padding-right:0px; background-color:rgba(193, 193, 193, 0.38); padding-bottom:30px; padding-top:30px">
+                                                <input type="hidden" name="name" value="asjkfkjk">
+                                                <input type="hidden" name="email" value="jkjk@ghh">
+                                                <input type="hidden" name="mobile" value="1973498595">
+                                                <input type="hidden" name="DOB" value="4/14/1992 12:00:00 AM">
+
+                                                <div class="form-group">
+                                                    <select class="form-control" title="Employment Status" name="employmentStatus" data-validation-required-error-msg="Please select your employment status." selection-colorid="" gateway-required="" aria-required="true" style="height: 40px; padding: 0 0 0 10px; border: 1px solid #ccc; border-radius: 4px; color: #4c4c4c;">
+                                                        <option selected="" disabled="" value="">Employment Status</option>
+                                                        <option value="EMPLOYED">Employed</option>
+                                                        <option value="NOT_EMPLOYED">Unemployed</option>
+                                                        <option value="SELF_EMPLOYED">Self Employed</option>
+                                                        <option value="MILITARY">Military</option>
+                                                        <option value="RETIRED_BENEFITS">Retired Benefits</option>
+                                                        <option value="OTHER">Other</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <select class="form-control" title="Estimated Credit Range" name="CreditScore" data-validation-required-error-msg="Please select your credit score." selection-colorid="" gateway-required="" aria-required="true" style="height: 40px; padding: 0 0 0 10px; border: 1px solid #ccc; border-radius: 4px; color: #4c4c4c;">
+                                                        <option selected="" disabled="" value="">Estimated Credit Range</option>
+                                                        <option value=">720">&gt; 720</option>
+                                                        <option value="680-720">680 - 720</option>
+                                                        <option value="640-679">640 - 679</option>
+                                                        <option value="550-639">550 - 639</option>
+                                                        <option value="<550">&lt; 550</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <select class="form-control" title="Housing Status" name="housingType" data-validation-required-error-msg="Please select your home type." selection-colorid="" gateway-required="" aria-required="true" style="height: 40px; padding: 0 0 0 10px; border: 1px solid #ccc; border-radius: 4px; color: #4c4c4c;">
+                                                        <option selected="" disabled="" value="">Housing Status</option>
+                                                        <option value="RENT">Rent</option>
+                                                        <option value="MORTGAGE">Mortgage</option>
+                                                        <option value="FULLYOWN">Fully Own</option>
+                                                        <option value="PARTIALLYOWN">Partially Own</option>
+                                                        <option value="OTHER">Other</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group left-inner-addon" style="text-align:left">
+                                                    <span>$ </span>
+                                                    <input type="text" placeholder="Gross Annual Individual Income" maxlength="10" class="form-control number-format tooltipstered" title="Gross Annual Individual Income" name="grossIncome" autocomplete="off" data-validation-required-error-msg="Please enter your estimated annual gross revenue." aria-required="true" aria-invalid="false" style="height: 40px; padding: 0 0 0 10px; border: 1px solid #ccc; border-radius: 4px; color: #4c4c4c; padding-left: 25px;">
+                                                </div>
+
+                                                <div class="form-group left-inner-addon" style="text-align:left">
+                                                    <span>$</span>
+                                                    <input type="text" name="netMonthly" placeholder="Net Monthly Income" maxlength="10" class="form-control" autocomplete="off" title="Net Monthly Income" data-validation-required-error-msg="Please enter your net monthly income." aria-required="true" aria-invalid="false" required="" style="height: 40px; padding: 0 0 0 10px; border: 1px solid #ccc; border-radius: 4px; color: #4c4c4c; padding-left: 25px;">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <select class="form-control" title="Salary Frequency" name="salaryFrequency" data-validation-required-error-msg="Please select your salary frequency." selection-colorid="" gateway-required="" aria-required="true" style="height: 40px; padding: 0 0 0 10px; border: 1px solid #ccc; border-radius: 4px; color: #4c4c4c;">
+                                                        <option selected="" disabled="" value="">Salary Frequency</option>
+                                                        <option value="WEEKLY">Weekly</option>
+                                                        <option value="BIWEEKLY">Bi-Weekly</option>
+                                                        <option value="TWICEMONTHLY">Twice Monthly</option>
+                                                        <option value="MONTHLY">Monthly</option>
+                                                        <option value="YEARLY">Yearly</option>
+                                                        <option value="OTHER">Other</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="width:50%; float:right">
+
+                                            <div style="padding:20px; padding-left:0px; background-color:rgba(193, 193, 193, 0.38); padding-top:30px;">
+                                                <div class="form-group" style="">
+                                                    <input type="text" class="form-control" placeholder="" value="1335 Ave of the Americas" title="Street Address" name="name" style="height: 40px; padding: 0 0 0 10px; border: 1px solid #ccc; border-radius: 4px; color: #4c4c4c;">
+                                                </div>
+
+                                                <div class="form-group" style="margin-bottom:15px">
+                                                    <input type="text" class="form-control" placeholder="" value="New York" title="City" name="name" style="width:50%; height: 40px; float:left; margin-bottom:15px; padding: 0 0 0 10px; border: 1px solid #ccc; border-radius: 4px; color: #4c4c4c;">
+                                                    <input type="text" class="form-control" placeholder="" value="NY" title="State" name="name" style="width:50%; height: 40px; float:right; padding: 0 0 0 10px; border: 1px solid #ccc; border-radius: 4px; color: #4c4c4c;">
+                                                </div>
+                                                <div class="form-group" style="">
+                                                    <input type="text" class="form-control" placeholder="Years at current Residence" value="" title="Years at current Residence" name="name" style="height:40px; padding: 0 0 0 10px; border: 1px solid #ccc; border-radius: 4px; color: #4c4c4c;">
+                                                </div>
+                                                <div class="form-group left-inner-addon" style="text-align:left">
+                                                    <span>$ </span>
+                                                    <input type="text" placeholder="Monthly Rent/Mortgage" maxlength="10" class="form-control number-format tooltipstered" title="Monthly Rent/Mortgage" autocomplete="off" data-validation-required-error-msg="Please enter your Monthly Rent/Mortgage." aria-required="true" aria-invalid="false" style="height: 40px; padding: 0 0 0 10px; border: 1px solid #ccc; border-radius: 4px; color: #4c4c4c; padding-left: 25px;">
+                                                </div>
+                                                <script>
+                                            $('input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="time"], input[type="week"]').each(function () {
+                                                var el = this, type = $(el).attr('type');
+                                                if ($(el).val() == '') $(el).attr('type', 'text');
+                                                $(el).focus(function () {
+                                                    $(el).attr('type', type);
+                                                    el.click();
+                                                });
+                                                $(el).blur(function () {
+                                                    if ($(el).val() == '') $(el).attr('type', 'text');
+                                                });
+                                            });
+                                                </script>
+                                                <div class="form-group" style="margin-bottom:15px">
+                                                    <input type="text" class="form-control" placeholder="Drivers License Number" value="" title="Drivers License Number" name="name" style="width:50%; height: 40px; float:left; margin-bottom:15px; padding: 0 0 0 10px; border: 1px solid #ccc; border-radius: 4px; color: #4c4c4c;">
+                                                    <input type="text" class="form-control" placeholder="Drivers License State" value="" title="Drivers License State" name="name" style="width:50%; height: 40px; float:none; padding: 0 0 0 10px; border: 1px solid #ccc; border-radius: 4px; color: #4c4c4c;">
+                                                    <input type="date" required="" name="dob" title="Date of Birth" onfocus="(this.type='date')" onblur="(this.type='text')" id="date" placeholder="Expiration Date(mm/dd/yyyy)" class="form-control" style="height: 40px; padding: 0 0 0 10px; border: 1px solid #ccc; border-radius: 4px; color: #4c4c4c;
+height: 40px;padding: 0 0 0 10px;border: 1px solid #ccc;border-radius: 4px;color: #4c4c4c;width: 100%;">
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="break"></div>
+
+                                    </div>
+                                </div>
+                                <br>
+                                <br />
+                                <br />
+                                <br />
+                            </div>
+
+                            <br>
+
+                            <input type="button" name="previous" id="Getoffer" style="padding: 20px; margin-top:20px; background: #0692CC; margin-bottom:20px; margin-top:20px; padding-left:40px; padding-right:40px" value="Back" bh-paypal-button="" class="previous action-button fs18 cursor-pointer c18 noUnderline center-align next-btn" data-selenium="bhPaypalButton">
+                            <input type="button" name="next" id="Getoffer" style="padding: 20px; margin-top:20px; background: #0692CC; margin-top:20px; margin-bottom:20px" value="Proceed to offers" bh-paypal-button="" class="next action-button fs18 cursor-pointer c18 noUnderline center-align next-btn" data-selenium="bhPaypalButton">
+
+                        </fieldset>
+                        <fieldset style="width:100%">
+                            <div class="relative section add-payment-method-area ng-scope showFormInAddingArea" style="text-align:center" id="offers123">
+
+                                <div style="padding:10px; text-align:center">
+                                    <img class="logo-svg" alt="James Allen - Engagement Rings" title="James Allen - Engagement Rings" src="https://ion.r2net.com/Images/ja-logo-svg.svg" style="width:20%; height:auto; margin-left:auto; margin-right:auto;"><br><br>
+                                    <b style="padding:5px">James Allen Financing Application Powered by ChargeAfter</b>
+
+                                </div>
+
+                                <div ng-hide="order.isUsingTaxExempt" class="ng-scope" data-selenium="isNotUsingTaxExempt" style="text-align:center">
+
+                                    <div class="break"></div>
+                                    <div style="margin-left:auto; margin-right:auto; margin-bottom:30px">
+                                        <div style="width:100%; text-align:center; margin-left:auto; margin-right:auto;">
+
+                                            <p style="text-align: center;">You are approved for <strong>$6000!</strong></p>
+
+                                            <p style="text-align: center;">
+                                                Choose the lender loan offer that works best for you.
+                                            </p>
+                                            <br>
+
+                                            <div style="width:80%; text-align:center; margin-left:auto; margin-right:auto; text-align:center; margin-bottom:10px">
+                                                <div style="width:80%; margin-left:auto; margin-right:auto; text-align:center">
+                                                    <p>James Allen Card</p>
+                                                    <div class="" style="background-color:rgba(100, 149, 237, 0.44); margin-bottom:5px; width:50%;margin-left:auto; margin-right:auto; text-align:center">
+                                                        <div style="padding-top:10px; padding-bottom:5px">
+                                                            <img src="http://hudsonvalleynewsnetwork.com/wp-content/uploads/2016/04/TD-Bank-logo.jpg" class="img-responsive" style="text-align:center; width:100px; height:auto; margin-left:auto; margin-right:auto; margin-top:10px">
+                                                            <h5 style="text-align:center;color:white;margin-top:0;padding-top:5%;margin-bottom:5%;">
+                                                                <strong>TD </strong> bank <strong>Credit Card</strong>
+                                                            </h5>
+                                                            <p style="text-align:center;color:white; padding-left:5px;padding-right:5px">
+                                                                9.90% APR for 24 months or deferred interest if paid in full within 6 months
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div style="width:2%; text-align:center; margin-left:auto; margin-right:auto;">
+                                                    <p>Or</p>
+                                                </div>
+                                                <div style="width:80%; margin-left:auto; margin-right:auto;">
+                                                    <p>Direct Loan, No Credit Card Required, No Commitment</p>
+                                                    <div class="" style="background-color:rgba(100, 149, 237, 0.44); margin-bottom:5px; width:49%; float:left">
+
+                                                        <a href="javascript:void(0);" id="confirmFortiva" style="text-decoration:none;  text-align:center; ">
+                                                            <div style="padding-top:10px; padding-bottom:5px">
+                                                                <img src="http://mammummy.com/images/Fortivalogo.png" class="img-responsive" style="text-align:center; width:120px; height:auto; margin-left:auto; margin-right:auto; margin-top:10px">
+                                                                <h5 style="text-align:center;color:white;margin-top:0;padding-top:5%;margin-bottom:5%;">
+                                                                    <strong>$1000/mo</strong> for <strong>6 months</strong>
+                                                                </h5>
+
+                                                                <p style="text-align:center; color:white; ">Interest (0% APR)</p>
+
+                                                            </div>
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="" style="background-color:rgba(100, 149, 237, 0.44); width:49%; float:right">
+                                                        <a href="javascript:void(0);" id="confirmProsper" style="text-decoration:none">
+
+                                                            <div style="padding-top:10px; padding-bottom:5px">
+                                                                <img class="img-responsive" style="width:120px; height:auto; margin-left:auto; margin-right:auto; margin-top:10px" src="https://www.prosper.com/web-borrower/assets/images/shared/themes/lumberjack/logo_prosper_color_gray-679c7f8b2684072b6e03ca0ed655a6aa.svg">
+                                                                <h5 style="text-align:center;color:white;margin-top:5%; padding-top:5%; margin-bottom:5%;">
+                                                                    <strong>$540/mo</strong> for <strong>12 months</strong>
+                                                                </h5>
+                                                                <p style="text-align:center;color:white;">Interest (8% APR)</p>
+
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <br>
+                                                <br>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="break"></div>
+
+                                </div>
+
+                            </div>
+
+                            <div id="offer1" style="display:none">
+
+                                <div style="padding:10px; text-align:center">
+                                    <img class="logo-svg" alt="James Allen - Engagement Rings" title="James Allen - Engagement Rings" src="https://ion.r2net.com/Images/ja-logo-svg.svg" style="width:20%;height:auto"><br><br>
+                                    <b style="padding:5px">James Allen Financing Application</b>
+
+                                </div>
+                                <!-- ngIf: order.isUsingTaxExempt -->
+                                <div ng-hide="order.isUsingTaxExempt" class="ng-scope" data-selenium="isNotUsingTaxExempt">
+
+                                    <div class="break"></div>
+
+                                    <div style="margin-left:28%">
+                                        <div style="width:60%">
+
+                                            <p style="text-align: center;">You are approved for <strong>$6000!</strong></p>
+
+                                            <br>
+
+                                            <div ng-hide="order.isUsingTaxExempt" class="ng-scope" data-selenium="isNotUsingTaxExempt">
+
+                                                <div class="break"></div>
+
+                                                <div style="">
+                                                    <div style="">
+
+                                                        <img class="img-responsive" src="http://mammummy.com/images/Fortivalogo.png" style="width:150px;height:auto; text-align:center; margin-left:auto; margin-right:auto; ">
+                                                        <div class="table-responsive" style="background-color:rgba(238, 238, 238, 0.36);">
+                                                            <table class="table table-bordered">
+                                                                <thead style="border:1px solid #f3f3f3;">
+                                                                    <tr>
+                                                                        <th colspan="2">
+                                                                            <h5 style="text-align:center;margin-top:5%;margin-bottom:5%;">
+                                                                                <strong>$1000/mo</strong> for <strong>6 months</strong>
+                                                                            </h5>
+                                                                        </th>
+                                                                    </tr>
+
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td style="border:1px solid #f3f3f3;">
+                                                                            <p style="text-align:center;margin-top:5%;margin-bottom:5%;">Interest (0% APR)</p>
+                                                                            <h5 style="text-align:center;margin-top:5%;margin-bottom:5%;"><strong>$0</strong></h5>
+                                                                        </td>
+                                                                        <td style="border:1px solid #f3f3f3;">
+                                                                            <p style="text-align:center;margin-top:5%;margin-bottom:5%;">Total of Payment</p>
+                                                                            <h5 style="text-align:center;margin-top:5%;margin-bottom:5%;"><strong>$6000</strong></h5>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+
+
+                                                        <p style="text-align: center;padding-top:3%;">Your Payments will be due each month starting on or after 1/2/2017 </p>
+
+                                                        <hr>
+
+
+                                                        <div style="padding-left:0px;padding-right:0px; font-size:small;">
+
+                                                            <p>
+                                                                <label class="form-check-label">
+
+                                                                    <input type="checkbox" required="" class="form-check-input" name="terms-and-conditions" data-validation-required-message="You must agree to the terms and conditions">
+                                                                </label>
+                                                                I have reviewed and agree to the <a href="#">Truth in Lending Disclosure and loan Agreement</a> and the refund policy provided
+                                                                by James Allen and have received the <a href="#">Credit Score Disclosure</a>
+                                                                your Identity.
+                                                            </p>
+
+                                                            <br>
+                                                        </div>
+                                                        <input type="submit" href="" value="Confirm Loan" style="text-align:center; padding: 20px; background: #0692CC; margin-left:auto; margin-right:auto" class="next-btn fs26 c18 bold cursor-pointer place-order checkout-option ng-binding ng-isolate-scope" ng-click="placeOrder()" bh-disabled="!isReadyToPlaceOrder() || !reviewPage()" data-selenium="placeOrder">
+
+                                                        <br><br>
+                                                    </div>
+                                                </div>
+                                                <div class="break"></div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <br>
+                            </div>
+                            <div id="offer2" style="display:none">
+
+                                <div style="padding:10px; text-align:center">
+                                    <img class="logo-svg" alt="James Allen - Engagement Rings" title="James Allen - Engagement Rings" src="https://ion.r2net.com/Images/ja-logo-svg.svg" style="width:20%;height:auto"><br><br>
+                                    <b style="padding:5px">James Allen Financing Application</b>
+
+                                </div>
+                                <!-- ngIf: order.isUsingTaxExempt -->
+                                <div ng-hide="order.isUsingTaxExempt" class="ng-scope" data-selenium="isNotUsingTaxExempt">
+
+                                    <div class="break"></div>
+
+                                    <div style="margin-left:28%">
+                                        <div style="width:60%">
+
+                                            <p style="text-align: center;">You are approved for <strong>$6000!</strong></p>
+
+                                            <br>
+
+                                            <div ng-hide="order.isUsingTaxExempt" class="ng-scope" data-selenium="isNotUsingTaxExempt">
+
+                                                <div class="break"></div>
+
+                                                <div style="">
+                                                    <div style="text-align:center">
+
+                                                        <img class="img-responsive" src="https://www.prosper.com/web-borrower/assets/images/shared/themes/lumberjack/logo_prosper_color_gray-679c7f8b2684072b6e03ca0ed655a6aa.svg" style="width:150px;height:auto;margin-left:auto; margin-right:auto;  text-align:center; ">
+                                                        <br>
+                                                        <div class="table-responsive" style="background-color:rgba(238, 238, 238, 0.36);">
+                                                            <table class="table table-bordered">
+                                                                <thead style="border:1px solid #f3f3f3;">
+                                                                    <tr>
+                                                                        <th colspan="2">
+                                                                            <h5 style="text-align:center;margin-top:5%;margin-bottom:5%;">
+                                                                                <strong>$540/mo</strong> for <strong>12 months</strong>
+                                                                            </h5>
+                                                                        </th>
+                                                                    </tr>
+
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td style="border:1px solid #f3f3f3;">
+                                                                            <p style="text-align:center;margin-top:5%;margin-bottom:5%;">Interest (8% APR)</p>
+                                                                            <h5 style="text-align:center;margin-top:5%;margin-bottom:5%;"><strong>$480</strong></h5>
+                                                                        </td>
+                                                                        <td style="border:1px solid #f3f3f3;">
+                                                                            <p style="text-align:center;margin-top:5%;margin-bottom:5%;">Total of Payment</p>
+                                                                            <h5 style="text-align:center;margin-top:5%;margin-bottom:5%;"><strong>$6480</strong></h5>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+
+
+                                                        <p style="text-align: center;padding-top:3%;">Your Payments will be due each month starting on or after 1/2/2017 </p>
+
+                                                        <hr>
+
+
+                                                        <div style="padding-left:0px;padding-right:0px; font-size:small;">
+
+                                                            <p>
+                                                                <label class="form-check-label">
+
+                                                                    <input type="checkbox" required="" class="form-check-input" name="terms-and-conditions" data-validation-required-message="You must agree to the terms and conditions">
+                                                                </label>
+                                                                I have reviewed and agree to the <a href="#">Truth in Lending Disclosure and loan Agreement</a> and the refund policy provided
+                                                                by James Allen and have received the <a href="#">Credit Score Disclosure</a>
+                                                                your Identity.
+                                                            </p>
+
+                                                            <br>
+                                                        </div>
+                                                        <input type="submit" href="" value="Confirm Loan" style="text-align:center; padding: 20px; background: #0692CC; margin-left:auto; margin-right:auto" class="next-btn fs26 c18 bold cursor-pointer place-order checkout-option ng-binding ng-isolate-scope" ng-click="placeOrder()" bh-disabled="!isReadyToPlaceOrder() || !reviewPage()" data-selenium="placeOrder">
+
+                                                        <br><br>
+                                                    </div>
+                                                </div>
+                                                <div class="break"></div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                            <script>
+                        $('#confirmFortiva').click(function () {
+                            $("#offers123").html($("#offer1"));
+                            document.getElementById("offer1").style.display = "block";
+                            if (animating) return false;
+                            animating = true;
+
+                            current_fs = $(this).parent();
+                            next_fs = $(this).parent().next();
+
+                            //activate next step on progressbarr using the index of next_fs
+                            $("#progressbarr li").eq($("fieldset").index(next_fs)).addClass("active");
+                            return false;
+                        });
+                        $('#confirmProsper').click(function () {
+                            $("#offers123").html($("#offer2"));
+                            document.getElementById("offer2").style.display = "block";
+                            if (animating) return false;
+                            animating = true;
+
+                            current_fs = $(this).parent();
+                            next_fs = $(this).parent().next();
+
+                            //activate next step on progressbarr using the index of next_fs
+                            $("#progressbarr li").eq($("fieldset").index(next_fs)).addClass("active");
+                            return false;
+                        });
+                            </script>
+
+                        </fieldset>
+                        <fieldset id="GetOffers">
+                            <div id="ConfirmOffer">
+
+                            </div>
+                            <input type="button" name="previous" class="previous action-button" value="Previous">
+                            <input type="submit" name="submit" class="submit action-button" value="Submit">
+                        </fieldset>
+                    </form>
+
+
+                    <!-- jQuery -->
+                    <script src="http://thecodeplayer.com/uploads/js/jquery-1.9.1.min.js" type="text/javascript"></script>
+                    <!-- jQuery easing plugin -->
+                    <script src="http://thecodeplayer.com/uploads/js/jquery.easing.min.js" type="text/javascript"></script>
+                    <style>
+                        * {
+                            margin: 0px;
+                            padding: 0px;
+                            padding-bottom: 10px;
+                            font-family: 'Century Gothic';
+                        }
+
+                        .form-group {
+                            padding: 5px;
+                            margin-bottom: 5px;
+                        }
+
+                        .p {
+                            margin-top: 30px;
+                        }
+
+                        #msform {
+                            width: 700px;
+                            margin: 50px auto;
+                            text-align: center;
+                            position: relative;
+                            font-family: 'Century Gothic';
+                        }
+
+                            #msform fieldset {
+                                margin-left: auto;
+                                margin-right: auto;
+                                /*stacking fieldsets above each other*/
+                                position: absolute;
+                            }
+                                /*Hide all except first fieldset*/
+                                #msform fieldset:not(:first-of-type) {
+                                    display: none;
+                                }
+
+                            #msform .action-button {
+                                color: #000;
+                                cursor: pointer;
+                            }
+
+                                #msform .action-button:hover, #msform .action-button:focus {
+                                    box-shadow: 0 0 0 2px white, 0 0 0 3px #0692CC;
+                                }
+
+                        /*progressbarrr*/
+                        #progressbarr {
+                            margin-bottom: 15px;
+                            overflow: hidden;
+                            /*CSS counters to number the steps*/
+                            counter-reset: step;
+                        }
+
+                            #progressbarr li {
+                                list-style-type: none;
+                                color: #000;
+                                text-transform: uppercase;
+                                font-size: 12px;
+                                width: 25%;
+                                float: left;
+                                position: relative;
+                                position: relative !important;
+                            }
+
+                                #progressbarr li:before {
+                                    content: counter(step);
+                                    counter-increment: step;
+                                    width: 20px;
+                                    line-height: 20px;
+                                    display: block;
+                                    font-size: 10px;
+                                    color: #fff;
+                                    background: #ccc;
+                                    border-radius: 3px;
+                                    margin: 0 auto 5px auto;
+                                }
+                                /*progressbarr connectors*/
+                                #progressbarr li:after {
+                                    content: '' !important;
+                                    width: 100% !important;
+                                    height: 2px !important;
+                                    background: #ccc;
+                                    position: absolute !important;
+                                    left: -50% !important;
+                                    top: 9px !important;
+                                    z-index: -1 !important; /*put it behind the numbers*/
+                                }
+
+                                #progressbarr li:first-child:after {
+                                    /*connector not needed before the first step*/
+                                    content: none !important;
+                                }
+                                /*marking active/completed steps green*/
+                                /*The number of the step and the connector before it = green*/
+                                #progressbarr li.active:before, #progressbarr li.active:after {
+                                    background: #0692CC;
+                                    color: white;
+                                }
+
+                        input[type="button"], input[type="submit"] {
+                            background-color: #a6a6a6;
+                            border: 0 none;
+                            color: #fff;
+                            font-family: CenturyGothic;
+                            font-size: 14px;
+                            letter-spacing: .5px;
+                            padding-bottom: 2px;
+                            cursor: pointer;
+                            -webkit-appearance: none !important;
+                            border-radius: 0;
+                            color: #fff !important;
+                            padding-left: 10px;
+                            padding-right: 10px;
+                        }
+                    </style>
+                    <script>
+                //jQuery time
+                var current_fs, next_fs, previous_fs; //fieldsets
+                var left, opacity, scale; //fieldset properties which we will animate
+                var animating; //flag to prevent quick multi-click glitches
+
+                $(".next").click(function () {
+                    if (animating) return false;
+                    animating = true;
+
+                    current_fs = $(this).parent();
+                    next_fs = $(this).parent().next();
+
+                    //activate next step on progressbarr using the index of next_fs
+                    $("#progressbarr li").eq($("fieldset").index(next_fs)).addClass("active");
+
+                    //show the next fieldset
+                    next_fs.show();
+                    //hide the current fieldset with style
+                    current_fs.animate({ opacity: 0 }, {
+                        step: function (now, mx) {
+                            //as the opacity of current_fs reduces to 0 - stored in "now"
+                            //1. scale current_fs down to 80%
+                            scale = 1 - (1 - now) * 0.2;
+                            //2. bring next_fs from the right(50%)
+                            left = (now * 50) + "%";
+                            //3. increase opacity of next_fs to 1 as it moves in
+                            opacity = 1 - now;
+                            current_fs.css({ 'transform': 'scale(' + scale + ')' });
+                            next_fs.css({ 'left': left, 'opacity': opacity });
+                        },
+                        duration: 800,
+                        complete: function () {
+                            current_fs.hide();
+                            animating = false;
+                        },
+                        //this comes from the custom easing plugin
+                        easing: 'easeInOutBack'
+                    });
+                });
+
+                $(".previous").click(function () {
+                    if (animating) return false;
+                    animating = true;
+
+                    current_fs = $(this).parent();
+                    previous_fs = $(this).parent().prev();
+
+                    //de-activate current step on progressbarr
+                    $("#progressbarr li").eq($("fieldset").index(current_fs)).removeClass("active");
+
+                    //show the previous fieldset
+                    previous_fs.show();
+                    //hide the current fieldset with style
+                    current_fs.animate({ opacity: 0 }, {
+                        step: function (now, mx) {
+                            //as the opacity of current_fs reduces to 0 - stored in "now"
+                            //1. scale previous_fs from 80% to 100%
+                            scale = 0.8 + (1 - now) * 0.2;
+                            //2. take current_fs to the right(50%) - from 0%
+                            left = ((1 - now) * 50) + "%";
+                            //3. increase opacity of previous_fs to 1 as it moves in
+                            opacity = 1 - now;
+                            current_fs.css({ 'left': left });
+                            previous_fs.css({ 'transform': 'scale(' + scale + ')', 'opacity': opacity });
+                        },
+                        duration: 800,
+                        complete: function () {
+                            current_fs.hide();
+                            animating = false;
+                        },
+                        //this comes from the custom easing plugin
+                        easing: 'easeInOutBack'
+                    });
+                });
+
+                $(".submit").click(function () {
+                    return false;
+                })
+
+                    </script>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .body {
+        font-family: CenturyGothic !important;
+    }
+
+    .left-inner-addon {
+        position: relative;
+    }
+
+        .left-inner-addon input {
+            padding-left: 22px;
+            padding-right: 20px;
+        }
+
+        .left-inner-addon span {
+            position: absolute;
+            padding: 11px 12px;
+            margin-right: 20px;
+            pointer-events: none;
+        }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon span {
+            position: absolute;
+            right: 0px;
+            padding: 7px 12px;
+            pointer-events: none;
+        }
+</style>

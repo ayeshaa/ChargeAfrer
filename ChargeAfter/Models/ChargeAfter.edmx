@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ChargeAfterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="PackageReturn">
+          <Key>
+            <PropertyRef Name="RtnID" />
+          </Key>
+          <Property Name="RtnID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PKGID" Type="bigint" />
+          <Property Name="ReqID" Type="bigint" />
+          <Property Name="ReturnAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="ReturnDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="500" />
+          <Property Name="Image" Type="varchar" MaxLength="500" />
+          <Property Name="description" Type="varchar" MaxLength="50" />
+          <Property Name="TopHiglight1" Type="varchar" MaxLength="100" />
+          <Property Name="TopHiglight2" Type="varchar" MaxLength="100" />
+          <Property Name="TopHiglight3" Type="varchar" MaxLength="100" />
+          <Property Name="Price" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="ReqID" />
+          </Key>
+          <Property Name="ReqID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="bigint" />
+          <Property Name="RequestAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="RequestDate" Type="datetime" />
+          <Property Name="RequestStatus" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="RequestOffers">
+          <Key>
+            <PropertyRef Name="OffID" />
+          </Key>
+          <Property Name="OffID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReqID" Type="bigint" />
+          <Property Name="UserID" Type="bigint" />
+          <Property Name="ApprovedAmmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="TotalPayback" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="IncreasePercent" Type="int" />
+          <Property Name="MonthlyAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="MonthCount" Type="int" />
+          <Property Name="Lender" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="Phone" Type="varchar" MaxLength="50" />
+          <Property Name="EmploymentStatus" Type="varchar" MaxLength="50" />
+          <Property Name="EstimatedCreditRange" Type="varchar" MaxLength="50" />
+          <Property Name="HousingStatus" Type="varchar" MaxLength="50" />
+          <Property Name="GrossAnnualIndividual" Type="varchar" MaxLength="50" />
+          <Property Name="NetMonthlyIncome" Type="varchar" MaxLength="50" />
+          <Property Name="SalaryFrequency" Type="varchar" MaxLength="50" />
+          <Property Name="DOB" Type="datetime" />
+          <Property Name="Mobile" Type="varchar" MaxLength="50" />
+          <Property Name="Lender" Type="varchar" MaxLength="50" />
+          <Property Name="DriverLicense" Type="varchar" MaxLength="50" />
+          <Property Name="monthlyRent" Type="varchar" MaxLength="50" />
+          <Property Name="YearatResidence" Type="varchar" MaxLength="50" />
+          <Property Name="DriverLicenseState" Type="varchar" MaxLength="50" />
+          <Property Name="DriverLicensExpirationDate" Type="datetime" />
+          <Property Name="SocialSecurityNumber" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="UserAdress">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="Country" Type="varchar" MaxLength="50" />
+          <Property Name="City" Type="varchar" MaxLength="50" />
+          <Property Name="Adress" Type="varchar" MaxLength="100" />
+          <Property Name="State" Type="varchar" MaxLength="50" />
+          <Property Name="PostalCode" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="UserPackage">
+          <Key>
+            <PropertyRef Name="PKGID" />
+          </Key>
+          <Property Name="PKGID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="bigint" />
+          <Property Name="ReqID" Type="bigint" />
+          <Property Name="OffID" Type="bigint" />
+        </EntityType>
+        <EntityContainer Name="ChargeAfterModelStoreContainer">
+          <EntitySet Name="PackageReturn" EntityType="Self.PackageReturn" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Request" EntityType="Self.Request" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RequestOffers" EntityType="Self.RequestOffers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserAdress" EntityType="Self.UserAdress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserPackage" EntityType="Self.UserPackage" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ChargeAfterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="PackageReturn">
+          <Key>
+            <PropertyRef Name="RtnID" />
+          </Key>
+          <Property Name="RtnID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PKGID" Type="Int64" />
+          <Property Name="ReqID" Type="Int64" />
+          <Property Name="ReturnAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ReturnDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Image" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TopHiglight1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TopHiglight2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TopHiglight3" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="ReqID" />
+          </Key>
+          <Property Name="ReqID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int64" />
+          <Property Name="RequestAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="RequestDate" Type="DateTime" Precision="3" />
+          <Property Name="RequestStatus" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="RequestOffer">
+          <Key>
+            <PropertyRef Name="OffID" />
+          </Key>
+          <Property Name="OffID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReqID" Type="Int64" />
+          <Property Name="UserID" Type="Int64" />
+          <Property Name="ApprovedAmmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TotalPayback" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="IncreasePercent" Type="Int32" />
+          <Property Name="MonthlyAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="MonthCount" Type="Int32" />
+          <Property Name="Lender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EmploymentStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EstimatedCreditRange" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HousingStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="GrossAnnualIndividual" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NetMonthlyIncome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SalaryFrequency" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DOB" Type="DateTime" Precision="3" />
+          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Lender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DriverLicense" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="monthlyRent" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="YearatResidence" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DriverLicenseState" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DriverLicensExpirationDate" Type="DateTime" Precision="3" />
+          <Property Name="SocialSecurityNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="UserAdress">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Adress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="UserPackage">
+          <Key>
+            <PropertyRef Name="PKGID" />
+          </Key>
+          <Property Name="PKGID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int64" />
+          <Property Name="ReqID" Type="Int64" />
+          <Property Name="OffID" Type="Int64" />
+        </EntityType>
+        <EntityContainer Name="ChargeAfterEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="PackageReturns" EntityType="Self.PackageReturn" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="Requests" EntityType="Self.Request" />
+          <EntitySet Name="RequestOffers" EntityType="Self.RequestOffer" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="UserAdresses" EntityType="Self.UserAdress" />
+          <EntitySet Name="UserPackages" EntityType="Self.UserPackage" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ChargeAfterModelStoreContainer" CdmEntityContainer="ChargeAfterEntities">
+          <EntitySetMapping Name="PackageReturns">
+            <EntityTypeMapping TypeName="ChargeAfterModel.PackageReturn">
+              <MappingFragment StoreEntitySet="PackageReturn">
+                <ScalarProperty Name="RtnID" ColumnName="RtnID" />
+                <ScalarProperty Name="PKGID" ColumnName="PKGID" />
+                <ScalarProperty Name="ReqID" ColumnName="ReqID" />
+                <ScalarProperty Name="ReturnAmount" ColumnName="ReturnAmount" />
+                <ScalarProperty Name="ReturnDate" ColumnName="ReturnDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="ChargeAfterModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="TopHiglight1" ColumnName="TopHiglight1" />
+                <ScalarProperty Name="TopHiglight2" ColumnName="TopHiglight2" />
+                <ScalarProperty Name="TopHiglight3" ColumnName="TopHiglight3" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Requests">
+            <EntityTypeMapping TypeName="ChargeAfterModel.Request">
+              <MappingFragment StoreEntitySet="Request">
+                <ScalarProperty Name="ReqID" ColumnName="ReqID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="RequestAmount" ColumnName="RequestAmount" />
+                <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+                <ScalarProperty Name="RequestStatus" ColumnName="RequestStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RequestOffers">
+            <EntityTypeMapping TypeName="ChargeAfterModel.RequestOffer">
+              <MappingFragment StoreEntitySet="RequestOffers">
+                <ScalarProperty Name="OffID" ColumnName="OffID" />
+                <ScalarProperty Name="ReqID" ColumnName="ReqID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ApprovedAmmount" ColumnName="ApprovedAmmount" />
+                <ScalarProperty Name="TotalPayback" ColumnName="TotalPayback" />
+                <ScalarProperty Name="IncreasePercent" ColumnName="IncreasePercent" />
+                <ScalarProperty Name="MonthlyAmount" ColumnName="MonthlyAmount" />
+                <ScalarProperty Name="MonthCount" ColumnName="MonthCount" />
+                <ScalarProperty Name="Lender" ColumnName="Lender" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="ChargeAfterModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="SocialSecurityNumber" ColumnName="SocialSecurityNumber" />
+                <ScalarProperty Name="DriverLicensExpirationDate" ColumnName="DriverLicensExpirationDate" />
+                <ScalarProperty Name="DriverLicenseState" ColumnName="DriverLicenseState" />
+                <ScalarProperty Name="YearatResidence" ColumnName="YearatResidence" />
+                <ScalarProperty Name="monthlyRent" ColumnName="monthlyRent" />
+                <ScalarProperty Name="DriverLicense" ColumnName="DriverLicense" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="EmploymentStatus" ColumnName="EmploymentStatus" />
+                <ScalarProperty Name="EstimatedCreditRange" ColumnName="EstimatedCreditRange" />
+                <ScalarProperty Name="HousingStatus" ColumnName="HousingStatus" />
+                <ScalarProperty Name="GrossAnnualIndividual" ColumnName="GrossAnnualIndividual" />
+                <ScalarProperty Name="NetMonthlyIncome" ColumnName="NetMonthlyIncome" />
+                <ScalarProperty Name="SalaryFrequency" ColumnName="SalaryFrequency" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Lender" ColumnName="Lender" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserAdresses">
+            <EntityTypeMapping TypeName="ChargeAfterModel.UserAdress">
+              <MappingFragment StoreEntitySet="UserAdress">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Adress" ColumnName="Adress" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserPackages">
+            <EntityTypeMapping TypeName="ChargeAfterModel.UserPackage">
+              <MappingFragment StoreEntitySet="UserPackage">
+                <ScalarProperty Name="PKGID" ColumnName="PKGID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ReqID" ColumnName="ReqID" />
+                <ScalarProperty Name="OffID" ColumnName="OffID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,106 @@
+﻿<div class="relative section add-payment-method-area ng-scope showFormInAddingArea" style="text-align:center" id="offers123">
+
+    <div style="padding:10px; text-align:center">
+       
+        <b style="padding:5px">B&H Financing Application Powered by ChargeAfter</b>
+
+    </div>
+
+    <div ng-hide="order.isUsingTaxExempt" class="ng-scope" data-selenium="isNotUsingTaxExempt" style="text-align:center">
+
+        <div class="break"></div>
+        <div style="margin-left:auto; margin-right:auto;">
+            <div style="width:100%; text-align:center; margin-left:auto; margin-right:auto;">
+
+                <p style="text-align: center;">You are approved for <strong>$899!</strong></p>
+
+                <p style="text-align: center;">
+                    Choose the financing offer that works best for you.
+                </p>
+                <br>
+
+                <div style="width:100%; text-align:center; margin-left:auto; margin-right:auto; text-align:center; margin-bottom:10px">
+                    <div style="width:80%; margin-left:auto; margin-right:auto; text-align:center">
+                        <p>B&H Credit Card</p><br />
+                        <div class="" style="background-color:rgba(100, 149, 237, 0.44); margin-bottom:5px; width:50%;margin-left:auto; margin-right:auto; text-align:center">
+                            <div style="padding-top:10px; padding-bottom:10px">
+                                <img src="~/images/B&HCard.jpg" class="img-responsive" style="text-align:center; width:100px; height:auto; margin-left:auto; margin-right:auto; margin-top:10px">
+                                <h5 style="text-align:center;color:white;margin-top:0;padding-top:5%;margin-bottom:5%;">
+                                    <strong>B&H</strong> <strong>Credit Card</strong>
+                                </h5>
+                                <p style="text-align:center;color:white; padding-left:5px;padding-right:5px">
+                                    9.90% APR for 24 months or deferred interest if paid in full within 6 months
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="width:2%; text-align:center; margin-left:auto; margin-right:auto;">
+                        <p>Or</p>
+                    </div>
+                    <div style="width:80%; margin-left:auto; margin-right:auto;">
+                        <p>Direct Loan, No Credit Card Required, No Commitment</p>
+                        <div class="" style="background-color:rgba(100, 149, 237, 0.44); margin-bottom:5px; width:60%; margin-left:auto; margin-right:auto; margin-top:20px">
+
+                            <a href="javascript:void(0);" id="confirmFortiva" style="text-decoration:none;  text-align:center; ">
+                                <div style="padding-top:10px; padding-bottom:15px">
+                                    <img src="http://mammummy.com/images/Fortivalogo.png" class="img-responsive" style="text-align:center; width:120px; height:auto; margin-left:auto; margin-right:auto; margin-top:10px">
+                                    <h5 style="text-align:center;color:white;margin-top:0;padding-top:5%;margin-bottom:5%;">
+                                        <strong>$150/mo</strong> for <strong>6 months</strong>
+                                    </h5>
+
+                                    <p style="text-align:center; color:white; ">Interest (0% APR)</p>
+
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="" style="background-color:rgba(100, 149, 237, 0.44); width:60%; margin-left:auto; margin-right:auto">
+                            <a href="javascript:void(0);" id="confirmProsper" style="text-decoration:none">
+                                @*onclick="jsfunction()"*@
+                                <div style="padding-top:10px; padding-bottom:15px">
+                                    <img class="img-responsive" style="width:120px; height:auto; margin-left:auto; margin-right:auto; margin-top:10px" src="https://www.prosper.com/web-borrower/assets/images/shared/themes/lumberjack/logo_prosper_color_gray-679c7f8b2684072b6e03ca0ed655a6aa.svg">
+                                    <h5 style="text-align:center;color:white;margin-top:5%; padding-top:5%; margin-bottom:5%;">
+                                        <strong>$81/mo</strong> for <strong>12 months</strong>
+                                    </h5>
+                                    <p style="text-align:center;color:white;">Interest (8% APR)</p>
+
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div id="offer1" style="display:none">
+    @Html.Partial("_ConfirmFortive")
+    <br />
+</div>
+<div id="offer2" style="display:none">
+    @Html.Partial("_ConfirmProsper")
+    <br />
+</div>
+
+<script>
+    $('#confirmFortiva').click(function () {
+        $("#offers123").html($("#offer1"));
+        document.getElementById("offer1").style.display = "block";
+        //activate next step on progressbar using the index of next_fs
+        $("#ConfimeLine").addClass("active");
+        return false;
+    });
+    $('#confirmProsper').click(function () {
+        $("#offers123").html($("#offer2"));
+        document.getElementById("offer2").style.display = "block";
+        
+
+        //activate next step on progressbar using the index of next_fs
+        $("#ConfimeLine").addClass("active");
+        return false;
+    });
+</script>

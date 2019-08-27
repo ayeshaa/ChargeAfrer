@@ -1,0 +1,433 @@
+﻿@model IEnumerable<ChargeAfter.ViewModel.TBL>
+
+
+@{
+    ViewBag.Title = "Financial Settlements";
+}
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@{ 
+    float totalSettled = 0;
+    foreach (var item in Model)
+    {
+        totalSettled = totalSettled + Convert.ToSingle(item.Amount);
+    }
+}
+
+<div class="page-content">
+    <ol class="breadcrumb">
+
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Financial Settlement </a></li>
+        <li class="active"><a href="#">reports</a></li>
+    </ol>
+    <div class="container-fluid">
+
+        <div data-widget-group="group1">
+
+@if (Model.Count() == 0)
+{
+    <div style="text-align:center">
+        <h1>No Reports found for today</h1>
+    </div>
+}
+else
+{
+    string fTotalS = string.Format("{0:N0}", totalSettled);
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="alert alert-info">
+                <h2>Total Settled $@fTotalS</h2>
+            </div>
+            <div class="panel panel-default" data-widget='{"draggable": "false"}'>
+                <div class="panel-heading">
+                    <h2>Financial Settlements </h2>
+                    <div class="panel-ctrls" data-actions-container="" data-action-collapse='{"target": ".panel-body"}'></div>
+                    <div class="options">
+                    </div>
+                </div>
+                <div class="panel-body">
+
+                    <table class="table table-bordered table-striped table-hover table-fixed-header m-n dataTable" cellspacing="0">
+                        <thead>
+                            <tr role="row">
+                                <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column descending" aria-sort="ascending">Date</th>
+                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Total Sales</th>
+                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Total Refunds</th>
+                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Total Merchant Fees</th>
+                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Total Settled</th>
+                                <th></th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ 
+                                var today = DateTime.Now.Date;
+                                var yestreday = DateTime.Now.AddDays(-1); //.ToString("yyyy-MM-dd"); }
+                                var DayBeforYes = DateTime.Now.AddDays(-2);
+                                var day4 = DateTime.Now.AddDays(-4);
+                                var day5 = DateTime.Now.AddDays(-5);
+                                var day6 = DateTime.Now.AddDays(-6);
+                                var day7 = DateTime.Now.AddDays(-7);
+
+                                float todaySettlement = 0;
+                                float yesterdaysSettlement = 0;
+                                float dayBeforeYesterDaySettlement = 0;
+                                float day4Settlement = 0;
+                                float day5Settlement = 0;
+                                float day6Settlement = 0;
+                                float day7Settlement = 0;
+
+                                float totalsale1 = 0;
+                                float totalsale2 = 0;
+                                float totalsale3 = 0;
+                                float totalsale4 = 0;
+                                float totalsale5 = 0;
+                                float totalsale6 = 0;
+                                float totalsale7 = 0;
+
+                                double percentage1 = 0;
+                                double percentage2 = 0;
+                                double percentage3 = 0;
+                                double percentage4 = 0;
+                                double percentage5 = 0;
+                                double percentage6 = 0;
+                                double percentage7 = 0;
+
+                                double settled1 = 0;
+                                double settled2 = 0;
+                                double settled3 = 0;
+                                double settled4 = 0;
+                                double settled5 = 0;
+                                double settled6 = 0;
+                                double settled7 = 0;
+
+                                double todayRefund = 0;
+                                double YesterdayRefund = 0;
+                                double Refund3 = 0;
+                                double Refund4 = 0;
+                                double Refund5 = 0;
+                                double Refund6 = 0;
+                                double Refund7 = 0;
+                            }
+                            @foreach (var item in Model)
+                            {
+                                var rDate = item.Date.Value.Date; //.ToString("yyyy-MM-dd"); ;
+                                var todaResult = DateTime.Compare(rDate.Date, today.Date);
+                                var YesterDayresult = DateTime.Compare(rDate.Date, yestreday.Date);
+                                var DayBeforeYesResult = DateTime.Compare(rDate.Date, DayBeforYes.Date);
+                                var day4Result = DateTime.Compare(rDate.Date, day4.Date);
+                                var day5Result = DateTime.Compare(rDate.Date, day5.Date);
+                                var day6Result = DateTime.Compare(rDate.Date, day6.Date);
+                                var day7Result = DateTime.Compare(rDate.Date, day7.Date);
+
+
+                                if (todaResult == 0)
+                                {
+                                    totalsale1 = totalsale1 + Convert.ToSingle(item.Amount);
+                                    if (item.Status != "Refunded")
+                                    {
+                                        todaySettlement = todaySettlement + Convert.ToSingle(item.Amount);
+                                    }
+                                    if(item.Status == "Refunded")
+                                    {
+                                        todayRefund = todayRefund + Convert.ToSingle(item.Amount);
+                                    }
+
+                                }
+
+                                if (YesterDayresult == 0)
+                                {
+                                    totalsale2 = totalsale2 + Convert.ToSingle(item.Amount);
+                                    if (item.Status != "Refunded")
+                                    {
+                                        yesterdaysSettlement = yesterdaysSettlement + Convert.ToSingle(item.Amount);
+                                    }
+                                    if (item.Status == "Refunded")
+                                    {
+                                        YesterdayRefund = YesterdayRefund + Convert.ToSingle(item.Amount);
+                                    }
+                                }
+                                if (DayBeforeYesResult == 0)
+                                {
+                                    totalsale3 = totalsale3 + Convert.ToSingle(item.Amount);
+                                    if (item.Status != "Refunded")
+                                    {
+                                        dayBeforeYesterDaySettlement = dayBeforeYesterDaySettlement + Convert.ToSingle(item.Amount);
+                                    }
+                                    if (item.Status == "Refunded")
+                                    {
+                                        Refund3 = Refund3 + Convert.ToSingle(item.Amount);
+                                    }
+                                }
+                                if (day4Result == 0)
+                                {
+                                    totalsale4 = totalsale4 + Convert.ToSingle(item.Amount);
+                                    if (item.Status != "Refunded")
+                                    {
+                                        day4Settlement = day4Settlement + Convert.ToSingle(item.Amount);
+                                    }
+                                    if (item.Status == "Refunded")
+                                    {
+                                        Refund4 = Refund4 + Convert.ToSingle(item.Amount);
+                                    }
+                                }
+                                if (day5Result == 0)
+                                {
+                                    totalsale5 = totalsale5 + Convert.ToSingle(item.Amount);
+                                    if (item.Status != "Refunded")
+                                    {
+                                        day5Settlement = day5Settlement + Convert.ToSingle(item.Amount);
+                                    }
+                                    if (item.Status == "Refunded")
+                                    {
+                                        Refund5 = Refund5 + Convert.ToSingle(item.Amount);
+                                    }
+                                }
+                                if (day6Settlement == 0)
+                                {
+                                    totalsale6 = totalsale6 + Convert.ToSingle(item.Amount);
+                                    if (item.Status != "Refunded")
+                                    {
+                                        day6Settlement = day6Settlement + Convert.ToSingle(item.Amount);
+                                    }
+                                    if (item.Status == "Refunded")
+                                    {
+                                        Refund6 = Refund6 + Convert.ToSingle(item.Amount);
+                                    }
+                                }
+                                if (day7Result == 0)
+                                {
+                                    totalsale7 = totalsale7 + Convert.ToSingle(item.Amount);
+                                    if (item.Status != "Refunded")
+                                    {
+                                        day7Settlement = day7Settlement + Convert.ToSingle(item.Amount);
+                                    }
+                                    if (item.Status == "Refunded")
+                                    {
+                                        Refund7 = Refund7 + Convert.ToSingle(item.Amount);
+                                    }
+                                }
+                            }
+                            @{ 
+                                percentage1 =  (1.5 / 100) * Convert.ToSingle(todaySettlement);
+                                percentage2 = (1.5 / 100) * Convert.ToSingle(yesterdaysSettlement);
+                                percentage3 = (1.5 / 100) * Convert.ToSingle(dayBeforeYesterDaySettlement);
+                                percentage4 = (1.5 / 100) * Convert.ToSingle(day4Settlement);
+                                percentage5 = (1.5 / 100) * Convert.ToSingle(day5Settlement);
+                                percentage6 = (1.5 / 100) * Convert.ToSingle(day6Settlement);
+                                percentage7 = (1.5 / 100) * Convert.ToSingle(day7Settlement);
+
+                                settled1 = todaySettlement - percentage1;
+                                settled2 = yesterdaysSettlement - percentage2;
+                                settled3 = dayBeforeYesterDaySettlement - percentage3;
+                                settled4 = day4Settlement - percentage4;
+                                settled5 = day5Settlement - percentage5;
+                                settled6 = day6Settlement - percentage6;
+                                settled7 = day7Settlement - percentage7;
+
+                                //Convert to 2 decimal
+                                decimal dpercentage1 = Math.Round((decimal)percentage1, 0);
+                                decimal dsettled1 = Math.Round((decimal)settled1, 0);
+
+                                decimal dpercentage2 = Math.Round((decimal)percentage2, 0);
+                                decimal dsettled2 = Math.Round((decimal)settled2, 0);
+
+                                decimal dpercentage3 = Math.Round((decimal)percentage3, 0);
+                                decimal dsettled3 = Math.Round((decimal)settled3, 0);
+
+                                decimal dpercentage4 = Math.Round((decimal)percentage4, 0);
+                                decimal dsettled4 = Math.Round((decimal)settled4, 0);
+
+                                decimal dpercentage5 = Math.Round((decimal)percentage5, 0);
+                                decimal dsettled5 = Math.Round((decimal)settled5, 0);
+
+                                decimal dpercentage6 = Math.Round((decimal)percentage6, 0);
+                                decimal dsettled6 = Math.Round((decimal)settled6, 0);
+
+                                decimal dpercentage7 = Math.Round((decimal)percentage7, 0);
+                                decimal dsettled7 = Math.Round((decimal)settled7, 0);
+                            }
+                            <tr role="row" class="odd">
+                                <td>@today.ToString("yyyy-MM-dd")</td>
+                                <td>$@totalsale1</td>
+                                <td class="sorting_1">$@todayRefund</td>
+                                <td>$@dpercentage1</td>
+                                <td>$@dsettled1</td>
+                            </tr>
+                            <tr role="row" class="odd">
+                                <td>@yestreday.ToString("yyyy-MM-dd")</td>
+                                <td>$@totalsale2</td>
+                                <td class="sorting_1">$@YesterdayRefund</td>
+                                <td>$@dpercentage2</td>
+                                <td>$@dsettled2</td>
+                            </tr>
+                            <tr role="row" class="odd">
+                                <td>@DayBeforYes.ToString("yyyy-MM-dd")</td>
+                                <td>$@totalsale3</td>
+                                <td class="sorting_1">$@Refund3</td>
+                                <td>$@dpercentage3</td>
+                                <td>$@dsettled3</td>
+                            </tr>
+                            <tr role="row" class="odd">
+                                <td>@day4.ToString("yyyy-MM-dd")</td>
+                                <td>$@totalsale4</td>
+                                <td class="sorting_1">$@Refund4</td>
+                                <td>$@dpercentage4</td>
+                                <td>$@dsettled4</td>
+                            </tr>
+                            <tr role="row" class="odd">
+                                <td>@day5.ToString("yyyy-MM-dd")</td>
+                                <td>$@totalsale5</td>
+                                <td class="sorting_1">$@Refund5</td>
+                                <td>$@dpercentage5</td>
+                                <td>$@dsettled5</td>
+                            </tr>
+                            <tr role="row" class="odd">
+                                <td>@day6.ToString("yyyy-MM-dd")</td>
+                                <td>$@totalsale6</td>
+                                <td class="sorting_1">$@Refund6</td>
+                                <td>$@dpercentage6</td>
+                                <td>$@dsettled6</td>
+                            </tr>
+                            <tr role="row" class="odd">
+                                <td>@day7.ToString("yyyy-MM-dd")</td>
+                                <td>$@totalsale7</td>
+                                <td class="sorting_1">$@Refund7</td>
+                                <td>$@dpercentage7</td>
+                                <td>$@dsettled7</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+        </div>
+    </div>
+</div>
+
+
+
+
+<div id="DetailWorker" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="width:60%">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body" id="data">
+                <section class="content padding-top-50" style="background-color:gainsboro; padding:20px; padding-bottom:0 ; min-height:390px">
+                    <div class="col-md-12" style="padding:0">
+                        <div class="nav-tabs-custom" style="background-color:#fff; border-top-color:none; box-shadow:none; border-radius:0; padding:20px;">
+                            <div class="col-md-6">
+                                <div class="">
+                                    <label style="display:inline-block">Transaction #</label>
+                                    <h5 style="display:inline-block" id="tid"></h5>
+                                </div>
+                                <div class="">
+                                    <label style="display:inline-block">Worker Name: </label>
+                                    <h5 style="display:inline-block" id="DName"></h5>
+                                </div>
+                                <div class="">
+                                    <label style="display:inline-block">Email: </label>
+                                    <h5 style="display:inline-block" id="rEmail"></h5>
+                                </div>
+                                <div class="">
+                                    <label style="display:inline-block">Amount: </label>
+                                    <h5 style="display:inline-block" id="amount"></h5>
+                                </div>
+                                <div class="">
+                                    <label style="display:inline-block">Status: </label>
+                                    <h5 style="display:inline-block" id="status"></h5>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="">
+                                    <label style="display:inline-block">Employement Status: </label>
+                                    <h5 style="display:inline-block" id="empS"></h5>
+                                </div>
+                                <div class="">
+                                    <label style="display:inline-block">Housing Status: </label>
+                                    <h5 style="display:inline-block" id="HousingS"></h5>
+                                </div>
+                                <div class="">
+                                    <label style="display:inline-block">GrossAnnualIndividual: </label>
+                                    <h5 style="display:inline-block" id="gaIndivial"></h5>
+                                </div>
+                                <div class="">
+                                    <label style="display:inline-block">NetMonthlyIncome: </label>
+                                    <h5 style="display:inline-block" id="NetIncom"></h5>
+                                </div>
+                                <div class="">
+                                    <label style="display:inline-block">SalaryFrequency: </label>
+                                    <h5 style="display:inline-block" id="salary"></h5>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" id="btnSave" data-dismiss="modal" data-toggle="modal" data-target="#AddWorker" class="btn btn-success" value="Cancel" />
+
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script>
+    $(function () {
+        $(".anchorDetail").click(function () {
+            debugger;
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: '/Admin/User/Details',
+                contentType: "application/json; charset=utf-8",
+                data: { "Id": id },
+                datatype: "json",
+                success: function (data) {
+                    $('#DetailWorker').modal('show');
+                    $('#DName').text(data.query.FirstName);
+                    $('#tid').text(data.query.Id);
+                    $('#rEmail').text(data.query.Email);
+                    $('#amount').text(data.query.Amount)
+                    $('#status').text(data.query.Status);
+                    $("#empS").text(data.query.EmpStatus);
+                    $("#HousingS").text(data.query.HousingStatus);
+                    $("#gaIndivial").text(data.query.GrossIndividual);
+                    $("#NetIncom").text(data.query.NetIncom);
+                    $("#salary").text(data.query.SalaryFrequency);
+
+                },
+                error: function () {
+
+                    alert("Dynamic content load failed.");
+                }
+            });
+        });
+        //$("#closebtn").on('click',function(){
+        //    $('#myModal').modal('hide');
+
+        $("#closbtn").click(function () {
+            $('#myModal').modal('hide');
+        });
+    });
+
+
+</script>

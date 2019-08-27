@@ -1,0 +1,1755 @@
+﻿@using ChargeAfter.ViewModel;
+@{
+    Layout = "~/Views/Shared/_CheckOutLayout.cshtml";
+}
+@{ var items = (List<Item>)Session["cart"]; }
+@if (items != null)
+{
+<div class="left view-container relative" data-selenium="viewContainer">
+    
+    <div id="ng-view" ui-view="" class="parent-ui-view ng-scope shipping" 
+                          ng-class="$state.current.name | slugify" data-selenium="ngView">
+        @*<div class="relative ng-scope">
+            <h2 class="c1 header inlineBlock ng-binding" data-selenium="shippingHeader">Shipping Address </h2>
+        </div>*@
+        @*<div class="ng-scope" ng-if="!order.isEmployee" ng-include="'storePickup.html'" data-selenium="storePickup">
+            <div ng-controller="PickupController" class="storePickupController ng-scope" bh-order-data="pickupInfo" 
+                 data-selenium="storePickupController">
+                <div class="absolute ship-profile-options move-down-store-pickup" 
+                     ng-class="{'move-down-store-pickup':!order.hasGiftAddress}" data-selenium="shipProfileOptions">
+                    <div class="setStorePickup clearfix" bh-toggle-pickup="" data-selenium="setStorePickup">
+                        <span class="styled-checkbox" ng-class="isStorePickup() ? 'checked' : ''">
+                            <input class="displayNone" ng-checked="isStorePickup()" type="checkbox" 
+                                   id="orderIsStorePickup" name="isStorePickup" data-selenium="isStorePickup">
+                            <svg class="bh-icon bh-icon-check" data-selenium="check">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg>
+                        </span>
+                        <span class="left light store-pickup-header fs16" 
+                              data-selenium="isStorePickupLabel">NYC Pickup (2 locations)</span>
+                    </div>
+                    <!-- <div class="no-wrap giftAddress" ng-if="order.hasGiftAddress">
+                        <input type="checkbox" id="orderIsGiftAddress" name="isGiftAddress" ng-model="order.isGiftAddress" styled-checkbox="" ng-change="setShipTpWishlist()">
+                        <label for="orderIsGiftAddress" class="left light store-pickup-header fs16">Ship to Nachmen Sigel <span class="fs14">(address private)</span></label>
+                    </div> -->
+                </div>
+                <div class="section store-pickup-form" slide-toggle="isStorePickup
+                      data-selenium="storePickupForm" style="display: none; overflow: hidden;">
+                    <!-- <p class="fs18 semibold more-info selenium sel-moreInfo">Our SuperStore is located at 420 9th Ave, New York, NY 10001</p> -->
+                    <!-- <div class="break"></div> -->
+                    <h3 class="fs24 semibold c34" data-selenium="who">
+                        Who will pick up this order?
+                    </h3>
+                    <br>
+                    <form bh-pickup-form="" name="pickupForm" bh-no-validate-on-focus="" class="ng-pristine ng-invalid ng-invalid-required ng-valid-maxlength ng-valid-mask ng-invalid-email" data-selenium="pickupForm">
+                        <div class="">
+                            <p class="form-group" data-selenium="formGroup">
+                                <span class="fs16 c4 capitalize right-align control-label inlineBlock" data-selenium="locationLabel">Location</span>
+                                <span class="control-input inlineBlock ng-binding">
+
+                                    <span bh-show-pickup-options="" class="right upper c5 cursor-pointer">Change</span>
+                                </span>
+                            </p>
+                            <div class="form-group" data-selenium="formGroup">
+                                <label for="firstName" class="fs16 c4 capitalize right-align control-label inlineBlock" data-selenium="firstNameLabel">First Name</label>
+                                <div class="control-input inlineBlock relative">
+                                    <input name="firstName" ng-model="pickupPerson.firstName" type="text" class="fs16 semibold validation-icon-space ng-pristine ng-untouched ng-invalid ng-invalid-required ng-valid-maxlength" required="" valid-chars="" maxlength="30" ie-maxlength="30" data-selenium="firstName">
+                                    <svg class="bh-icon bh-icon-check absolute inline-check ng-hide" ng-show="pickupForm.firstName.$valid" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg>
+                                    <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!pickupForm.firstName.$valid &amp;&amp; (pickupForm.$submitted || pickupForm.firstName.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                                </div>
+                                <!-- ngIf: (pickupForm.$submitted || pickupForm.firstName.$touched) && !pickupForm.firstName.$valid -->
+                            </div>
+                            <div class="form-group" data-selenium="formGroup">
+                                <label for="lastName" class="fs16 c4 capitalize right-align control-label inlineBlock" data-selenium="lastNameLabel">Last Name</label>
+                                <div class="control-input inlineBlock relative">
+                                    <input name="lastName" ng-model="pickupPerson.lastName" class="fs16 semibold validation-icon-space ng-pristine ng-untouched ng-invalid ng-invalid-required ng-valid-maxlength" type="text" required="" valid-chars="" maxlength="30" data-selenium="lastName">
+                                    <svg class="bh-icon bh-icon-check absolute inline-check ng-hide" ng-show="pickupForm.lastName.$valid" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg>
+                                    <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!pickupForm.lastName.$valid &amp;&amp; (pickupForm.$submitted || pickupForm.lastName.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                                </div>
+                                <!-- ngIf: (pickupForm.$submitted || pickupForm.lastName.$touched) && !pickupForm.lastName.$valid -->
+                            </div>
+                            <div class="form-group" data-selenium="formGroup">
+                                <label for="messengerCompanyName" class="fs16 c4 capitalize right-align control-label inlineBlock messengerCompanyName" data-selenium="messengerCompanyNameLabel">Messenger / Courier Services</label>
+                                <div class="control-input inlineBlock relative">
+                                    <input name="messengerCompanyName" ng-model="pickupPerson.messengerCompanyName" type="text" class="fs16 semibold validation-icon-space error-icon-only ng-pristine ng-untouched ng-valid ng-valid-maxlength" valid-chars="" maxlength="30" placeholder="Optional" data-selenium="messengerCompanyName">
+                                    <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!pickupForm.messengerCompanyName.$valid &amp;&amp; (pickupForm.$submitted || pickupForm.messengerCompanyName.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                                </div>
+                                <!-- ngIf: (pickupForm.$submitted || pickupForm.messengerCompanyName.$touched) && !pickupForm.messengerCompanyName.$valid -->
+                            </div>
+                            <div class="form-group" data-selenium="formGroup">
+                                <label for="phone" class="fs16 c4 capitalize right-align control-label inlineBlock" data-selenium="phoneLabel">Phone</label>
+                                <div class="control-input inlineBlock relative">
+                                    <input name="phone" ng-model="pickupPerson.phone" type="tel" class="fs16 semibold validation-icon-space ng-pristine ng-untouched ng-invalid ng-invalid-required ng-valid-mask" required="" ui-mask="(999) 999-9999?9?9?9?9?9?9?9?9?9?9" ui-options="{clearOnBlur: false}" ui-mask-placeholder-char="space" data-selenium="phone" placeholder="(   )    -              ">
+                                    <svg class="bh-icon bh-icon-check absolute inline-check ng-hide" ng-show="pickupForm.phone.$valid" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg>
+                                    <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!pickupForm.phone.$valid &amp;&amp; (pickupForm.$submitted || pickupForm.phone.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                                </div>
+                                <!-- ngIf: (pickupForm.$submitted || pickupForm.phone.$touched) && !pickupForm.phone.$valid -->
+                            </div>
+                        </div>
+
+                        <!-- ngIf: !isLoggedIn() --><div class="form-group ng-scope" ng-if="!isLoggedIn()" data-selenium="formGroup">
+                            <label for="email" class="fs16 c4 capitalize right-align control-label inlineBlock" data-selenium="emailLabel">Email</label>
+                            <div class="control-input inlineBlock relative">
+                                <input name="email" ng-model="pickupPerson.email" type="text" class="fs16 semibold validation-icon-space ng-pristine ng-untouched ng-invalid ng-invalid-required ng-invalid-email" placeholder="To Receive Order Confirmation" required="" ng-trim="false" bh-disallowed-chars="[ ]" email="" data-selenium="email">
+                                <svg class="bh-icon bh-icon-check absolute inline-check ng-hide" ng-show="pickupForm.email.$valid" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg>
+                                <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!pickupForm.email.$valid &amp;&amp; (pickupForm.$submitted || pickupForm.email.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                            </div>
+                            <!-- ngIf: (pickupForm.$submitted || pickupForm.email.$touched) && !pickupForm.email.$valid -->
+                            <!-- <span ng-messages="pickupForm.email.$error" ng-messages-include="email-error-messages" ng-show="pickupForm.$submitted && pickupForm.email.$error.email" class="inlineBlock fs20 c7 error">
+                            </span> -->
+                        </div><!-- end ngIf: !isLoggedIn() -->
+                        <!-- ngIf: !isLoggedIn() --><div class="form-group emailSignUp ng-scope" ng-if="!isLoggedIn()" data-selenium="formGroup">
+                            <label class="fs16 c36 capitalize right-align control-label inlineBlock"></label>
+                            <div class="control-input inlineBlock">
+                                <div>
+                                    <label class="styled-checkbox big checked"><input name="emailSignUp" class="ng-pristine ng-untouched ng-valid displayNone" type="checkbox" ng-model="$storage.emailSignUp" styled-checkbox="big" data-selenium="emailSignUp"><svg class="bh-icon bh-icon-check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg></label>
+                                    <p class="fs16 no-wrap" data-selenium="emailSignUpMsg">Sign Up for Weekly B&amp;H Email Newsletters</p>
+                                    <br>
+                                    <p class="fs12 c9 italic no-wrap" data-selenium="emailSignUpInfo">We respect your privacy, your information is safe with us.</p>
+                                </div>
+                            </div>
+                        </div><!-- end ngIf: !isLoggedIn() -->
+
+                    </form>
+                    <div class="break"></div>
+                    <div class="break"></div>
+                    <div class="store-pickup-instruction" data-selenium="storePickupInstruction">
+                        <p class="c5 fs16 bold" data-selenium="whatsRequired">To pick up an order, USA &amp; non-USA citizens must provide:</p>
+                        <div class="break"></div>
+                        <div class="" ng-show="!pickupPerson.isMessengerCompany" data-selenium="isNotMessengerCompany">
+                            <p class="c5 fs16" ng-hide="pickupPerson.messengerCompanyName" data-selenium="notMessengerCompanyName">1. Government issued photo ID matching name above</p><p>
+                            </p><p class="c5 fs16 ng-hide" ng-show="pickupPerson.messengerCompanyName" data-selenium="isMessengerCompanyName">1. Messenger Service ID Card <span class="light">or</span> a Bill of Lading <span class="light">or</span> a Daily Manifest</p>
+                            <div class="break"></div>
+                            <p class="c5 fs16" data-selenium="orderNumber">2. Your order number (generated upon completion)</p><p>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="break"></div>
+                    <div class="store-pickup-msg" data-selenium="storePickupMsg">
+                        <p class="fs18 ng-binding ng-hide" ng-show="pickupInfo.messageType === 'AVAILABLE'" data-selenium="available"></p><p>
+                        </p><p class="fs18 bold orange ng-hide" ng-show="pickupInfo.messageType === 'CLOSING'" data-selenium="closing">{pickupInfo.message}}</p>
+                        <p class="fs18 ng-binding ng-hide" ng-show="pickupInfo.messageType === 'CLOSED'" data-selenium="closed"></p>
+                    </div>
+                    <br>
+                    <!-- <div class="">
+                        <label class="cursor-pointer c18 center-align next-btn"><span class="light">Next: </span><span class="bold"> Select Shipping Method</span>
+                        <input type="submit"
+                               value="Select Shipping Method"
+                               bh-set-order-profile="address"
+                               class="displayNone"
+                               ng-if="pickupForm.$valid || true">
+                        </label>
+                    </div> -->
+                </div>
+            </div>
+        </div><!-- end ngIf: !order.isEmployee -->
+        <!-- ngIf: order.isEmployee -->
+        <div class="ng-scope">
+            <div class="section selected-address" slide-toggle="showSelected() &amp;&amp; !isStorePickup()" speed="500" data-selenium="selectedAddress" style="display: block; overflow: hidden;">
+
+                <div class="right right-align">
+                    <!-- ngIf: !isLoggedIn() && order.changeShipProfileAllowed --><a ng-if="!isLoggedIn() &amp;&amp; order.changeShipProfileAllowed" class="c5 underline-on-hover upper fs16 cursor-pointer inlineBlock ng-scope ng-isolate-scope" bh-start-editing="order.shippingProfile" bh-disabled="order.shippingProfile.isTaxExempt" ng-click="editAnAddress(!order.shippingProfile.isTaxExempt, true)" popover-template="''" popover-trigger="hover" popover-animation="false" data-selenium="editAddress">Change Address</a><!-- end ngIf: !isLoggedIn() && order.changeShipProfileAllowed -->
+                    <!-- ngIf: isLoggedIn() && order.changeShipProfileAllowed -->
+                </div>
+
+                <div>
+                    <div class="inlineBlock"><svg class="bh-icon bh-icon-check relative" style="height:22px; 
+width:20px; fill:#769e2d;" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use>
+                        </svg>&nbsp;&nbsp;&nbsp;</div>
+                    <!-- ngInclude: 'shippingProfile.html' --><div class="inlineBlock selected-address-include ng-scope"
+                                                                    ng-include="'shippingProfile.html'"
+                                                                    data-selenium="selectedAddressInclude">
+                        <ul class="selected-address-info ng-scope" data-selenium="selectedAddressInfo">
+                            <li class="inlineBlock fs16 semibold capitalize ng-binding" data-selenium="name"></li>
+                            <li class="inlineBlock break"></li>
+                            <!-- ngIf: order.shippingProfile.companyName -->
+                            <li class="inlineBlock fs16 ng-binding" data-selenium="address1">hkhfkjgkj</li>
+                            <li class="inlineBlock fs16 ng-binding" data-selenium="address2">kksggkj</li>
+                            <!-- ngIf: order.shippingProfile.address3 -->
+                            <li class="inlineBlock fs16 ng-binding" data-selenium="cityStateZip">
+                                jkjdfjk, kdfhkjkj 5400
+                                <span class="ng-binding" ng-show="order.shippingProfile.country !== 'US'" data-selenium="countryName"> PAKISTAN</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="qas-auto-corrected ng-scope ng-hide" ng-controller="QasAutoCorrected" ng-show="hasAutoCorrections" data-selenium="hasAutoCorrections">
+                    <svg class="bh-icon bh-icon-error-light inlineBlock qas-auto-corrected-error-icon" style="height:26px; width:26px; fill:#ff9933;" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                    <span class="inlineBlock">
+                        <span class="semibold c16">Your address has been modified</span>
+                        to match carrier specifications.
+                        <span class="semibold c5 cursor-pointer underline-on-hover" popover-template="'qasAutoCorrected.html'" popover-placement="right" popover-trigger="click" data-selenium="qasAutoCorrected">View Details</span>
+                    </span>
+                </div>
+            </div>*@
+
+            <div bh-saved-addresses="shipping" class="saved-addresses saved-list" slide-toggle="showAddressList() &amp;&amp; !isStorePickup()" speed="500" data-selenium="bhSavedAddress" style="display: none; overflow: hidden;">
+                <div class="section saved-list-inner clearfix" data-selenium="savedListInner">
+                    <p class="fs12 ng-hide" ng-show="profileType === 'billing'" data-selenium="manageAddressesMessage">
+                        Manage your addresses in "MY ACCOUNT"
+                    </p><div class="break"></div>
+                    <div class="break"></div>
+                    <p></p>
+                    <div class="right-align" ng-show="profileType === 'shipping'">
+                        <a bh-cancel-editing="" class="c5 underline-on-hover upper fs16 cursor-pointer inlineBlock" ng-click="cancelAddressUpdate()" data-selenium="cancelAddressUpdate">
+                            Cancel
+                        </a>
+                        <span>&nbsp;&nbsp;&nbsp;</span>
+                        <div class="break"></div>
+                    </div>
+                    <div class="clearfix">
+                        <div class="item relative fs16 cursor-pointer center-align addNewAddress ng-isolate-scope" bh-disabled="addressDisabled()" bh-start-editing="" ng-click="createNewAddress(!addressDisabled())" popover-template="''" popover-trigger="hover" popover-popup-delay="150" popover-animation="false" data-selenium="createNewAddress">
+                            <svg class="bh-icon bh-icon-plus" style="height:16px; width:16px; fill:#000;" data-selenium="plus"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#plus"></use></svg> New Address
+                        </div>
+
+                        <!-- ngRepeat: address in addresses | orderBy:selectedAddress --><div class="item relative ng-scope ng-isolate-scope selected" ng-repeat="address in addresses | orderBy:selectedAddress" ng-init="index = addresses.indexOf(address)" ng-class="{'selected':selectedAddressId() === address.addrId, 'full-address': (address.companyName &amp;&amp; address.address2)}" bh-disabled="addressDisabled(address)" popover-template="''" popover-trigger="hover" popover-append-to-body="true" popover-animation="false" data-selenium="address">
+
+                            <p class="address-line semibold ng-binding" data-selenium="addressName">sjfkdf kkskjghk </p>
+                            <p class="break"></p>
+                            <p class="address-line ng-binding" data-selenium="addressCompany"></p>
+                            <p class="address-line ng-binding" data-selenium="addressAddress1">hkhfkjgkj</p>
+                            <!-- ngIf: address.address2 --><p class="address-line ng-binding ng-scope" ng-if="address.address2" data-selenium="addressAddress2">kksggkj</p><!-- end ngIf: address.address2 -->
+                            <p class="address-line ng-binding" data-selenium="addressCityStateZip">jkjdfjk, kdfhkjkj 5400</p>
+                            <p class="address-line ng-binding" data-selenium="addressCountry">PAKISTAN</p>
+                            <p class="address-line ng-binding" data-selenium="addressPhone">923 (04) 464-7511</p>
+                            <label class="btn-select item-button c2 fs18 semibold cursor-pointer center-align absolute">
+                                <p class="ng-binding" bh-set-order-profile="address" data-selenium="bhSetOrderProfile">Selected  <svg class="bh-icon bh-icon-check" style="height:13px; width:11px; fill:#fff;" ng-show="selectedAddressId() === address.addrId" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg></p>
+                            </label>
+                            <div ng-show="showEdit(address, profileType)" class="item-controlles right-align absolute" data-selenium="itemControls">
+                                <a class="underline-on-hover upper fs14 c9 cursor-pointer ng-isolate-scope" bh-start-editing="address" ng-click="editAnAddress(!address.isTaxExempt, true)" bh-disabled="address.isTaxExempt" popover-template="''" popover-trigger="hover" popover-append-to-body="true" popover-animation="false" data-selenium="editAddress">Edit</a>
+                                <!--<a class="underline upper fs14 c9 cursor-pointer" bh-remove-address="address.addrId">Remove</a>-->
+                            </div>
+                        </div><!-- end ngRepeat: address in addresses | orderBy:selectedAddress -->
+                    </div>
+                    <p class="fs12 right-align" ng-show="profileType === 'shipping'" data-selenium="manageAddressesMessage">Manage your addresses in "MY ACCOUNT"&nbsp;&nbsp;</p>
+                </div>
+            </div>
+
+            <div class="section address-form" slide-toggle="showForm() &amp;&amp; !isStorePickup()" speed="500" data-selenium="addressFormSection" style="display: none; overflow: hidden;">
+                <a bh-cancel-editing="" class="right c5 underline-on-hover upper fs16 cursor-pointer inlineBlock ng-hide" ng-show="showForm() &amp;&amp; addresses.length" ng-click="cancelAddressUpdate()" data-selenium="cancelAddressUpdate">
+                    Cancel
+                </a>
+                <div class="ng-scope" bh-address-form="addressForm.html" bh-qas-address-form="" data-selenium="bhQasAddressForm">
+                    <form name="form" class="ng-valid-maxlength ng-valid-valid-chars ng-dirty ng-valid-required ng-valid-mask ng-valid-parse ng-submitted ng-valid ng-valid-email" ng-model-options="{allowInvalid: true}" bh-remove-server-validations="" bh-no-validate-on-focus="" novalidate="" data-selenium="addressForm">
+                        <div class="form-group" data-selenium="formGroup">
+                            <label for="country" class="fs16 c36 capitalize right-align inlineBlock control-label" data-selenium="countryLabel">Country</label>
+                            <div class="inlineBlock control-input relative bh-dropdown-is-valid">
+                                <div class="bh-dropdown inlineBlock undefined" style="width: 100%;">
+                                    <svg class="bh-icon bh-icon-arrow-down-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-down-light"></use></svg><span class="bh-dropdown-selected">PAKISTAN</span><select name="country" class="fs16 semibold ng-valid ng-valid-required ng-valid-parse ng-dirty ng-touched" ng-model="address.country" bh-territory-country-select="" bh-dropdown="" required="" data-selenium="country">
+                                        <option value="PK" ng-selected="true" selected="selected">PAKISTAN</option>
+                                        <option value="US">UNITED STATES</option>
+                                        <option value="--" disabled="">------</option>
+                                        <option value="AF">AFGHANISTAN</option>
+                                        <option value="AX">ALAND ISLANDS</option>
+                                        <option value="AL">ALBANIA</option>
+                                        <option value="DZ">ALGERIA</option>
+                                        <option value="AS">AMERICAN SAMOA (U.S.</option>
+                                        <option value="AD">ANDORRA</option>
+                                        <option value="AO">ANGOLA</option>
+                                        <option value="AI">ANGUILLA</option>
+                                        <option value="AG">ANTIGUA &amp; BARBUDA</option>
+                                        <option value="AR">ARGENTINA</option>
+                                        <option value="AM">ARMENIA</option>
+                                        <option value="AW">ARUBA</option>
+                                        <option value="SH3">ASCENSION</option>
+                                        <option value="AU">AUSTRALIA</option>
+                                        <option value="AT">AUSTRIA</option>
+                                        <option value="AZ">AZERBAIJAN</option>
+                                        <option value="PT2">AZORES</option>
+                                        <option value="BS">BAHAMAS</option>
+                                        <option value="BH">BAHRAIN</option>
+                                        <option value="BD">BANGLADESH</option>
+                                        <option value="BB">BARBADOS</option>
+                                        <option value="BY">BELARUS</option>
+                                        <option value="BE">BELGIUM</option>
+                                        <option value="BZ">BELIZE</option>
+                                        <option value="BJ">BENIN</option>
+                                        <option value="BM">BERMUDA</option>
+                                        <option value="BT">BHUTAN</option>
+                                        <option value="BO">BOLIVIA</option>
+                                        <option value="BQ1">BONAIRE</option>
+                                        <option value="BA">BOSNIA-HERCEGOVINA</option>
+                                        <option value="BW">BOTSWANA</option>
+                                        <option value="BR">BRAZIL</option>
+                                        <option value="VG">BRITISH VIRGIN IS.</option>
+                                        <option value="BN">BRUNEI</option>
+                                        <option value="BG">BULGARIA</option>
+                                        <option value="BF">BURKINA FASO</option>
+                                        <option value="MM">BURMA (MYANMAR)</option>
+                                        <option value="BI">BURUNDI</option>
+                                        <option value="KH">CAMBODIA (KAMPUCHEA)</option>
+                                        <option value="CM">CAMEROON</option>
+                                        <option value="CA">CANADA</option>
+                                        <option value="ES2">CANARY ISLANDS</option>
+                                        <option value="CV">CAPE VERDE</option>
+                                        <option value="KY">CAYMAN ISLANDS</option>
+                                        <option value="CF">CENTRAL AFRICAN REP.</option>
+                                        <option value="TD">CHAD</option>
+                                        <option value="CL">CHILE</option>
+                                        <option value="CN">CHINA</option>
+                                        <option value="CO">COLOMBIA</option>
+                                        <option value="KM">COMOROS</option>
+                                        <option value="CG">CONGO</option>
+                                        <option value="CK">COOK ISLANDS (N.Z.)</option>
+                                        <option value="FR2">CORSICA</option>
+                                        <option value="CR">COSTA RICA</option>
+                                        <option value="CI">COTE D'IVOIRE (IV.C.</option>
+                                        <option value="HR">CROATIA</option>
+                                        <option value="CW">CURACAO</option>
+                                        <option value="CY">CYPRUS</option>
+                                        <option value="CZ">CZECH REPUBLIC</option>
+                                        <option value="CD">DEM. OF CONGO</option>
+                                        <option value="DK">DENMARK</option>
+                                        <option value="DJ">DJIBOUTI</option>
+                                        <option value="DM">DOMINICA</option>
+                                        <option value="DO">DOMINICAN REPUBLIC</option>
+                                        <option value="TL">EAST TIMOR</option>
+                                        <option value="EC">ECUADOR</option>
+                                        <option value="EG">EGYPT</option>
+                                        <option value="SV">EL SALVADOR</option>
+                                        <option value="GQ">EQUATORIAL GUINEA</option>
+                                        <option value="ER">ERITREA</option>
+                                        <option value="EE">ESTONIA</option>
+                                        <option value="ET">ETHIOPIA</option>
+                                        <option value="FK">FALKLAND ISLANDS</option>
+                                        <option value="FO">FAROE ISLANDS</option>
+                                        <option value="FJ">FIJI</option>
+                                        <option value="FI">FINLAND</option>
+                                        <option value="FR">FRANCE</option>
+                                        <option value="GF">FRENCH GUIANA</option>
+                                        <option value="PF">FRENCH POLYNESIA</option>
+                                        <option value="GA">GABON</option>
+                                        <option value="GM">GAMBIA</option>
+                                        <option value="GE">GEORGIA</option>
+                                        <option value="DE">GERMANY</option>
+                                        <option value="GH">GHANA</option>
+                                        <option value="GI">GIBRALTAR</option>
+                                        <option value="GR">GREECE</option>
+                                        <option value="GL">GREENLAND</option>
+                                        <option value="GD">GRENADA</option>
+                                        <option value="GP">GUADELOUPE</option>
+                                        <option value="GU">GUAM (U.S. TER.)</option>
+                                        <option value="GT">GUATEMALA</option>
+                                        <option value="GG">GUERNSEY</option>
+                                        <option value="GN">GUINEA</option>
+                                        <option value="GW">GUINEA-BISSAU</option>
+                                        <option value="GY">GUYANA</option>
+                                        <option value="HT">HAITI</option>
+                                        <option value="HN">HONDURAS</option>
+                                        <option value="HK">HONG KONG</option>
+                                        <option value="HU">HUNGARY</option>
+                                        <option value="IS">ICELAND</option>
+                                        <option value="IN">INDIA</option>
+                                        <option value="ID">INDONESIA</option>
+                                        <option value="IQ">IRAQ</option>
+                                        <option value="IE">IRELAND, REPUBLIC OF</option>
+                                        <option value="IL">ISRAEL</option>
+                                        <option value="IT">ITALY</option>
+                                        <option value="JM">JAMAICA</option>
+                                        <option value="JP">JAPAN</option>
+                                        <option value="JE">JERSEY</option>
+                                        <option value="JO">JORDAN</option>
+                                        <option value="KZ">KAZAKHSTAN</option>
+                                        <option value="KE">KENYA</option>
+                                        <option value="KI">KIRIBATI</option>
+                                        <option value="KV">KOSOVO</option>
+                                        <option value="FM1">KOSRAE</option>
+                                        <option value="KW">KUWAIT</option>
+                                        <option value="KG">KYRGYZSTAN</option>
+                                        <option value="LA">LAOS</option>
+                                        <option value="LV">LATVIA</option>
+                                        <option value="LB">LEBANON</option>
+                                        <option value="LS">LESOTHO</option>
+                                        <option value="LR">LIBERIA</option>
+                                        <option value="LY">LIBYA</option>
+                                        <option value="LI">LIECHTENSTEIN</option>
+                                        <option value="LT">LITHUANIA</option>
+                                        <option value="LU">LUXEMBOURG</option>
+                                        <option value="MO">MACAU</option>
+                                        <option value="MK">MACEDONIA</option>
+                                        <option value="MG">MADAGASCAR</option>
+                                        <option value="PT3">MADEIRA ISLANDS</option>
+                                        <option value="MW">MALAWI</option>
+                                        <option value="MY">MALAYSIA</option>
+                                        <option value="MV">MALDIVES</option>
+                                        <option value="ML">MALI</option>
+                                        <option value="MT">MALTA</option>
+                                        <option value="MH">MARSHALL ISLANDS</option>
+                                        <option value="MQ">MARTINIQUE</option>
+                                        <option value="MR">MAURITANIA</option>
+                                        <option value="MU">MAURITIUS</option>
+                                        <option value="YT">MAYOTTE</option>
+                                        <option value="MX">MEXICO</option>
+                                        <option value="FM">MICRONESIA</option>
+                                        <option value="MD">MOLDOVA</option>
+                                        <option value="MC">MONACO</option>
+                                        <option value="MN">MONGOLIA</option>
+                                        <option value="ME">MONTENEGRO</option>
+                                        <option value="MS">MONTSERRAT</option>
+                                        <option value="MA">MOROCCO</option>
+                                        <option value="MZ">MOZAMBIQUE</option>
+                                        <option value="NA">NAMIBIA</option>
+                                        <option value="NR">NAURU</option>
+                                        <option value="NP">NEPAL</option>
+                                        <option value="NL">NETHERLANDS</option>
+                                        <option value="NC">NEW CALEDONIA</option>
+                                        <option value="NZ">NEW ZEALAND</option>
+                                        <option value="NI">NICARAGUA</option>
+                                        <option value="NE">NIGER</option>
+                                        <option value="NG">NIGERIA</option>
+                                        <option value="NF">NORFOLK ISLAND</option>
+                                        <option value="MP">NORT. MARIANA ISL.</option>
+                                        <option value="NO">NORWAY</option>
+                                        <option value="OM">OMAN</option>
+                                        <option value="PK">PAKISTAN</option>
+                                        <option value="PW">PALAU</option>
+                                        <option value="PA">PANAMA</option>
+                                        <option value="PG">PAPUA NEW GUINEA</option>
+                                        <option value="PY">PARAGUAY</option>
+                                        <option value="PE">PERU</option>
+                                        <option value="PH">PHILIPPINES</option>
+                                        <option value="PN">PITCAIRN ISLANDS</option>
+                                        <option value="FM3">POHNPEI</option>
+                                        <option value="PL">POLAND</option>
+                                        <option value="PT">PORTUGAL</option>
+                                        <option value="QA">QATAR</option>
+                                        <option value="RE">REUNION</option>
+                                        <option value="RO">ROMANIA</option>
+                                        <option value="MP3">ROTA (U.S. TER.)</option>
+                                        <option value="RU">RUSSIA</option>
+                                        <option value="RW">RWANDA</option>
+                                        <option value="BQ">SABA</option>
+                                        <option value="MP2">SAIPAN (U.S. TER.)</option>
+                                        <option value="SM">SAN MARINO (ITALY)</option>
+                                        <option value="ST">SAO TOME &amp; PRINCIPE</option>
+                                        <option value="SA">SAUDI ARABIA</option>
+                                        <option value="SN">SENEGAL</option>
+                                        <option value="RS">SERBIA</option>
+                                        <option value="SC">SEYCHELLES</option>
+                                        <option value="SL">SIERRA LEONE</option>
+                                        <option value="SG">SINGAPORE</option>
+                                        <option value="BQ3">SINT EUSTATIUS</option>
+                                        <option value="SXM">SINT MAARTEN</option>
+                                        <option value="SK">SLOVAK REPUBLIC</option>
+                                        <option value="SI">SLOVENIA</option>
+                                        <option value="SB">SOLOMON ISLANDS</option>
+                                        <option value="ZA">SOUTH AFRICA</option>
+                                        <option value="KR">SOUTH KOREA</option>
+                                        <option value="ES">SPAIN</option>
+                                        <option value="LK">SRI LANKA</option>
+                                        <option value="VI2">ST. CROIX (U.S.TER.)</option>
+                                        <option value="SH">ST. HELENA</option>
+                                        <option value="KN">ST. KITTS &amp; NEVIS</option>
+                                        <option value="LC">ST. LUCIA</option>
+                                        <option value="SX">ST. MAARTEN</option>
+                                        <option value="PM">ST. PIERRE &amp; MIQU.</option>
+                                        <option value="VI3">ST. THOMAS (U.S. TER.)</option>
+                                        <option value="VC">ST. VINCENT</option>
+                                        <option value="BL">ST.BARTHELEMY (GUAD)</option>
+                                        <option value="SR">SURINAME</option>
+                                        <option value="SZ">SWAZILAND</option>
+                                        <option value="SE">SWEDEN</option>
+                                        <option value="CH">SWITZERLAND</option>
+                                        <option value="PF2">TAHITI (FR. POLY.)</option>
+                                        <option value="TW">TAIWAN</option>
+                                        <option value="TJ">TAJIKISTAN</option>
+                                        <option value="TZ">TANZANIA</option>
+                                        <option value="TH">THAILAND</option>
+                                        <option value="MP4">TINIAN</option>
+                                        <option value="TG">TOGO</option>
+                                        <option value="TO">TONGA</option>
+                                        <option value="VG2">TORTOLA</option>
+                                        <option value="TT">TRINIDAD AND TOBAGO</option>
+                                        <option value="SH2">TRISTAN DA CUNHA</option>
+                                        <option value="FM4">TRUK</option>
+                                        <option value="TN">TUNISIA</option>
+                                        <option value="TR">TURKEY</option>
+                                        <option value="TM">TURKMENISTAN</option>
+                                        <option value="TC">TURKS &amp; CAICOS IS.</option>
+                                        <option value="TV">TUVALU</option>
+                                        <option value="VI">U.S. VIRGIN ISLANDS</option>
+                                        <option value="UG">UGANDA</option>
+                                        <option value="UA">UKRAINE</option>
+                                        <option value="VC2">UNION ISLAND</option>
+                                        <option value="AE">UNITED ARAB EMIRATES</option>
+                                        <option value="GB">UNITED KINGDOM</option>
+                                        <option value="US">UNITED STATES</option>
+                                        <option value="UY">URUGUAY</option>
+                                        <option value="UZ">UZBEKISTAN</option>
+                                        <option value="VU">VANUATU</option>
+                                        <option value="VA">VATICAN CITY</option>
+                                        <option value="VE">VENEZUELA</option>
+                                        <option value="VN">VIETNAM</option>
+                                        <option value="WF">WALLIS &amp; FUTUNA IS.</option>
+                                        <option value="WS">WESTERN SAMOA (APIA</option>
+                                        <option value="FM5">YAP</option>
+                                        <option value="YE">YEMEN</option>
+                                        <option value="ZM">ZAMBIA</option>
+                                        <option value="ZW">ZIMBABWE</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <span ng-messages="form.country.$error" ng-messages-include="generic-error-messages" ng-show="(form.$submitted || form.country.$touched) &amp;&amp; !form.country.$valid" class="fs14 inlineBlock ng-inactive ng-hide c7" ng-class="form.$submitted ? 'c7' : 'c16'" data-selenium="ngMessages">
+                                <!-- ngMessage: required --><!-- ngMessage: minlength --><!-- ngMessage: maxlength --><!-- ngMessage: pattern --><!-- ngMessage: validChars --><!-- ngMessage: server-validChars --><!-- ngMessage: digitsOnly --><!-- ngMessage: server-generic --><!-- ngMessage: email -->
+                                <!-- ngMessage: required -->
+                            </span>
+                        </div>
+                        <br>
+                        <div class="form-group" data-selenium="formGroup">
+                            <label for="firstName" class="fs16 c36 capitalize right-align inlineBlock control-label" data-selenium="firstNameLabel">First Name</label>
+                            <div class="inlineBlock control-input relative">
+                                <input name="firstName" ng-model="address.firstName" type="text" placeholder="" class="fs16 semibold validation-icon-space ng-valid-maxlength ng-valid-parse ng-valid ng-valid-required ng-pristine ng-untouched" required="" maxlength="30" data-selenium="firstName">
+                                <svg class="bh-icon bh-icon-check absolute inline-check" ng-show="form.firstName.$valid" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg>
+                                <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!form.firstName.$valid &amp;&amp; (form.$submitted || form.firstName.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                            </div>
+                            <span ng-messages="form.firstName.$error" ng-messages-include="generic-error-messages" ng-show="(form.$submitted || form.firstName.$touched) &amp;&amp; !form.firstName.$valid" class="inlineBlock fs14 ng-hide ng-inactive c7" ng-class="form.$submitted ? 'c7' : 'c16'" data-selenium="ngMessages">
+                                <!-- ngMessage: required --><!-- ngMessage: minlength --><!-- ngMessage: maxlength --><!-- ngMessage: pattern --><!-- ngMessage: validChars --><!-- ngMessage: server-validChars --><!-- ngMessage: digitsOnly --><!-- ngMessage: server-generic --><!-- ngMessage: email -->
+                                <!-- ngMessage: required -->
+                            </span>
+                        </div>
+                        <div class="form-group" data-selenium="formGroup">
+                            <label for="lastName" class="fs16 c36 capitalize right-align control-label inlineBlock" data-selenium="lastNameLabel">Last Name</label>
+                            <div class="control-input inlineBlock relative">
+                                <input name="lastName" ng-model="address.lastName" type="text" class="fs16 semibold validation-icon-space ng-valid-maxlength ng-valid-parse ng-valid ng-valid-required ng-pristine ng-untouched" required="" maxlength="30" data-selenium="lastName">
+                                <svg class="bh-icon bh-icon-check absolute inline-check" ng-show="form.lastName.$valid" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg>
+                                <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!form.lastName.$valid &amp;&amp; (form.$submitted || form.lastName.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                            </div>
+                            <span ng-messages="form.lastName.$error" ng-messages-include="generic-error-messages" ng-show="(form.$submitted || form.lastName.$touched) &amp;&amp; !form.lastName.$valid" class="inlineBlock fs14 ng-hide ng-inactive c7" ng-class="form.$submitted ? 'c7' : 'c16'" data-selenium="ngMessages">
+                                <!-- ngMessage: required --><!-- ngMessage: minlength --><!-- ngMessage: maxlength --><!-- ngMessage: pattern --><!-- ngMessage: validChars --><!-- ngMessage: server-validChars --><!-- ngMessage: digitsOnly --><!-- ngMessage: server-generic --><!-- ngMessage: email -->
+                                <!-- ngMessage: required -->
+                            </span>
+                        </div>
+                        <br>
+                        <div class="form-group" ng-show="!address.showCompany &amp;&amp; !address.companyName" data-selenium="formGroup">
+                            <label for="companyName" class="fs16 c36 capitalize right-align control-label inlineBlock"></label>
+                            <div class="control-input inlineBlock">
+                                <a class="fs14 cursor-pointer underline-on-hover light" ng-click="address.showCompany = true" data-selenium="addCompany">+ Add Company Name</a>
+                            </div>
+                        </div>
+                        <div class="form-group ng-hide" ng-show="(address.showCompany || address.companyName)" data-selenium="formGroup">
+                            <label for="companyName" class="fs16 c36 capitalize right-align control-label inlineBlock" data-selenium="companyLabel">Company</label>
+                            <div class="control-input inlineBlock relative">
+                                <input name="companyName" class="fs16 semibold validation-icon-space error-icon-only ng-pristine ng-untouched ng-valid ng-valid-maxlength" ng-model="address.companyName" type="text" placeholder="(Optional)" maxlength="30" data-selenium="company">
+                                <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!form.companyName.$valid &amp;&amp; (form.$submitted || form.companyName.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                            </div>
+                            <span ng-messages="form.companyName.$error" ng-messages-include="generic-error-messages" ng-show="(form.$submitted || form.companyName.$touched) &amp;&amp; !form.companyName.$valid" class="inlineBlock fs14 ng-inactive ng-hide c7" ng-class="form.$submitted ? 'c7' : 'c16'" data-selenium="ngMessages">
+                                <!-- ngMessage: required --><!-- ngMessage: minlength --><!-- ngMessage: maxlength --><!-- ngMessage: pattern --><!-- ngMessage: validChars --><!-- ngMessage: server-validChars --><!-- ngMessage: digitsOnly --><!-- ngMessage: server-generic --><!-- ngMessage: email -->
+                            </span>
+                        </div>
+                        <div class="qas-wrapper relative inlineBlock" data-selenium="qasWrapper">
+                            <div class="qas-border absolute ng-scope ng-hide" ng-controller="QasContainerController" ng-show="hasQasErrors()" popover-template="'qasContainer.html'" popover-placement="right" popover-trigger="toggle" popover-animation="false" popover-append-to-body="true" popover-toggle="hasQasErrors()" data-selenium="qasBorder">
+                            </div>
+                            <div class="form-group relative" data-selenium="formGroup">
+                                <label for="address1" class="fs16 c36 capitalize right-align control-label inlineBlock" data-selenium="address1Label">Address 1</label>
+                                <!-- ngIf: showUSterritory() -->
+                                <!-- ngIf: !showUSterritory() --><div class="control-input inlineBlock relative ng-scope" ng-if="!showUSterritory()">
+                                    <input name="address1" ng-model="address.address1" type="text" placeholder="Street Address" class="fs16 semibold validation-icon-space ng-pristine ng-untouched ng-valid ng-valid-required ng-valid-maxlength" required="" maxlength="30" data-selenium="address1">
+                                    <svg class="bh-icon bh-icon-check absolute inline-check" ng-show="form.address1.$valid" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg>
+                                    <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!form.address1.$valid &amp;&amp; (form.$submitted || form.address1.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                                </div><!-- end ngIf: !showUSterritory() -->
+                                <!-- <div class="qas-container-include" ng-include="''"></div> -->
+                                <span ng-messages="form.address1.$error" ng-messages-include="generic-error-messages" ng-show="(form.$submitted || form.address1.$touched) &amp;&amp; !form.address1.$valid" class="inlineBlock fs14 ng-hide ng-inactive c7" ng-class="form.$submitted ? 'c7' : 'c16'" data-selenium="ngMessages">
+                                    <!-- ngMessage: required --><!-- ngMessage: minlength --><!-- ngMessage: maxlength --><!-- ngMessage: pattern --><!-- ngMessage: validChars --><!-- ngMessage: server-validChars --><!-- ngMessage: digitsOnly --><!-- ngMessage: server-generic --><!-- ngMessage: email -->
+                                    <!-- ngMessage: required -->
+                                </span>
+                            </div>
+                            <div class="form-group relative" data-selenium="formGroup">
+                                <label for="address2" class="fs16 c36 capitalize right-align control-label inlineBlock" data-selenium="address2Label">Address 2</label>
+                                <div class="control-input inlineBlock relative">
+                                    <input name="address2" ng-model="address.address2" type="text" placeholder="Apartment, Suite, Unit, Floor (Optional)" class="fs16 semibold ng-valid ng-valid-maxlength ng-valid-required ng-valid-parse ng-pristine ng-untouched" ng-class="address.country === 'BR' ? 'validation-icon-space' : ''" ng-required="address.country === 'BR'" maxlength="30" data-selenium="address2">
+                                    <svg class="bh-icon bh-icon-check absolute inline-check ng-hide" ng-show="address.country === 'BR' &amp;&amp; form.address2.$valid" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg>
+                                    <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!form.address2.$valid &amp;&amp; (form.$submitted || form.address2.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                                </div>
+                                <span ng-messages="form.address2.$error" ng-messages-include="generic-error-messages" ng-show="(form.$submitted || form.address2.$touched) &amp;&amp; !form.address2.$valid" class="inlineBlock fs14 ng-inactive ng-hide c7" ng-class="form.$submitted ? 'c7' : 'c16'" data-selenium="ngMessages">
+                                    <!-- ngMessage: required --><!-- ngMessage: minlength --><!-- ngMessage: maxlength --><!-- ngMessage: pattern --><!-- ngMessage: validChars --><!-- ngMessage: server-validChars --><!-- ngMessage: digitsOnly --><!-- ngMessage: server-generic --><!-- ngMessage: email -->
+                                    <!-- ngMessage: required -->
+                                </span>
+                            </div>
+                            <!-- ngIf: !showUSterritory() && !showCPF() --><div class="form-group relative ng-scope" ng-if="!showUSterritory() &amp;&amp; !showCPF()" data-selenium="formGroup">
+                                <label for="address3" class="fs16 c36 capitalize right-align control-label inlineBlock" data-selenium="address3Label">Address 3</label>
+                                <div class="control-input inlineBlock relative">
+                                    <input name="address3" ng-model="address.address3" type="text" placeholder="(Optional)" class="fs16 semibold validation-icon-space error-icon-only ng-pristine ng-valid ng-valid-maxlength ng-touched" maxlength="30" data-selenium="address3">
+                                    <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!form.address3.$valid &amp;&amp; (form.$submitted || form.address3.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                                </div>
+                                <span ng-messages="form.address3.$error" ng-messages-include="generic-error-messages" ng-show="(form.$submitted || form.address3.$touched) &amp;&amp; !form.address3.$valid" class="inlineBlock fs14 ng-hide ng-inactive c7" ng-class="form.$submitted ? 'c7' : 'c16'" data-selenium="ngMessages">
+                                    <!-- ngMessage: required --><!-- ngMessage: minlength --><!-- ngMessage: maxlength --><!-- ngMessage: pattern --><!-- ngMessage: validChars --><!-- ngMessage: server-validChars --><!-- ngMessage: digitsOnly --><!-- ngMessage: server-generic --><!-- ngMessage: email -->
+                                </span>
+                            </div><!-- end ngIf: !showUSterritory() && !showCPF() -->
+                            <!-- ngIf: showCPF() -->
+                            <!-- ngIf: showUSterritory() -->
+                            <!-- ngIf: showUSterritory() -->
+                            <!-- ngIf: !showUSterritory() --><div class="form-group relative sel-formGroup relative ng-scope" ng-if="!showUSterritory()">
+                                <label for="city" class="fs16 c36 capitalize right-align control-label inlineBlock" data-selenium="cityLabel">City</label>
+                                <div class="control-input inlineBlock relative">
+                                    <!-- ngIf: address.country !== 'BM' --><input name="city" ng-model="address.city" type="text" class="fs16 semibold validation-icon-space ng-pristine ng-untouched ng-valid ng-scope ng-valid-required ng-valid-maxlength" required="" maxlength="30" ng-if="address.country !== 'BM'" data-selenium="city"><!-- end ngIf: address.country !== 'BM' -->
+                                    <svg class="bh-icon bh-icon-check absolute inline-check" ng-show="form.city.$valid" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg>
+                                    <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!form.city.$valid &amp;&amp; (form.$submitted || form.city.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                                    <!-- ngIf: address.country === 'BM' -->
+                                </div>
+                                <span ng-messages="form.city.$error" ng-messages-include="generic-error-messages" ng-show="(form.$submitted || form.city.$touched) &amp;&amp; !form.city.$valid" class="inlineBlock fs14 ng-hide ng-inactive c7" ng-class="form.$submitted ? 'c7' : 'c16'" data-selenium="ngMessages">
+                                    <!-- ngMessage: required --><!-- ngMessage: minlength --><!-- ngMessage: maxlength --><!-- ngMessage: pattern --><!-- ngMessage: validChars --><!-- ngMessage: server-validChars --><!-- ngMessage: digitsOnly --><!-- ngMessage: server-generic --><!-- ngMessage: email -->
+                                    <!-- ngMessage: required -->
+                                </span>
+                            </div><!-- end ngIf: !showUSterritory() -->
+                            <!-- ngIf: !showUSterritory() --><div class="form-group relative ng-scope" ng-if="!showUSterritory()" data-selenium="formGroup">
+                                <label for="state" class="fs16 c36 capitalize right-align control-label inlineBlock ng-binding" data-selenium="stateLabel">State</label>
+                                <div class="control-input inlineBlock">
+                                    <!-- ngIf: !hasStates() --><span class="inlineBlock relative ng-scope" ng-if="!hasStates()">
+                                        <input name="state" ng-model="address.state" type="text" class="fs16 small semibold ng-pristine ng-untouched ng-valid ng-valid-required ng-valid-maxlength" ng-class="isStateRequired() ? 'validation-icon-space' : ''" maxlength="30" ng-required="isStateRequired()" data-selenium="state">
+                                        <svg class="bh-icon bh-icon-check absolute inline-check ng-hide" ng-show="isStateRequired() &amp;&amp; form.state.$valid" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg>
+                                        <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!form.state.$valid &amp;&amp; (form.$submitted || form.state.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                                    </span><!-- end ngIf: !hasStates() -->
+                                    <!-- ngIf: hasStates() -->
+                                    <label for="zip" class="fs16 c36 capitalize right-align small" data-selenium="zipLabel">Postal Code</label>
+                                    <span class="inlineBlock relative">
+                                        <input name="zip" ng-model="address.zip" type="text" class="fs16 small semibold right validation-icon-space ng-valid ng-valid-required ng-valid-mask error-icon-only ng-dirty ng-valid-parse ng-touched" ng-class="!isZipRequired() ? 'error-icon-only' : ''" ng-required="isZipRequired()" ui-mask="?*?*?*?*?*?*?*?*?*?*" ui-options="{clearOnBlur: false}" ui-mask-placeholder-char="space" data-selenium="zip" placeholder=" ">
+                                        <svg class="bh-icon bh-icon-check absolute inline-check ng-hide" ng-show="isZipRequired() &amp;&amp; form.zip.$valid" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg>
+                                        <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!form.zip.$valid &amp;&amp; (form.$submitted || form.zip.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                                    </span>
+                                </div>
+
+                                <span ng-messages="stateAndZipErrorsTouchedOrSubmitted()" ng-messages-include="generic-error-messages" ng-show="(!form.state.$valid &amp;&amp; (form.$submitted || form.state.$touched)) || (!form.zip.$valid &amp;&amp; (form.$submitted || form.zip.$touched))" class="inlineBlock fs14 ng-hide ng-inactive c7" ng-class="form.$submitted ? 'c7' : 'c16'" data-selenium="ngMessages">
+                                    <!-- ngMessage: required --><!-- ngMessage: minlength --><!-- ngMessage: maxlength --><!-- ngMessage: pattern --><!-- ngMessage: validChars --><!-- ngMessage: server-validChars --><!-- ngMessage: digitsOnly --><!-- ngMessage: server-generic --><!-- ngMessage: email -->
+                                    <!-- ngMessage: required -->
+                                    <!-- ngMessage: mask -->
+                                    <!-- ngMessage: server-validZip -->
+                                </span>
+                            </div><!-- end ngIf: !showUSterritory() -->
+                        </div>
+                        <div class="form-group" data-selenium="formGroup">
+                            <label for="phone" class="fs16 c36 capitalize right-align control-label inlineBlock" data-selenium="phoneLabel">Phone</label>
+                            <div class="control-input inlineBlock">
+                                <span class="inlineBlock relative">
+                                    <input name="phone" ng-model="address.phone" ui-mask="+9999999999?9?9?9?9?9?9?9?9?9?9" ui-options="{clearOnBlur: false, clearOnBlurPlaceholder: true}" ui-mask-placeholder-char="space" placeholder="In case questions arise" ui-mask-placeholder="" type="tel" class="fs16 mid semibold phone-number validation-icon-space ng-touched ng-dirty ng-valid-mask ng-valid ng-valid-parse ng-valid-required" required="" data-selenium="phone">
+                                    <svg class="bh-icon bh-icon-check absolute inline-check" ng-show="form.phone.$valid" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg>
+                                    <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!form.phone.$valid &amp;&amp; (form.$submitted || form.phone.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                                </span>
+                                <div class="inlineBlock" ng-show="!address.phoneExt &amp;&amp; !address.showPhoneExt">
+                                    <label class="fs14 cursor-pointer underline-on-hover light phoneExt" ng-click="address.showPhoneExt = true" data-selenium="addPhoneExt"> + ADD EXT</label>
+                                </div>
+                                <span ng-show="address.showPhoneExt || address.phoneExt" class="ng-hide">
+                                    <label for="phoneExt" class="fs16 c36 capitalize right-align small phoneExt" data-selenium="phoneExtLabel">EXT.</label>
+                                    <input name="phoneExt" ng-model="address.phoneExt" type="text" class="fs16 extraSmall semibold right ng-pristine ng-untouched ng-valid ng-valid-mask" ui-mask="?9?9?9?9?9?9" ui-mask-placeholder-char="space" data-selenium="phoneExt" placeholder=" ">
+                                </span>
+                            </div>
+                            <span ng-messages="form.phone.$error" ng-messages-include="generic-error-messages" ng-show="(form.$submitted || form.phone.$touched) &amp;&amp; !form.phone.$valid" class="inlineBlock fs14 ng-hide ng-inactive c7" ng-class="form.$submitted ? 'c7' : 'c16'" data-selenium="ngMessages">
+                                <!-- ngMessage: required --><!-- ngMessage: minlength --><!-- ngMessage: maxlength --><!-- ngMessage: pattern --><!-- ngMessage: validChars --><!-- ngMessage: server-validChars --><!-- ngMessage: digitsOnly --><!-- ngMessage: server-generic --><!-- ngMessage: email -->
+                                <!-- ngMessage: required -->
+                                <!-- ngMessage: mask -->
+                            </span>
+                        </div>
+                        <div class="form-group" ng-show="profileType === 'shipping' &amp;&amp; !address.showPhoneTwo &amp;&amp; !address.phoneTwo" data-selenium="formGroup">
+                            <label class="fs16 c36 capitalize right-align control-label inlineBlock"></label>
+                            <div class="inlineBlock">
+                                <a class="fs14 cursor-pointer underline-on-hover light" ng-click="address.showPhoneTwo = true" data-selenium="addPhone2">+ Add Phone 2</a>
+                            </div>
+                        </div>
+                        <div class="form-group ng-hide" ng-show="profileType === 'shipping' &amp;&amp; (address.showPhoneTwo || address.phoneTwo)" data-selenium="formGroup">
+                            <label class="fs16 c36 capitalize right-align control-label inlineBlock" data-selenium="phone2Label">phone 2</label>
+                            <div class="control-input inlineBlock">
+                                <span class="inlineBlock relative">
+                                    <input name="phoneTwo" type="tel" class="fs16 mid semibold validation-icon-space ng-untouched ng-valid ng-valid-mask ng-valid-parse ng-pristine" ng-model="address.phoneTwo" ui-mask="+9999999999?9?9?9?9?9?9?9?9?9?9" ui-options="{clearOnBlur: false}" ui-mask-placeholder-char="space" data-selenium="phone2" placeholder="+                    ">
+                                    <svg class="bh-icon bh-icon-check absolute inline-check ng-hide" ng-show="!form.phoneTwo.$isEmpty(form.phoneTwo.$viewValue) &amp;&amp; form.phoneTwo.$valid" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg>
+                                    <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!form.phoneTwo.$valid &amp;&amp; (form.$submitted || form.phoneTwo.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                                </span>
+                                <div class="inlineBlock" ng-show="!address.phoneTwoExt &amp;&amp; !address.showPhoneTwoExt">
+                                    <label class="fs14 cursor-pointer underline-on-hover light phoneExt" ng-click="address.showPhoneTwoExt = true" data-selenium="addPhone2Ext"> + ADD EXT</label>
+                                </div>
+                                <span ng-show="address.showPhoneTwoExt || address.phoneTwoExt" class="ng-hide">
+                                    <label for="phoneTwoExt" class="fs16 c36 capitalize right-align small phoneExt" data-selenium="phone2ExtLabel">EXT.</label>
+                                    <input name="phoneTwoExt" ng-model="address.phoneTwoExt" type="text" class="fs16 extraSmall semibold right ng-pristine ng-untouched ng-valid ng-valid-mask" ui-mask="?9?9?9?9?9?9" ui-mask-placeholder-char="space" data-selenium="phone2Ext" placeholder=" ">
+                                </span>
+                            </div>
+                            <span ng-messages="form.phoneTwo.$error" ng-messages-include="generic-error-messages" ng-show="(form.$submitted || form.phoneTwo.$touched) &amp;&amp; !form.phoneTwo.$valid" class="inlineBlock fs14 ng-inactive ng-hide c7" ng-class="form.$submitted ? 'c7' : 'c16'" data-selenium="ngMessages">
+                                <!-- ngMessage: required --><!-- ngMessage: minlength --><!-- ngMessage: maxlength --><!-- ngMessage: pattern --><!-- ngMessage: validChars --><!-- ngMessage: server-validChars --><!-- ngMessage: digitsOnly --><!-- ngMessage: server-generic --><!-- ngMessage: email -->
+                                <!-- ngMessage: mask -->
+                            </span>
+
+                        </div>
+                        <br>
+                        <!-- ngIf: emailFieldRequired(profileType) --><div class="form-group ng-scope" ng-if="emailFieldRequired(profileType)" data-selenium="formGroup">
+                            <label for="Email" class="fs16 c36 capitalize right-align control-label inlineBlock" data-selenium="emailLabel">Email</label>
+                            <div class="control-input inlineBlock relative">
+                                <input name="email" ng-model="address.email" ng-trim="false" bh-disallowed-chars="[ ]" type="text" class="fs16 semibold ng-valid-parse ng-valid-required ng-touched ng-dirty ng-valid ng-valid-email" placeholder="To Receive Order Confirmation" required="" email="" data-selenium="email">
+                                <svg class="bh-icon bh-icon-check absolute inline-check" ng-show="form.email.$valid" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg>
+                                <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!form.email.$valid &amp;&amp; (form.$submitted || form.email.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                            </div>
+                            <span ng-messages="form.email.$error" ng-messages-include="generic-error-messages" ng-show="(form.$submitted || form.email.$touched) &amp;&amp; !form.email.$valid" class="inlineBlock fs14 c7 ng-hide ng-inactive" ng-class="form.$submitted ? 'c7' : 'c16'" data-selenium="ngMessages">
+                                <!-- ngMessage: required --><!-- ngMessage: minlength --><!-- ngMessage: maxlength --><!-- ngMessage: pattern --><!-- ngMessage: validChars --><!-- ngMessage: server-validChars --><!-- ngMessage: digitsOnly --><!-- ngMessage: server-generic --><!-- ngMessage: email -->
+                                <!-- ngMessage: required -->
+                            </span>
+                            <!-- <span ng-messages="form.email.$error" ng-messages-include="email-error-messages" ng-show="form.$submitted && form.email.$error.email" class="inlineBlock fs20 c7 error">
+                            </span> -->
+                        </div><!-- end ngIf: emailFieldRequired(profileType) -->
+                        <div class="form-group emailSignUp" ng-show="profileType === 'shipping'" data-selenium="formGroup">
+                            <label class="fs16 c36 capitalize right-align control-label inlineBlock"></label>
+                            <div class="control-input inlineBlock">
+                                <!-- ngIf: !isLoggedIn() --><div ng-if="!isLoggedIn()" class="ng-scope">
+                                    <label class="styled-checkbox big checked"><input name="emailSignUp" class="ng-pristine ng-untouched ng-valid displayNone" type="checkbox" ng-model="$storage.emailSignUp" styled-checkbox="big" data-selenium="emailSignUp"><svg class="bh-icon bh-icon-check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg></label>
+                                    <p class="fs16 no-wrap" data-selenium="emailSignUpMsg">Sign Up for Weekly B&amp;H Email Newsletters</p>
+                                    <br>
+                                    <!-- <input name="emailSignUp"
+                                        type="checkbox"
+                                        ng-model="emailSignUp"
+                                        styled-checkbox>
+                                    <p class="fs16">Sign Up DealZone Emails</p>
+                                    <br> -->
+                                    <p class="fs12 c9 italic no-wrap" data-selenium="emailSignUpInfo">We employ Cybertrust &amp; ScanAlert security to ensure your data is safe with us.</p>
+                                </div><!-- end ngIf: !isLoggedIn() -->
+                            </div>
+                        </div>
+
+                        <br>
+                        <div class="center-align">
+                            <label class="center-align" data-selenium="saveAddressLabel">
+
+                                <button type="submit" class="fs24 cursor-pointer c18 next-btn ng-binding" bh-set-order-profile="address" data-selenium="saveAddress">
+                                    View Shipping Options
+                                </button>
+                            </label>
+                        </div>
+                        <!-- <div ng-if="profileType === 'billing'"
+                            bh-set-order-profile="address"
+                            bh-set-order-profile-on="submitAddressForm"
+                            class="displayNone" >
+                        </div> -->
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- <div class="section" ng-show="false || order.isGiftAddress">
+
+        </div> -->
+        <!-- <div class="section gifSection-checkbox clearfix" ng-if="!isStorePickup" ng-controller="GiftNoteController">
+            <input type="checkbox" name="isGift" ng-model="order.isGift" styled-checkbox="big" ng-change="openGiftCardLayer()">
+            <div class="fs18 semibold capitalize inlineBlock">Gift Receipt/Message</div>
+            <div class="c31 capitalize inlineBlock cursor-pointer" ng-if="order.isGift" ng-click="openGiftCardLayer()">: Show Note</div>
+        </div>
+
+        <div class="break"></div> -->
+    <div id="ng-view" ui-view="" class="parent-ui-view ng-scope shipping" ng-class="$state.current.name | slugify" data-selenium="ngView">
+        <div class="relative ng-scope">
+            <h2 class="c1 header inlineBlock ng-binding" data-selenium="shippingHeader">Shipping Address </h2>
+        </div>
+
+        <!-- ngIf: !order.isEmployee --><!-- ngInclude: 'storePickup.html' --><div class="ng-scope" ng-if="!order.isEmployee" ng-include="'storePickup.html'" data-selenium="storePickup">
+            <div ng-controller="PickupController" class="storePickupController ng-scope" bh-order-data="pickupInfo" data-selenium="storePickupController">
+                <div class="absolute ship-profile-options move-down-store-pickup" ng-class="{'move-down-store-pickup':!order.hasGiftAddress}" data-selenium="shipProfileOptions">
+                    <div class="setStorePickup clearfix" bh-toggle-pickup="" data-selenium="setStorePickup">
+                        <span class="styled-checkbox" ng-class="isStorePickup() ? 'checked' : ''">
+                            <input class="displayNone" ng-checked="isStorePickup()" type="checkbox" id="orderIsStorePickup" name="isStorePickup" data-selenium="isStorePickup">
+                            <svg class="bh-icon bh-icon-check" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg>
+                        </span>
+                        <span class="left light store-pickup-header fs16" data-selenium="isStorePickupLabel">NYC Pickup (2 locations)</span>
+                    </div>
+                    <!-- <div class="no-wrap giftAddress" ng-if="order.hasGiftAddress">
+                        <input type="checkbox" id="orderIsGiftAddress" name="isGiftAddress" ng-model="order.isGiftAddress" styled-checkbox="" ng-change="setShipTpWishlist()">
+                        <label for="orderIsGiftAddress" class="left light store-pickup-header fs16">Ship to Nachmen Sigel <span class="fs14">(address private)</span></label>
+                    </div> -->
+                </div>
+                <div class="section store-pickup-form" slide-toggle="isStorePickup()" data-selenium="storePickupForm" style="display: none; overflow: hidden;">
+                    <!-- <p class="fs18 semibold more-info selenium sel-moreInfo">Our SuperStore is located at 420 9th Ave, New York, NY 10001</p> -->
+                    <!-- <div class="break"></div> -->
+                    <h3 class="fs24 semibold c34" data-selenium="who">
+                        Who will pick up this order?
+                    </h3>
+                    <br>
+                    <form bh-pickup-form="" name="pickupForm" bh-no-validate-on-focus="" class="ng-pristine ng-invalid ng-invalid-required ng-valid-maxlength ng-valid-mask ng-invalid-email" data-selenium="pickupForm">
+                        <div class="">
+                            <p class="form-group" data-selenium="formGroup">
+                                <span class="fs16 c4 capitalize right-align control-label inlineBlock" data-selenium="locationLabel">Location</span>
+                                <span class="control-input inlineBlock ng-binding">
+
+                                    <span bh-show-pickup-options="" class="right upper c5 cursor-pointer">Change</span>
+                                </span>
+                            </p>
+                            <div class="form-group" data-selenium="formGroup">
+                                <label for="firstName" class="fs16 c4 capitalize right-align control-label inlineBlock" data-selenium="firstNameLabel">First Name</label>
+                                <div class="control-input inlineBlock relative">
+                                    <input name="firstName" ng-model="pickupPerson.firstName" type="text" class="fs16 semibold validation-icon-space ng-pristine ng-untouched ng-invalid ng-invalid-required ng-valid-maxlength" required="" valid-chars="" maxlength="30" ie-maxlength="30" data-selenium="firstName">
+                                    <svg class="bh-icon bh-icon-check absolute inline-check ng-hide" ng-show="pickupForm.firstName.$valid" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg>
+                                    <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!pickupForm.firstName.$valid &amp;&amp; (pickupForm.$submitted || pickupForm.firstName.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                                </div>
+                                <!-- ngIf: (pickupForm.$submitted || pickupForm.firstName.$touched) && !pickupForm.firstName.$valid -->
+                            </div>
+                            <div class="form-group" data-selenium="formGroup">
+                                <label for="lastName" class="fs16 c4 capitalize right-align control-label inlineBlock" data-selenium="lastNameLabel">Last Name</label>
+                                <div class="control-input inlineBlock relative">
+                                    <input name="lastName" ng-model="pickupPerson.lastName" class="fs16 semibold validation-icon-space ng-pristine ng-untouched ng-invalid ng-invalid-required ng-valid-maxlength" type="text" required="" valid-chars="" maxlength="30" data-selenium="lastName">
+                                    <svg class="bh-icon bh-icon-check absolute inline-check ng-hide" ng-show="pickupForm.lastName.$valid" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg>
+                                    <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!pickupForm.lastName.$valid &amp;&amp; (pickupForm.$submitted || pickupForm.lastName.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                                </div>
+                                <!-- ngIf: (pickupForm.$submitted || pickupForm.lastName.$touched) && !pickupForm.lastName.$valid -->
+                            </div>
+                            <div class="form-group" data-selenium="formGroup">
+                                <label for="messengerCompanyName" class="fs16 c4 capitalize right-align control-label inlineBlock messengerCompanyName" data-selenium="messengerCompanyNameLabel">Messenger / Courier Services</label>
+                                <div class="control-input inlineBlock relative">
+                                    <input name="messengerCompanyName" ng-model="pickupPerson.messengerCompanyName" type="text" class="fs16 semibold validation-icon-space error-icon-only ng-pristine ng-untouched ng-valid ng-valid-maxlength" valid-chars="" maxlength="30" placeholder="Optional" data-selenium="messengerCompanyName">
+                                    <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!pickupForm.messengerCompanyName.$valid &amp;&amp; (pickupForm.$submitted || pickupForm.messengerCompanyName.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                                </div>
+                                <!-- ngIf: (pickupForm.$submitted || pickupForm.messengerCompanyName.$touched) && !pickupForm.messengerCompanyName.$valid -->
+                            </div>
+                            <div class="form-group" data-selenium="formGroup">
+                                <label for="phone" class="fs16 c4 capitalize right-align control-label inlineBlock" data-selenium="phoneLabel">Phone</label>
+                                <div class="control-input inlineBlock relative">
+                                    <input name="phone" ng-model="pickupPerson.phone" type="tel" class="fs16 semibold validation-icon-space ng-pristine ng-untouched ng-invalid ng-invalid-required ng-valid-mask" required="" ui-mask="(999) 999-9999?9?9?9?9?9?9?9?9?9?9" ui-options="{clearOnBlur: false}" ui-mask-placeholder-char="space" data-selenium="phone" placeholder="(   )    -              ">
+                                    <svg class="bh-icon bh-icon-check absolute inline-check ng-hide" ng-show="pickupForm.phone.$valid" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg>
+                                    <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!pickupForm.phone.$valid &amp;&amp; (pickupForm.$submitted || pickupForm.phone.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                                </div>
+                                <!-- ngIf: (pickupForm.$submitted || pickupForm.phone.$touched) && !pickupForm.phone.$valid -->
+                            </div>
+                        </div>
+
+                        <!-- ngIf: !isLoggedIn() --><div class="form-group ng-scope" ng-if="!isLoggedIn()" data-selenium="formGroup">
+                            <label for="email" class="fs16 c4 capitalize right-align control-label inlineBlock" data-selenium="emailLabel">Email</label>
+                            <div class="control-input inlineBlock relative">
+                                <input name="email" ng-model="pickupPerson.email" type="text" class="fs16 semibold validation-icon-space ng-pristine ng-untouched ng-invalid ng-invalid-required ng-invalid-email" placeholder="To Receive Order Confirmation" required="" ng-trim="false" bh-disallowed-chars="[ ]" email="" data-selenium="email">
+                                <svg class="bh-icon bh-icon-check absolute inline-check ng-hide" ng-show="pickupForm.email.$valid" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg>
+                                <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!pickupForm.email.$valid &amp;&amp; (pickupForm.$submitted || pickupForm.email.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                            </div>
+                            <!-- ngIf: (pickupForm.$submitted || pickupForm.email.$touched) && !pickupForm.email.$valid -->
+                            <!-- <span ng-messages="pickupForm.email.$error" ng-messages-include="email-error-messages" ng-show="pickupForm.$submitted && pickupForm.email.$error.email" class="inlineBlock fs20 c7 error">
+                            </span> -->
+                        </div><!-- end ngIf: !isLoggedIn() -->
+                        <!-- ngIf: !isLoggedIn() --><div class="form-group emailSignUp ng-scope" ng-if="!isLoggedIn()" data-selenium="formGroup">
+                            <label class="fs16 c36 capitalize right-align control-label inlineBlock"></label>
+                            <div class="control-input inlineBlock">
+                                <div>
+                                    <label class="styled-checkbox big checked"><input name="emailSignUp" class="ng-pristine ng-untouched ng-valid displayNone" type="checkbox" ng-model="$storage.emailSignUp" styled-checkbox="big" data-selenium="emailSignUp"><svg class="bh-icon bh-icon-check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg></label>
+                                    <p class="fs16 no-wrap" data-selenium="emailSignUpMsg">Sign Up for Weekly B&amp;H Email Newsletters</p>
+                                    <br>
+                                    <p class="fs12 c9 italic no-wrap" data-selenium="emailSignUpInfo">We respect your privacy, your information is safe with us.</p>
+                                </div>
+                            </div>
+                        </div><!-- end ngIf: !isLoggedIn() -->
+
+                    </form>
+                    <div class="break"></div>
+                    <div class="break"></div>
+                    <div class="store-pickup-instruction" data-selenium="storePickupInstruction">
+                        <p class="c5 fs16 bold" data-selenium="whatsRequired">To pick up an order, USA &amp; non-USA citizens must provide:</p>
+                        <div class="break"></div>
+                        <div class="" ng-show="!pickupPerson.isMessengerCompany" data-selenium="isNotMessengerCompany">
+                            <p class="c5 fs16" ng-hide="pickupPerson.messengerCompanyName" data-selenium="notMessengerCompanyName">1. Government issued photo ID matching name above</p><p>
+                            </p><p class="c5 fs16 ng-hide" ng-show="pickupPerson.messengerCompanyName" data-selenium="isMessengerCompanyName">1. Messenger Service ID Card <span class="light">or</span> a Bill of Lading <span class="light">or</span> a Daily Manifest</p>
+                            <div class="break"></div>
+                            <p class="c5 fs16" data-selenium="orderNumber">2. Your order number (generated upon completion)</p><p>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="break"></div>
+                    <div class="store-pickup-msg" data-selenium="storePickupMsg">
+                        <p class="fs18 ng-binding ng-hide" ng-show="pickupInfo.messageType === 'AVAILABLE'" data-selenium="available"></p><p>
+                        </p><p class="fs18 bold orange ng-hide" ng-show="pickupInfo.messageType === 'CLOSING'" data-selenium="closing">{pickupInfo.message}}</p>
+                        <p class="fs18 ng-binding ng-hide" ng-show="pickupInfo.messageType === 'CLOSED'" data-selenium="closed"></p>
+                    </div>
+                    <br>
+                    <!-- <div class="">
+                        <label class="cursor-pointer c18 center-align next-btn"><span class="light">Next: </span><span class="bold"> Select Shipping Method</span>
+                        <input type="submit"
+                               value="Select Shipping Method"
+                               bh-set-order-profile="address"
+                               class="displayNone"
+                               ng-if="pickupForm.$valid || true">
+                        </label>
+                    </div> -->
+                </div>
+            </div>
+        </div><!-- end ngIf: !order.isEmployee -->
+        <!-- ngIf: order.isEmployee -->
+        <div class="ng-scope">
+            <div class="section selected-address" slide-toggle="showSelected() &amp;&amp; !isStorePickup()" speed="500" data-selenium="selectedAddress" style="display: block; overflow: hidden;">
+
+                <div class="right right-align">
+                    <!-- ngIf: !isLoggedIn() && order.changeShipProfileAllowed --><a ng-if="!isLoggedIn() &amp;&amp; order.changeShipProfileAllowed" class="c5 underline-on-hover upper fs16 cursor-pointer inlineBlock ng-scope ng-isolate-scope" bh-start-editing="order.shippingProfile" bh-disabled="order.shippingProfile.isTaxExempt" ng-click="editAnAddress(!order.shippingProfile.isTaxExempt, true)" popover-template="''" popover-trigger="hover" popover-animation="false" data-selenium="editAddress">Change Address</a><!-- end ngIf: !isLoggedIn() && order.changeShipProfileAllowed -->
+                    <!-- ngIf: isLoggedIn() && order.changeShipProfileAllowed -->
+                </div>
+
+                <div>
+                    <div class="inlineBlock"><svg class="bh-icon bh-icon-check relative" style="height:22px; width:20px; fill:#769e2d;" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg>&nbsp;&nbsp;&nbsp;</div>
+                    <!-- ngInclude: 'shippingProfile.html' --><div class="inlineBlock selected-address-include ng-scope" ng-include="'shippingProfile.html'" data-selenium="selectedAddressInclude">
+                        <ul class="selected-address-info ng-scope" data-selenium="selectedAddressInfo">
+                            <li class="inlineBlock fs16 semibold capitalize ng-binding" data-selenium="name">@TempData["name"]</li>
+                            <li class="inlineBlock break"></li>
+                            <!-- ngIf: order.shippingProfile.companyName -->
+                            <li class="inlineBlock fs16 ng-binding" data-selenium="address1">@TempData["address"]</li>
+                            <!-- ngIf: order.shippingProfile.address3 -->
+                           
+                            <li class="inlineBlock fs16 ng-binding" data-selenium="cityStateZip">
+                                @TempData["city"] @TempData["state"] @TempData["Zip"]
+                                <span class="ng-binding" ng-show="order.shippingProfile.country !== 'US'" data-selenium="countryName">
+                                @TempData["country"]</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="qas-auto-corrected ng-scope ng-hide" ng-controller="QasAutoCorrected" ng-show="hasAutoCorrections" data-selenium="hasAutoCorrections">
+                    <svg class="bh-icon bh-icon-error-light inlineBlock qas-auto-corrected-error-icon" style="height:26px; width:26px; fill:#ff9933;" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                    <span class="inlineBlock">
+                        <span class="semibold c16">Your address has been modified</span>
+                        to match carrier specifications.
+                        <span class="semibold c5 cursor-pointer underline-on-hover" popover-template="'qasAutoCorrected.html'" popover-placement="right" popover-trigger="click" data-selenium="qasAutoCorrected">View Details</span>
+                    </span>
+                </div>
+            </div>
+
+            <div bh-saved-addresses="shipping" class="saved-addresses saved-list" slide-toggle="showAddressList() &amp;&amp; !isStorePickup()" speed="500" data-selenium="bhSavedAddress" style="display: none; overflow: hidden;">
+                <div class="section saved-list-inner clearfix" data-selenium="savedListInner">
+                    <p class="fs12 ng-hide" ng-show="profileType === 'billing'" data-selenium="manageAddressesMessage">
+                        Manage your addresses in "MY ACCOUNT"
+                    </p><div class="break"></div>
+                    <div class="break"></div>
+                    <p></p>
+                    <div class="right-align" ng-show="profileType === 'shipping'">
+                        <a bh-cancel-editing="" class="c5 underline-on-hover upper fs16 cursor-pointer inlineBlock" ng-click="cancelAddressUpdate()" data-selenium="cancelAddressUpdate">
+                            Cancel
+                        </a>
+                        <span>&nbsp;&nbsp;&nbsp;</span>
+                        <div class="break"></div>
+                    </div>
+                    <div class="clearfix">
+                        <div class="item relative fs16 cursor-pointer center-align addNewAddress ng-isolate-scope" bh-disabled="addressDisabled()" bh-start-editing="" ng-click="createNewAddress(!addressDisabled())" popover-template="''" popover-trigger="hover" popover-popup-delay="150" popover-animation="false" data-selenium="createNewAddress">
+                            <svg class="bh-icon bh-icon-plus" style="height:16px; width:16px; fill:#000;" data-selenium="plus"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#plus"></use></svg> New Address
+                        </div>
+
+                        <!-- ngRepeat: address in addresses | orderBy:selectedAddress --><div class="item relative ng-scope ng-isolate-scope selected" ng-repeat="address in addresses | orderBy:selectedAddress" ng-init="index = addresses.indexOf(address)" ng-class="{'selected':selectedAddressId() === address.addrId, 'full-address': (address.companyName &amp;&amp; address.address2)}" bh-disabled="addressDisabled(address)" popover-template="''" popover-trigger="hover" popover-append-to-body="true" popover-animation="false" data-selenium="address">
+
+                            <p class="address-line semibold ng-binding" data-selenium="addressName">Ayesha Mshtaque </p>
+                            <p class="break"></p>
+                            <p class="address-line ng-binding" data-selenium="addressCompany"></p>
+                            <p class="address-line ng-binding" data-selenium="addressAddress1">fdjshj</p>
+                            <!-- ngIf: address.address2 --><p class="address-line ng-binding ng-scope" ng-if="address.address2" data-selenium="addressAddress2">hjghjkHFDKJK</p><!-- end ngIf: address.address2 -->
+                            <p class="address-line ng-binding" data-selenium="addressCityStateZip">kjhhkhjkhk, hjhkhk 866868</p>
+                            <p class="address-line ng-binding" data-selenium="addressCountry">PAKISTAN</p>
+                            <p class="address-line ng-binding" data-selenium="addressPhone">(923) 044-9779</p>
+                            <label class="btn-select item-button c2 fs18 semibold cursor-pointer center-align absolute">
+                                <p class="ng-binding" bh-set-order-profile="address" data-selenium="bhSetOrderProfile">Selected  <svg class="bh-icon bh-icon-check" style="height:13px; width:11px; fill:#fff;" ng-show="selectedAddressId() === address.addrId" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg></p>
+                            </label>
+                            <div ng-show="showEdit(address, profileType)" class="item-controlles right-align absolute" data-selenium="itemControls">
+                                <a class="underline-on-hover upper fs14 c9 cursor-pointer ng-isolate-scope" bh-start-editing="address" ng-click="editAnAddress(!address.isTaxExempt, true)" bh-disabled="address.isTaxExempt" popover-template="''" popover-trigger="hover" popover-append-to-body="true" popover-animation="false" data-selenium="editAddress">Edit</a>
+                                <!--<a class="underline upper fs14 c9 cursor-pointer" bh-remove-address="address.addrId">Remove</a>-->
+                            </div>
+                        </div><!-- end ngRepeat: address in addresses | orderBy:selectedAddress -->
+                    </div>
+                    <p class="fs12 right-align" ng-show="profileType === 'shipping'" data-selenium="manageAddressesMessage">Manage your addresses in "MY ACCOUNT"&nbsp;&nbsp;</p>
+                </div>
+            </div>
+
+            <div class="section address-form" slide-toggle="showForm() &amp;&amp; !isStorePickup()" speed="500" data-selenium="addressFormSection" style="display: none; overflow: hidden;">
+                <a bh-cancel-editing="" class="right c5 underline-on-hover upper fs16 cursor-pointer inlineBlock ng-hide" ng-show="showForm() &amp;&amp; addresses.length" ng-click="cancelAddressUpdate()" data-selenium="cancelAddressUpdate">
+                    Cancel
+                </a>
+                <div class="ng-scope" bh-address-form="addressForm.html" bh-qas-address-form="" data-selenium="bhQasAddressForm">
+                    <form name="form" class="ng-valid-maxlength ng-dirty ng-valid-mask ng-valid-parse ng-valid-required ng-valid ng-valid-email ng-submitted" ng-model-options="{allowInvalid: true}" bh-remove-server-validations="" bh-no-validate-on-focus="" novalidate="" data-selenium="addressForm">
+                        <div class="form-group" data-selenium="formGroup">
+                            <label for="country" class="fs16 c36 capitalize right-align inlineBlock control-label" data-selenium="countryLabel">Country</label>
+                            <div class="inlineBlock control-input relative bh-dropdown-is-valid">
+                                <div class="bh-dropdown inlineBlock undefined" style="width: 100%;">
+                                    <svg class="bh-icon bh-icon-arrow-down-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-down-light"></use></svg><span class="bh-dropdown-selected">PAKISTAN</span><select name="country" class="fs16 semibold ng-pristine ng-untouched ng-valid ng-valid-required" ng-model="address.country" bh-territory-country-select="" bh-dropdown="" required="" data-selenium="country">
+                                        <option value="PK" ng-selected="true" selected="selected">PAKISTAN</option>
+                                        <option value="US">UNITED STATES</option>
+                                        <option value="--" disabled="">------</option>
+                                        <option value="AF">AFGHANISTAN</option>
+                                        <option value="AX">ALAND ISLANDS</option>
+                                        <option value="AL">ALBANIA</option>
+                                        <option value="DZ">ALGERIA</option>
+                                        <option value="AS">AMERICAN SAMOA (U.S.</option>
+                                        <option value="AD">ANDORRA</option>
+                                        <option value="AO">ANGOLA</option>
+                                        <option value="AI">ANGUILLA</option>
+                                        <option value="AG">ANTIGUA &amp; BARBUDA</option>
+                                        <option value="AR">ARGENTINA</option>
+                                        <option value="AM">ARMENIA</option>
+                                        <option value="AW">ARUBA</option>
+                                        <option value="SH3">ASCENSION</option>
+                                        <option value="AU">AUSTRALIA</option>
+                                        <option value="AT">AUSTRIA</option>
+                                        <option value="AZ">AZERBAIJAN</option>
+                                        <option value="PT2">AZORES</option>
+                                        <option value="BS">BAHAMAS</option>
+                                        <option value="BH">BAHRAIN</option>
+                                        <option value="BD">BANGLADESH</option>
+                                        <option value="BB">BARBADOS</option>
+                                        <option value="BY">BELARUS</option>
+                                        <option value="BE">BELGIUM</option>
+                                        <option value="BZ">BELIZE</option>
+                                        <option value="BJ">BENIN</option>
+                                        <option value="BM">BERMUDA</option>
+                                        <option value="BT">BHUTAN</option>
+                                        <option value="BO">BOLIVIA</option>
+                                        <option value="BQ1">BONAIRE</option>
+                                        <option value="BA">BOSNIA-HERCEGOVINA</option>
+                                        <option value="BW">BOTSWANA</option>
+                                        <option value="BR">BRAZIL</option>
+                                        <option value="VG">BRITISH VIRGIN IS.</option>
+                                        <option value="BN">BRUNEI</option>
+                                        <option value="BG">BULGARIA</option>
+                                        <option value="BF">BURKINA FASO</option>
+                                        <option value="MM">BURMA (MYANMAR)</option>
+                                        <option value="BI">BURUNDI</option>
+                                        <option value="KH">CAMBODIA (KAMPUCHEA)</option>
+                                        <option value="CM">CAMEROON</option>
+                                        <option value="CA">CANADA</option>
+                                        <option value="ES2">CANARY ISLANDS</option>
+                                        <option value="CV">CAPE VERDE</option>
+                                        <option value="KY">CAYMAN ISLANDS</option>
+                                        <option value="CF">CENTRAL AFRICAN REP.</option>
+                                        <option value="TD">CHAD</option>
+                                        <option value="CL">CHILE</option>
+                                        <option value="CN">CHINA</option>
+                                        <option value="CO">COLOMBIA</option>
+                                        <option value="KM">COMOROS</option>
+                                        <option value="CG">CONGO</option>
+                                        <option value="CK">COOK ISLANDS (N.Z.)</option>
+                                        <option value="FR2">CORSICA</option>
+                                        <option value="CR">COSTA RICA</option>
+                                        <option value="CI">COTE D'IVOIRE (IV.C.</option>
+                                        <option value="HR">CROATIA</option>
+                                        <option value="CW">CURACAO</option>
+                                        <option value="CY">CYPRUS</option>
+                                        <option value="CZ">CZECH REPUBLIC</option>
+                                        <option value="CD">DEM. OF CONGO</option>
+                                        <option value="DK">DENMARK</option>
+                                        <option value="DJ">DJIBOUTI</option>
+                                        <option value="DM">DOMINICA</option>
+                                        <option value="DO">DOMINICAN REPUBLIC</option>
+                                        <option value="TL">EAST TIMOR</option>
+                                        <option value="EC">ECUADOR</option>
+                                        <option value="EG">EGYPT</option>
+                                        <option value="SV">EL SALVADOR</option>
+                                        <option value="GQ">EQUATORIAL GUINEA</option>
+                                        <option value="ER">ERITREA</option>
+                                        <option value="EE">ESTONIA</option>
+                                        <option value="ET">ETHIOPIA</option>
+                                        <option value="FK">FALKLAND ISLANDS</option>
+                                        <option value="FO">FAROE ISLANDS</option>
+                                        <option value="FJ">FIJI</option>
+                                        <option value="FI">FINLAND</option>
+                                        <option value="FR">FRANCE</option>
+                                        <option value="GF">FRENCH GUIANA</option>
+                                        <option value="PF">FRENCH POLYNESIA</option>
+                                        <option value="GA">GABON</option>
+                                        <option value="GM">GAMBIA</option>
+                                        <option value="GE">GEORGIA</option>
+                                        <option value="DE">GERMANY</option>
+                                        <option value="GH">GHANA</option>
+                                        <option value="GI">GIBRALTAR</option>
+                                        <option value="GR">GREECE</option>
+                                        <option value="GL">GREENLAND</option>
+                                        <option value="GD">GRENADA</option>
+                                        <option value="GP">GUADELOUPE</option>
+                                        <option value="GU">GUAM (U.S. TER.)</option>
+                                        <option value="GT">GUATEMALA</option>
+                                        <option value="GG">GUERNSEY</option>
+                                        <option value="GN">GUINEA</option>
+                                        <option value="GW">GUINEA-BISSAU</option>
+                                        <option value="GY">GUYANA</option>
+                                        <option value="HT">HAITI</option>
+                                        <option value="HN">HONDURAS</option>
+                                        <option value="HK">HONG KONG</option>
+                                        <option value="HU">HUNGARY</option>
+                                        <option value="IS">ICELAND</option>
+                                        <option value="IN">INDIA</option>
+                                        <option value="ID">INDONESIA</option>
+                                        <option value="IQ">IRAQ</option>
+                                        <option value="IE">IRELAND, REPUBLIC OF</option>
+                                        <option value="IL">ISRAEL</option>
+                                        <option value="IT">ITALY</option>
+                                        <option value="JM">JAMAICA</option>
+                                        <option value="JP">JAPAN</option>
+                                        <option value="JE">JERSEY</option>
+                                        <option value="JO">JORDAN</option>
+                                        <option value="KZ">KAZAKHSTAN</option>
+                                        <option value="KE">KENYA</option>
+                                        <option value="KI">KIRIBATI</option>
+                                        <option value="KV">KOSOVO</option>
+                                        <option value="FM1">KOSRAE</option>
+                                        <option value="KW">KUWAIT</option>
+                                        <option value="KG">KYRGYZSTAN</option>
+                                        <option value="LA">LAOS</option>
+                                        <option value="LV">LATVIA</option>
+                                        <option value="LB">LEBANON</option>
+                                        <option value="LS">LESOTHO</option>
+                                        <option value="LR">LIBERIA</option>
+                                        <option value="LY">LIBYA</option>
+                                        <option value="LI">LIECHTENSTEIN</option>
+                                        <option value="LT">LITHUANIA</option>
+                                        <option value="LU">LUXEMBOURG</option>
+                                        <option value="MO">MACAU</option>
+                                        <option value="MK">MACEDONIA</option>
+                                        <option value="MG">MADAGASCAR</option>
+                                        <option value="PT3">MADEIRA ISLANDS</option>
+                                        <option value="MW">MALAWI</option>
+                                        <option value="MY">MALAYSIA</option>
+                                        <option value="MV">MALDIVES</option>
+                                        <option value="ML">MALI</option>
+                                        <option value="MT">MALTA</option>
+                                        <option value="MH">MARSHALL ISLANDS</option>
+                                        <option value="MQ">MARTINIQUE</option>
+                                        <option value="MR">MAURITANIA</option>
+                                        <option value="MU">MAURITIUS</option>
+                                        <option value="YT">MAYOTTE</option>
+                                        <option value="MX">MEXICO</option>
+                                        <option value="FM">MICRONESIA</option>
+                                        <option value="MD">MOLDOVA</option>
+                                        <option value="MC">MONACO</option>
+                                        <option value="MN">MONGOLIA</option>
+                                        <option value="ME">MONTENEGRO</option>
+                                        <option value="MS">MONTSERRAT</option>
+                                        <option value="MA">MOROCCO</option>
+                                        <option value="MZ">MOZAMBIQUE</option>
+                                        <option value="NA">NAMIBIA</option>
+                                        <option value="NR">NAURU</option>
+                                        <option value="NP">NEPAL</option>
+                                        <option value="NL">NETHERLANDS</option>
+                                        <option value="NC">NEW CALEDONIA</option>
+                                        <option value="NZ">NEW ZEALAND</option>
+                                        <option value="NI">NICARAGUA</option>
+                                        <option value="NE">NIGER</option>
+                                        <option value="NG">NIGERIA</option>
+                                        <option value="NF">NORFOLK ISLAND</option>
+                                        <option value="MP">NORT. MARIANA ISL.</option>
+                                        <option value="NO">NORWAY</option>
+                                        <option value="OM">OMAN</option>
+                                        <option value="PK">PAKISTAN</option>
+                                        <option value="PW">PALAU</option>
+                                        <option value="PA">PANAMA</option>
+                                        <option value="PG">PAPUA NEW GUINEA</option>
+                                        <option value="PY">PARAGUAY</option>
+                                        <option value="PE">PERU</option>
+                                        <option value="PH">PHILIPPINES</option>
+                                        <option value="PN">PITCAIRN ISLANDS</option>
+                                        <option value="FM3">POHNPEI</option>
+                                        <option value="PL">POLAND</option>
+                                        <option value="PT">PORTUGAL</option>
+                                        <option value="QA">QATAR</option>
+                                        <option value="RE">REUNION</option>
+                                        <option value="RO">ROMANIA</option>
+                                        <option value="MP3">ROTA (U.S. TER.)</option>
+                                        <option value="RU">RUSSIA</option>
+                                        <option value="RW">RWANDA</option>
+                                        <option value="BQ">SABA</option>
+                                        <option value="MP2">SAIPAN (U.S. TER.)</option>
+                                        <option value="SM">SAN MARINO (ITALY)</option>
+                                        <option value="ST">SAO TOME &amp; PRINCIPE</option>
+                                        <option value="SA">SAUDI ARABIA</option>
+                                        <option value="SN">SENEGAL</option>
+                                        <option value="RS">SERBIA</option>
+                                        <option value="SC">SEYCHELLES</option>
+                                        <option value="SL">SIERRA LEONE</option>
+                                        <option value="SG">SINGAPORE</option>
+                                        <option value="BQ3">SINT EUSTATIUS</option>
+                                        <option value="SXM">SINT MAARTEN</option>
+                                        <option value="SK">SLOVAK REPUBLIC</option>
+                                        <option value="SI">SLOVENIA</option>
+                                        <option value="SB">SOLOMON ISLANDS</option>
+                                        <option value="ZA">SOUTH AFRICA</option>
+                                        <option value="KR">SOUTH KOREA</option>
+                                        <option value="ES">SPAIN</option>
+                                        <option value="LK">SRI LANKA</option>
+                                        <option value="VI2">ST. CROIX (U.S.TER.)</option>
+                                        <option value="SH">ST. HELENA</option>
+                                        <option value="KN">ST. KITTS &amp; NEVIS</option>
+                                        <option value="LC">ST. LUCIA</option>
+                                        <option value="SX">ST. MAARTEN</option>
+                                        <option value="PM">ST. PIERRE &amp; MIQU.</option>
+                                        <option value="VI3">ST. THOMAS (U.S. TER.)</option>
+                                        <option value="VC">ST. VINCENT</option>
+                                        <option value="BL">ST.BARTHELEMY (GUAD)</option>
+                                        <option value="SR">SURINAME</option>
+                                        <option value="SZ">SWAZILAND</option>
+                                        <option value="SE">SWEDEN</option>
+                                        <option value="CH">SWITZERLAND</option>
+                                        <option value="PF2">TAHITI (FR. POLY.)</option>
+                                        <option value="TW">TAIWAN</option>
+                                        <option value="TJ">TAJIKISTAN</option>
+                                        <option value="TZ">TANZANIA</option>
+                                        <option value="TH">THAILAND</option>
+                                        <option value="MP4">TINIAN</option>
+                                        <option value="TG">TOGO</option>
+                                        <option value="TO">TONGA</option>
+                                        <option value="VG2">TORTOLA</option>
+                                        <option value="TT">TRINIDAD AND TOBAGO</option>
+                                        <option value="SH2">TRISTAN DA CUNHA</option>
+                                        <option value="FM4">TRUK</option>
+                                        <option value="TN">TUNISIA</option>
+                                        <option value="TR">TURKEY</option>
+                                        <option value="TM">TURKMENISTAN</option>
+                                        <option value="TC">TURKS &amp; CAICOS IS.</option>
+                                        <option value="TV">TUVALU</option>
+                                        <option value="VI">U.S. VIRGIN ISLANDS</option>
+                                        <option value="UG">UGANDA</option>
+                                        <option value="UA">UKRAINE</option>
+                                        <option value="VC2">UNION ISLAND</option>
+                                        <option value="AE">UNITED ARAB EMIRATES</option>
+                                        <option value="GB">UNITED KINGDOM</option>
+                                        <option value="US">UNITED STATES</option>
+                                        <option value="UY">URUGUAY</option>
+                                        <option value="UZ">UZBEKISTAN</option>
+                                        <option value="VU">VANUATU</option>
+                                        <option value="VA">VATICAN CITY</option>
+                                        <option value="VE">VENEZUELA</option>
+                                        <option value="VN">VIETNAM</option>
+                                        <option value="WF">WALLIS &amp; FUTUNA IS.</option>
+                                        <option value="WS">WESTERN SAMOA (APIA</option>
+                                        <option value="FM5">YAP</option>
+                                        <option value="YE">YEMEN</option>
+                                        <option value="ZM">ZAMBIA</option>
+                                        <option value="ZW">ZIMBABWE</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <span ng-messages="form.country.$error" ng-messages-include="generic-error-messages" ng-show="(form.$submitted || form.country.$touched) &amp;&amp; !form.country.$valid" class="fs14 inlineBlock ng-inactive ng-hide c7" ng-class="form.$submitted ? 'c7' : 'c16'" data-selenium="ngMessages">
+                                <!-- ngMessage: required --><!-- ngMessage: minlength --><!-- ngMessage: maxlength --><!-- ngMessage: pattern --><!-- ngMessage: validChars --><!-- ngMessage: server-validChars --><!-- ngMessage: digitsOnly --><!-- ngMessage: server-generic --><!-- ngMessage: email -->
+                                <!-- ngMessage: required -->
+                            </span>
+                        </div>
+                        <br>
+                        <div class="form-group" data-selenium="formGroup">
+                            <label for="firstName" class="fs16 c36 capitalize right-align inlineBlock control-label" data-selenium="firstNameLabel">First Name</label>
+                            <div class="inlineBlock control-input relative">
+                                <input name="firstName" ng-model="address.firstName" type="text" placeholder="" class="fs16 semibold validation-icon-space ng-valid-maxlength ng-dirty ng-valid-parse ng-valid ng-valid-required ng-touched" required="" maxlength="30" data-selenium="firstName">
+                                <svg class="bh-icon bh-icon-check absolute inline-check" ng-show="form.firstName.$valid" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg>
+                                <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!form.firstName.$valid &amp;&amp; (form.$submitted || form.firstName.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                            </div>
+                            <span ng-messages="form.firstName.$error" ng-messages-include="generic-error-messages" ng-show="(form.$submitted || form.firstName.$touched) &amp;&amp; !form.firstName.$valid" class="inlineBlock fs14 ng-hide ng-inactive c7" ng-class="form.$submitted ? 'c7' : 'c16'" data-selenium="ngMessages">
+                                <!-- ngMessage: required --><!-- ngMessage: minlength --><!-- ngMessage: maxlength --><!-- ngMessage: pattern --><!-- ngMessage: validChars --><!-- ngMessage: server-validChars --><!-- ngMessage: digitsOnly --><!-- ngMessage: server-generic --><!-- ngMessage: email -->
+                                <!-- ngMessage: required -->
+                            </span>
+                        </div>
+                        <div class="form-group" data-selenium="formGroup">
+                            <label for="lastName" class="fs16 c36 capitalize right-align control-label inlineBlock" data-selenium="lastNameLabel">Last Name</label>
+                            <div class="control-input inlineBlock relative">
+                                <input name="lastName" ng-model="address.lastName" type="text" class="fs16 semibold validation-icon-space ng-valid-maxlength ng-dirty ng-valid-parse ng-valid ng-valid-required ng-touched" required="" maxlength="30" data-selenium="lastName">
+                                <svg class="bh-icon bh-icon-check absolute inline-check" ng-show="form.lastName.$valid" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg>
+                                <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!form.lastName.$valid &amp;&amp; (form.$submitted || form.lastName.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                            </div>
+                            <span ng-messages="form.lastName.$error" ng-messages-include="generic-error-messages" ng-show="(form.$submitted || form.lastName.$touched) &amp;&amp; !form.lastName.$valid" class="inlineBlock fs14 ng-hide ng-inactive c7" ng-class="form.$submitted ? 'c7' : 'c16'" data-selenium="ngMessages">
+                                <!-- ngMessage: required --><!-- ngMessage: minlength --><!-- ngMessage: maxlength --><!-- ngMessage: pattern --><!-- ngMessage: validChars --><!-- ngMessage: server-validChars --><!-- ngMessage: digitsOnly --><!-- ngMessage: server-generic --><!-- ngMessage: email -->
+                                <!-- ngMessage: required -->
+                            </span>
+                        </div>
+                        <br>
+                        <div class="form-group" ng-show="!address.showCompany &amp;&amp; !address.companyName" data-selenium="formGroup">
+                            <label for="companyName" class="fs16 c36 capitalize right-align control-label inlineBlock"></label>
+                            <div class="control-input inlineBlock">
+                                <a class="fs14 cursor-pointer underline-on-hover light" ng-click="address.showCompany = true" data-selenium="addCompany">+ Add Company Name</a>
+                            </div>
+                        </div>
+                        <div class="form-group ng-hide" ng-show="(address.showCompany || address.companyName)" data-selenium="formGroup">
+                            <label for="companyName" class="fs16 c36 capitalize right-align control-label inlineBlock" data-selenium="companyLabel">Company</label>
+                            <div class="control-input inlineBlock relative">
+                                <input name="companyName" class="fs16 semibold validation-icon-space error-icon-only ng-pristine ng-untouched ng-valid ng-valid-maxlength" ng-model="address.companyName" type="text" placeholder="(Optional)" maxlength="30" data-selenium="company">
+                                <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!form.companyName.$valid &amp;&amp; (form.$submitted || form.companyName.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                            </div>
+                            <span ng-messages="form.companyName.$error" ng-messages-include="generic-error-messages" ng-show="(form.$submitted || form.companyName.$touched) &amp;&amp; !form.companyName.$valid" class="inlineBlock fs14 ng-inactive ng-hide c7" ng-class="form.$submitted ? 'c7' : 'c16'" data-selenium="ngMessages">
+                                <!-- ngMessage: required --><!-- ngMessage: minlength --><!-- ngMessage: maxlength --><!-- ngMessage: pattern --><!-- ngMessage: validChars --><!-- ngMessage: server-validChars --><!-- ngMessage: digitsOnly --><!-- ngMessage: server-generic --><!-- ngMessage: email -->
+                            </span>
+                        </div>
+                        <div class="qas-wrapper relative inlineBlock" data-selenium="qasWrapper">
+                            <div class="qas-border absolute ng-scope ng-hide" ng-controller="QasContainerController" ng-show="hasQasErrors()" popover-template="'qasContainer.html'" popover-placement="right" popover-trigger="toggle" popover-animation="false" popover-append-to-body="true" popover-toggle="hasQasErrors()" data-selenium="qasBorder">
+                            </div>
+                            <div class="form-group relative" data-selenium="formGroup">
+                                <label for="address1" class="fs16 c36 capitalize right-align control-label inlineBlock" data-selenium="address1Label">Address 1</label>
+                                <!-- ngIf: showUSterritory() -->
+                                <!-- ngIf: !showUSterritory() --><div class="control-input inlineBlock relative ng-scope" ng-if="!showUSterritory()">
+                                    <input name="address1" ng-model="address.address1" type="text" placeholder="Street Address" class="fs16 semibold validation-icon-space ng-valid-maxlength ng-dirty ng-valid-parse ng-valid ng-valid-required ng-touched" required="" maxlength="30" data-selenium="address1">
+                                    <svg class="bh-icon bh-icon-check absolute inline-check" ng-show="form.address1.$valid" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg>
+                                    <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!form.address1.$valid &amp;&amp; (form.$submitted || form.address1.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                                </div><!-- end ngIf: !showUSterritory() -->
+                                <!-- <div class="qas-container-include" ng-include="''"></div> -->
+                                <span ng-messages="form.address1.$error" ng-messages-include="generic-error-messages" ng-show="(form.$submitted || form.address1.$touched) &amp;&amp; !form.address1.$valid" class="inlineBlock fs14 ng-hide ng-inactive c7" ng-class="form.$submitted ? 'c7' : 'c16'" data-selenium="ngMessages">
+                                    <!-- ngMessage: required --><!-- ngMessage: minlength --><!-- ngMessage: maxlength --><!-- ngMessage: pattern --><!-- ngMessage: validChars --><!-- ngMessage: server-validChars --><!-- ngMessage: digitsOnly --><!-- ngMessage: server-generic --><!-- ngMessage: email -->
+                                    <!-- ngMessage: required -->
+                                </span>
+                            </div>
+                            <div class="form-group relative" data-selenium="formGroup">
+                                <label for="address2" class="fs16 c36 capitalize right-align control-label inlineBlock" data-selenium="address2Label">Address 2</label>
+                                <div class="control-input inlineBlock relative">
+                                    <input name="address2" ng-model="address.address2" type="text" placeholder="Apartment, Suite, Unit, Floor (Optional)" class="fs16 semibold ng-valid ng-valid-maxlength ng-valid-required ng-dirty ng-valid-parse ng-touched" ng-class="address.country === 'BR' ? 'validation-icon-space' : ''" ng-required="address.country === 'BR'" maxlength="30" data-selenium="address2">
+                                    <svg class="bh-icon bh-icon-check absolute inline-check ng-hide" ng-show="address.country === 'BR' &amp;&amp; form.address2.$valid" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg>
+                                    <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!form.address2.$valid &amp;&amp; (form.$submitted || form.address2.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                                </div>
+                                <span ng-messages="form.address2.$error" ng-messages-include="generic-error-messages" ng-show="(form.$submitted || form.address2.$touched) &amp;&amp; !form.address2.$valid" class="inlineBlock fs14 ng-inactive ng-hide c7" ng-class="form.$submitted ? 'c7' : 'c16'" data-selenium="ngMessages">
+                                    <!-- ngMessage: required --><!-- ngMessage: minlength --><!-- ngMessage: maxlength --><!-- ngMessage: pattern --><!-- ngMessage: validChars --><!-- ngMessage: server-validChars --><!-- ngMessage: digitsOnly --><!-- ngMessage: server-generic --><!-- ngMessage: email -->
+                                    <!-- ngMessage: required -->
+                                </span>
+                            </div>
+                            <!-- ngIf: !showUSterritory() && !showCPF() --><div class="form-group relative ng-scope" ng-if="!showUSterritory() &amp;&amp; !showCPF()" data-selenium="formGroup">
+                                <label for="address3" class="fs16 c36 capitalize right-align control-label inlineBlock" data-selenium="address3Label">Address 3</label>
+                                <div class="control-input inlineBlock relative">
+                                    <input name="address3" ng-model="address.address3" type="text" placeholder="(Optional)" class="fs16 semibold validation-icon-space error-icon-only ng-valid ng-valid-maxlength ng-dirty ng-valid-parse ng-touched" maxlength="30" data-selenium="address3">
+                                    <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!form.address3.$valid &amp;&amp; (form.$submitted || form.address3.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                                </div>
+                                <span ng-messages="form.address3.$error" ng-messages-include="generic-error-messages" ng-show="(form.$submitted || form.address3.$touched) &amp;&amp; !form.address3.$valid" class="inlineBlock fs14 ng-hide ng-inactive c7" ng-class="form.$submitted ? 'c7' : 'c16'" data-selenium="ngMessages">
+                                    <!-- ngMessage: required --><!-- ngMessage: minlength --><!-- ngMessage: maxlength --><!-- ngMessage: pattern --><!-- ngMessage: validChars --><!-- ngMessage: server-validChars --><!-- ngMessage: digitsOnly --><!-- ngMessage: server-generic --><!-- ngMessage: email -->
+                                </span>
+                            </div><!-- end ngIf: !showUSterritory() && !showCPF() -->
+                            <!-- ngIf: showCPF() -->
+                            <!-- ngIf: showUSterritory() -->
+                            <!-- ngIf: showUSterritory() -->
+                            <!-- ngIf: !showUSterritory() --><div class="form-group relative sel-formGroup relative ng-scope" ng-if="!showUSterritory()">
+                                <label for="city" class="fs16 c36 capitalize right-align control-label inlineBlock" data-selenium="cityLabel">City</label>
+                                <div class="control-input inlineBlock relative">
+                                    <!-- ngIf: address.country !== 'BM' --><input name="city" ng-model="address.city" type="text" class="fs16 semibold validation-icon-space ng-scope ng-valid-maxlength ng-dirty ng-valid-parse ng-valid ng-valid-required ng-touched" required="" maxlength="30" ng-if="address.country !== 'BM'" data-selenium="city"><!-- end ngIf: address.country !== 'BM' -->
+                                    <svg class="bh-icon bh-icon-check absolute inline-check" ng-show="form.city.$valid" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg>
+                                    <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!form.city.$valid &amp;&amp; (form.$submitted || form.city.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                                    <!-- ngIf: address.country === 'BM' -->
+                                </div>
+                                <span ng-messages="form.city.$error" ng-messages-include="generic-error-messages" ng-show="(form.$submitted || form.city.$touched) &amp;&amp; !form.city.$valid" class="inlineBlock fs14 ng-hide ng-inactive c7" ng-class="form.$submitted ? 'c7' : 'c16'" data-selenium="ngMessages">
+                                    <!-- ngMessage: required --><!-- ngMessage: minlength --><!-- ngMessage: maxlength --><!-- ngMessage: pattern --><!-- ngMessage: validChars --><!-- ngMessage: server-validChars --><!-- ngMessage: digitsOnly --><!-- ngMessage: server-generic --><!-- ngMessage: email -->
+                                    <!-- ngMessage: required -->
+                                </span>
+                            </div><!-- end ngIf: !showUSterritory() -->
+                            <!-- ngIf: !showUSterritory() --><div class="form-group relative ng-scope" ng-if="!showUSterritory()" data-selenium="formGroup">
+                                <label for="state" class="fs16 c36 capitalize right-align control-label inlineBlock ng-binding" data-selenium="stateLabel">State</label>
+                                <div class="control-input inlineBlock">
+                                    <!-- ngIf: !hasStates() --><span class="inlineBlock relative ng-scope" ng-if="!hasStates()">
+                                        <input name="state" ng-model="address.state" type="text" class="fs16 small semibold ng-valid ng-valid-maxlength ng-valid-required ng-dirty ng-valid-parse ng-touched" ng-class="isStateRequired() ? 'validation-icon-space' : ''" maxlength="30" ng-required="isStateRequired()" data-selenium="state">
+                                        <svg class="bh-icon bh-icon-check absolute inline-check ng-hide" ng-show="isStateRequired() &amp;&amp; form.state.$valid" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg>
+                                        <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!form.state.$valid &amp;&amp; (form.$submitted || form.state.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                                    </span><!-- end ngIf: !hasStates() -->
+                                    <!-- ngIf: hasStates() -->
+                                    <label for="zip" class="fs16 c36 capitalize right-align small" data-selenium="zipLabel">Postal Code</label>
+                                    <span class="inlineBlock relative">
+                                        <input name="zip" ng-model="address.zip" type="text" class="fs16 small semibold right validation-icon-space ng-valid ng-valid-mask error-icon-only ng-valid-required ng-dirty ng-valid-parse ng-touched" ng-class="!isZipRequired() ? 'error-icon-only' : ''" ng-required="isZipRequired()" ui-mask="?*?*?*?*?*?*?*?*?*?*" ui-options="{clearOnBlur: false}" ui-mask-placeholder-char="space" data-selenium="zip" placeholder=" ">
+                                        <svg class="bh-icon bh-icon-check absolute inline-check ng-hide" ng-show="isZipRequired() &amp;&amp; form.zip.$valid" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg>
+                                        <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!form.zip.$valid &amp;&amp; (form.$submitted || form.zip.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                                    </span>
+                                </div>
+
+                                <span ng-messages="stateAndZipErrorsTouchedOrSubmitted()" ng-messages-include="generic-error-messages" ng-show="(!form.state.$valid &amp;&amp; (form.$submitted || form.state.$touched)) || (!form.zip.$valid &amp;&amp; (form.$submitted || form.zip.$touched))" class="inlineBlock fs14 ng-hide ng-inactive c7" ng-class="form.$submitted ? 'c7' : 'c16'" data-selenium="ngMessages">
+                                    <!-- ngMessage: required --><!-- ngMessage: minlength --><!-- ngMessage: maxlength --><!-- ngMessage: pattern --><!-- ngMessage: validChars --><!-- ngMessage: server-validChars --><!-- ngMessage: digitsOnly --><!-- ngMessage: server-generic --><!-- ngMessage: email -->
+                                    <!-- ngMessage: required -->
+                                    <!-- ngMessage: mask -->
+                                    <!-- ngMessage: server-validZip -->
+                                </span>
+                            </div><!-- end ngIf: !showUSterritory() -->
+                        </div>
+                        <div class="form-group" data-selenium="formGroup">
+                            <label for="phone" class="fs16 c36 capitalize right-align control-label inlineBlock" data-selenium="phoneLabel">Phone</label>
+                            <div class="control-input inlineBlock">
+                                <span class="inlineBlock relative">
+                                    <input name="phone" ng-model="address.phone" ui-mask="+9999999999?9?9?9?9?9?9?9?9?9?9" ui-options="{clearOnBlur: false, clearOnBlurPlaceholder: true}" ui-mask-placeholder-char="space" placeholder="In case questions arise" ui-mask-placeholder="" type="tel" class="fs16 mid semibold phone-number validation-icon-space ng-dirty ng-valid-mask ng-valid ng-valid-parse ng-valid-required ng-touched" required="" data-selenium="phone">
+                                    <svg class="bh-icon bh-icon-check absolute inline-check" ng-show="form.phone.$valid" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg>
+                                    <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!form.phone.$valid &amp;&amp; (form.$submitted || form.phone.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                                </span>
+                                <div class="inlineBlock" ng-show="!address.phoneExt &amp;&amp; !address.showPhoneExt">
+                                    <label class="fs14 cursor-pointer underline-on-hover light phoneExt" ng-click="address.showPhoneExt = true" data-selenium="addPhoneExt"> + ADD EXT</label>
+                                </div>
+                                <span ng-show="address.showPhoneExt || address.phoneExt" class="ng-hide">
+                                    <label for="phoneExt" class="fs16 c36 capitalize right-align small phoneExt" data-selenium="phoneExtLabel">EXT.</label>
+                                    <input name="phoneExt" ng-model="address.phoneExt" type="text" class="fs16 extraSmall semibold right ng-pristine ng-untouched ng-valid ng-valid-mask" ui-mask="?9?9?9?9?9?9" ui-mask-placeholder-char="space" data-selenium="phoneExt" placeholder=" ">
+                                </span>
+                            </div>
+                            <span ng-messages="form.phone.$error" ng-messages-include="generic-error-messages" ng-show="(form.$submitted || form.phone.$touched) &amp;&amp; !form.phone.$valid" class="inlineBlock fs14 ng-hide ng-inactive c7" ng-class="form.$submitted ? 'c7' : 'c16'" data-selenium="ngMessages">
+                                <!-- ngMessage: required --><!-- ngMessage: minlength --><!-- ngMessage: maxlength --><!-- ngMessage: pattern --><!-- ngMessage: validChars --><!-- ngMessage: server-validChars --><!-- ngMessage: digitsOnly --><!-- ngMessage: server-generic --><!-- ngMessage: email -->
+                                <!-- ngMessage: required -->
+                                <!-- ngMessage: mask -->
+                            </span>
+                        </div>
+                        <div class="form-group" ng-show="profileType === 'shipping' &amp;&amp; !address.showPhoneTwo &amp;&amp; !address.phoneTwo" data-selenium="formGroup">
+                            <label class="fs16 c36 capitalize right-align control-label inlineBlock"></label>
+                            <div class="inlineBlock">
+                                <a class="fs14 cursor-pointer underline-on-hover light" ng-click="address.showPhoneTwo = true" data-selenium="addPhone2">+ Add Phone 2</a>
+                            </div>
+                        </div>
+                        <div class="form-group ng-hide" ng-show="profileType === 'shipping' &amp;&amp; (address.showPhoneTwo || address.phoneTwo)" data-selenium="formGroup">
+                            <label class="fs16 c36 capitalize right-align control-label inlineBlock" data-selenium="phone2Label">phone 2</label>
+                            <div class="control-input inlineBlock">
+                                <span class="inlineBlock relative">
+                                    <input name="phoneTwo" type="tel" class="fs16 mid semibold validation-icon-space ng-pristine ng-untouched ng-valid ng-valid-mask" ng-model="address.phoneTwo" ui-mask="+9999999999?9?9?9?9?9?9?9?9?9?9" ui-options="{clearOnBlur: false}" ui-mask-placeholder-char="space" data-selenium="phone2" placeholder="+                    ">
+                                    <svg class="bh-icon bh-icon-check absolute inline-check ng-hide" ng-show="!form.phoneTwo.$isEmpty(form.phoneTwo.$viewValue) &amp;&amp; form.phoneTwo.$valid" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg>
+                                    <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!form.phoneTwo.$valid &amp;&amp; (form.$submitted || form.phoneTwo.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                                </span>
+                                <div class="inlineBlock" ng-show="!address.phoneTwoExt &amp;&amp; !address.showPhoneTwoExt">
+                                    <label class="fs14 cursor-pointer underline-on-hover light phoneExt" ng-click="address.showPhoneTwoExt = true" data-selenium="addPhone2Ext"> + ADD EXT</label>
+                                </div>
+                                <span ng-show="address.showPhoneTwoExt || address.phoneTwoExt" class="ng-hide">
+                                    <label for="phoneTwoExt" class="fs16 c36 capitalize right-align small phoneExt" data-selenium="phone2ExtLabel">EXT.</label>
+                                    <input name="phoneTwoExt" ng-model="address.phoneTwoExt" type="text" class="fs16 extraSmall semibold right ng-pristine ng-untouched ng-valid ng-valid-mask" ui-mask="?9?9?9?9?9?9" ui-mask-placeholder-char="space" data-selenium="phone2Ext" placeholder=" ">
+                                </span>
+                            </div>
+                            <span ng-messages="form.phoneTwo.$error" ng-messages-include="generic-error-messages" ng-show="(form.$submitted || form.phoneTwo.$touched) &amp;&amp; !form.phoneTwo.$valid" class="inlineBlock fs14 ng-inactive ng-hide c7" ng-class="form.$submitted ? 'c7' : 'c16'" data-selenium="ngMessages">
+                                <!-- ngMessage: required --><!-- ngMessage: minlength --><!-- ngMessage: maxlength --><!-- ngMessage: pattern --><!-- ngMessage: validChars --><!-- ngMessage: server-validChars --><!-- ngMessage: digitsOnly --><!-- ngMessage: server-generic --><!-- ngMessage: email -->
+                                <!-- ngMessage: mask -->
+                            </span>
+
+                        </div>
+                        <br>
+                        <!-- ngIf: emailFieldRequired(profileType) --><div class="form-group ng-scope" ng-if="emailFieldRequired(profileType)" data-selenium="formGroup">
+                            <label for="Email" class="fs16 c36 capitalize right-align control-label inlineBlock" data-selenium="emailLabel">Email</label>
+                            <div class="control-input inlineBlock relative">
+                                <input name="email" ng-model="address.email" ng-trim="false" bh-disallowed-chars="[ ]" type="text" class="fs16 semibold ng-dirty ng-valid-parse ng-valid-required ng-valid ng-valid-email ng-touched" placeholder="To Receive Order Confirmation" required="" email="" data-selenium="email">
+                                <svg class="bh-icon bh-icon-check absolute inline-check" ng-show="form.email.$valid" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg>
+                                <svg class="bh-icon bh-icon-error-light absolute inline-error ng-hide" ng-show="!form.email.$valid &amp;&amp; (form.$submitted || form.email.$touched)" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg>
+                            </div>
+                            <span ng-messages="form.email.$error" ng-messages-include="generic-error-messages" ng-show="(form.$submitted || form.email.$touched) &amp;&amp; !form.email.$valid" class="inlineBlock fs14 ng-hide ng-inactive c7" ng-class="form.$submitted ? 'c7' : 'c16'" data-selenium="ngMessages">
+                                <!-- ngMessage: required --><!-- ngMessage: minlength --><!-- ngMessage: maxlength --><!-- ngMessage: pattern --><!-- ngMessage: validChars --><!-- ngMessage: server-validChars --><!-- ngMessage: digitsOnly --><!-- ngMessage: server-generic --><!-- ngMessage: email -->
+                                <!-- ngMessage: required -->
+                            </span>
+                            <!-- <span ng-messages="form.email.$error" ng-messages-include="email-error-messages" ng-show="form.$submitted && form.email.$error.email" class="inlineBlock fs20 c7 error">
+                            </span> -->
+                        </div><!-- end ngIf: emailFieldRequired(profileType) -->
+                        <div class="form-group emailSignUp" ng-show="profileType === 'shipping'" data-selenium="formGroup">
+                            <label class="fs16 c36 capitalize right-align control-label inlineBlock"></label>
+                            <div class="control-input inlineBlock">
+                                <!-- ngIf: !isLoggedIn() --><div ng-if="!isLoggedIn()" class="ng-scope">
+                                    <label class="styled-checkbox big checked"><input name="emailSignUp" class="ng-pristine ng-untouched ng-valid displayNone" type="checkbox" ng-model="$storage.emailSignUp" styled-checkbox="big" data-selenium="emailSignUp"><svg class="bh-icon bh-icon-check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg></label>
+                                    <p class="fs16 no-wrap" data-selenium="emailSignUpMsg">Sign Up for Weekly B&amp;H Email Newsletters</p>
+                                    <br>
+                                    <!-- <input name="emailSignUp"
+                                        type="checkbox"
+                                        ng-model="emailSignUp"
+                                        styled-checkbox>
+                                    <p class="fs16">Sign Up DealZone Emails</p>
+                                    <br> -->
+                                    <p class="fs12 c9 italic no-wrap" data-selenium="emailSignUpInfo">We employ Cybertrust &amp; ScanAlert security to ensure your data is safe with us.</p>
+                                </div><!-- end ngIf: !isLoggedIn() -->
+                            </div>
+                        </div>
+
+                        <br>
+                        <div class="center-align">
+                            <label class="center-align" data-selenium="saveAddressLabel">
+
+                                <button type="submit" class="fs24 cursor-pointer c18 next-btn ng-binding" bh-set-order-profile="address" data-selenium="saveAddress">
+                                    View Shipping Options
+                                </button>
+                            </label>
+                        </div>
+                        <!-- <div ng-if="profileType === 'billing'"
+                            bh-set-order-profile="address"
+                            bh-set-order-profile-on="submitAddressForm"
+                            class="displayNone" >
+                        </div> -->
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- <div class="section" ng-show="false || order.isGiftAddress">
+
+        </div> -->
+        <!-- <div class="section gifSection-checkbox clearfix" ng-if="!isStorePickup" ng-controller="GiftNoteController">
+            <input type="checkbox" name="isGift" ng-model="order.isGift" styled-checkbox="big" ng-change="openGiftCardLayer()">
+            <div class="fs18 semibold capitalize inlineBlock">Gift Receipt/Message</div>
+            <div class="c31 capitalize inlineBlock cursor-pointer" ng-if="order.isGift" ng-click="openGiftCardLayer()">: Show Note</div>
+        </div>
+
+        <div class="break"></div> -->
+
+
+        
+
+        <!-- ngIf: isStorePickup() -->
+
+        <div class="ng-scope" bh-order-restrictions="shipping" data-selenium="bhOrderRestrictions">
+            <!-- ngRepeat: inlineRestriction in restrictions -->
+        </div>
+
+    </div>
+
+        <div class="ng-scope" fade-toggle="showShippingMethods()" speed="1500" data-selenium="showShippingMethods" style="display: block;">
+            <div class="break"></div>
+            <!-- ngInclude: 'shippingMethods.html' --><div class="shippingMethodsInclude ng-scope" ng-include="'shippingMethods.html'" bh-order-shipping-prefs="" data-selenium="shippingMethodsInclude">
+                <div class="break ng-scope"></div>
+                <h2 class="c1 header ng-scope" ng-hide="isStorePickup() || order.isNonShipOrder" data-selenium="shippingMethodsHeader">
+                    <span ng-show="!reviewPage()" bh-mlt="">Your Shipping Method</span>
+                    <span ng-show="reviewPage()" class="ng-binding ng-hide">Order Details &amp; Shipping Method</span>
+                </h2>
+                <h2 class="c1 header ng-binding ng-scope ng-hide" ng-show="isStorePickup() || order.isNonShipOrder" data-selenium="itemsHeader">Items in Your Order</h2>
+                <div class="light fs18 merge-expedited ng-scope ng-hide" ng-show="showMergeExpedited() &amp;&amp; !isShippingRouteDisabled()" data-selenium="mergeExpedited">
+                    <div class="break"></div>
+                    <label class="" data-selenium="setMergeExpeditedLabel">
+                        <label class="styled-checkbox big"><input class="ng-pristine ng-untouched ng-valid displayNone" type="checkbox" ng-model="order.isMerged" ng-change="setMergeExpedited()" styled-checkbox="big" data-selenium="setMergeExpedited"><svg class="bh-icon bh-icon-check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg></label>
+                        I prefer to receive fewer shipments
+                    </label>
+                    <div class="break"></div>
+                </div>
+                <div class="saved-shipping-accounts-container ng-scope ng-hide" ng-controller="ShipAccountsController" ng-show="showShipAccountOption() &amp;&amp; !isShippingRouteDisabled()" data-selenium="savedShippingAccountsContainer">
+                    <div class="light fs18 saved-shipping-accounts-checkbox" data-selenium="savedShippingAccountsCheckbox">
+                        <label class="styled-checkbox big"><input class="ng-pristine ng-untouched ng-valid displayNone" type="checkbox" ng-model="enableShipAccounts" ng-change="toggleShipAccounts()" styled-checkbox="big" data-selenium="toggleShipAccounts"><svg class="bh-icon bh-icon-check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg></label>
+                        Use my UPS / FedEx Account
+                        <span ng-show="isUsingShipAccount()" class="ng-hide"> - <a ng-click="toggleShipAccounts()" class="c31 cursor-pointer ng-binding" data-selenium="selectedShipAccount">#</a></span>
+                    </div>
+                    <div class="break"></div>
+                    <div class="break"></div>
+                </div>
+                <div class="section center-align dutiesAndTax clearfix ng-scope ng-hide" bh-order-data="duties" ng-show="showDuties() &amp;&amp; !isShippingRouteDisabled()" bh-disable="restrictions.length > 0" data-selenium="dutiesAndTaxSection">
+                    <p class="dutiesAndTax-header fs18" ng-hide="order.shippingProfile.country === 'CA'" data-selenium="dutiesAndTaxHeader"><span class="semibold">Duties &amp; Tax:</span> How would you like to pay?</p>
+                    <p class="dutiesAndTax-header fs18 ng-hide" ng-show="order.shippingProfile.country === 'CA'" data-selenium="dutiesAndTaxHeader"><span class="semibold">Customs Clearance:</span> How would you like to pay?</p>
+                    <div class="break"></div>
+                    <div class="dutiesAndTax-option clearfix" data-selenium="dutiesAndTaxOption">
+                        <div class="clearfix">
+                            <label class="semibold left fs18 dutiesAndTax-select ng-isolate-scope" ng-class="{'selected':order.isPayDuties === 'N'}" bh-disabled="isOnlyPayNowAvailable()" popover-template="''" popover-trigger="hover" data-selenium="dutiesPayNowNLabel">
+                                <span class="inlineBlock"><svg class="bh-icon bh-icon-check displayNone" style="height:18px; width:16px; fill:#fff;" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg></span>
+                                I'll Handle Myself
+                                <input name="dutiesPayNow" type="radio" ng-model="order.isPayDuties" class="displayNone ng-pristine ng-untouched ng-valid" value="N" ng-change="setPayDuties()" data-selenium="dutiesPayNowN">
+                            </label>
+                            <label class="semibold left fs18 relative dutiesAndTax-select ng-isolate-scope" ng-class="{'selected':order.isPayDuties === 'Y'}" bh-disabled="!!order.duties.disabled" popover-template="''" popover-trigger="hover" data-selenium="dutiesPayNowYLabel">
+                                <span class="absolute fs12 recommended">Recommended!</span>
+                                <span class="inlineBlock"><svg class="bh-icon bh-icon-check displayNone" style="height:18px; width:16px; fill:#fff;" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg></span>
+                                Fast &amp; Easy Pre-Pay
+                                <input name="dutiesPayNow" type="radio" ng-model="order.isPayDuties" class="displayNone ng-pristine ng-untouched ng-valid" value="Y" ng-change="setPayDuties()" data-selenium="dutiesPayNowY">
+                            </label>
+                        </div>
+                        <div>
+                            <p class="fs14 light left c37 center-align dutiesAndTax-msg" data-selenium="dutiesAndTaxMsg">Want a larger choice of shipping methods? Opt to pay later.</p>
+                            <p class="fs14 light left c37 center-align dutiesAndTax-msg" data-selenium="dutiesAndTaxMsg">Save time &amp; headaches: pay all customs fees now and be done. Period!</p>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="shipping-methods" class="ng-scope ng-isolate-scope" bh-order-data="packages" bh-disabled="order.shippingData.restrictions.length > 0 || (showDuties() &amp;&amp; !order.isPayDuties)" data-selenium="shippingMethods">
+
+                    <!-- ngIf: !isStorePickup() && !order.isNonShipOrder --><div class="shipping-packages ng-scope" ng-show="packages.length" ng-if="!isStorePickup() &amp;&amp; !order.isNonShipOrder" data-selenium="shippingPackages">
+                        <!-- ngIf: showNoFreeToPOB() -->
+                        <div class="section center-align merge-split-container ng-hide" ng-show="hasInAndOutStock() &amp;&amp; !isShippingRouteDisabled()" data-selenium="mergeSplitContainer">
+                            <p class="fs18 merge-split-header" data-selenium="mergeSplitHeader">
+                                <span class="inlineBlock"><svg class="bh-icon bh-icon-error-light" style="height:30px; width:30px; fill:#ff9933;" data-selenium="error-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#error-light"></use></svg></span>
+                                <span class="">&nbsp;&nbsp;Some items below are <span class="semibold">not in stock.</span></span>
+                            </p>
+                            <div class="clearfix">
+                                <label class="fs18 left center-align semibold cursor-pointer merge-split-option selected" ng-class="{'selected':order.splitOrder === 'N'}" data-selenium="setSplitMergeNLabel">
+                                    <input type="radio" name="splitOrder" ng-model="order.splitOrder" value="N" class="displayNone ng-pristine ng-untouched ng-valid" ng-change="setSplitMerge('N')" data-selenium="setSplitMergeN">
+                                    <span class="inlineBlock"><svg class="bh-icon bh-icon-check displayNone" style="height:18px; width:16px; fill:#fff;" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg></span>
+                                    Ship when all items are in stock
+                                </label>
+                                <label class="fs18 left center-align semibold cursor-pointer merge-split-option" ng-class="{'selected':order.splitOrder === 'Y'}" data-selenium="setSplitMergeYLabel">
+                                    <input type="radio" name="splitOrder" ng-model="order.splitOrder" value="Y" class="displayNone ng-pristine ng-untouched ng-valid" ng-change="setSplitMerge('Y')" data-selenium="setSplitMergeY">
+                                    <span class="inlineBlock"><svg class="bh-icon bh-icon-check displayNone" style="height:18px; width:16px; fill:#fff;" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg></span>
+                                    Ship in-stock items first
+                                </label>
+                            </div>
+                            <!-- ngIf: order.shippingProfile.country !== 'US' --><p class="fs13 light ng-scope" ng-if="order.shippingProfile.country !== 'US'" data-selenium="intlMultiplePkgs">
+                                Your order may ship in multiple packages
+                            </p><!-- end ngIf: order.shippingProfile.country !== 'US' -->
+                        </div>
+                        <!-- ngRepeat: package in packages --><div class="section table shipping-package shipping-package-type_ship selenium sel-shippingPackage" ng-repeat="package in packages" bh-order-shipping-package="" data-selenium="shippingPackage">
+                            <div class="shipping-package-left-container table-cell" ng-class="{'collapse':package.items.length > 6 &amp;&amp; !package.showAllItems}">
+                                <div class="table">
+                                    <div class="table-row">
+                                        <h2 class="shipping-package-header js-shipping-package-header c1 table-cell" data-selenium="shippingPackageHeader" style="height: 74px;">
+                                            <svg class="bh-icon bh-icon-location inlineBlock" style="height:28px; width:17px; fill:#7f7f7f;" ng-hide="package.isDownload || package.isEmail" data-selenium="location"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#location"></use></svg>
+                                            <svg class="bh-icon bh-icon-download inlineBlock ng-hide" style="height:28px; width:22px; fill:#7f7f7f;" ng-show="package.isDownload" data-selenium="download"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#download"></use></svg>
+                                            <svg class="bh-icon bh-icon-envelope inlineBlock ng-hide" style="height:28px; width:22px; fill:#7f7f7f;" ng-show="package.isEmail" data-selenium="envelope"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#envelope"></use></svg>
+                                            <span class="upper fs20 inlineBlock" data-selenium="shippingFrom">
+                                                &nbsp;&nbsp;<span ng-hide="package.isDownload || package.isEmail">Shipping from </span><span class="semibold ng-binding">B&amp;H</span>
+                                                <span class="" ng-show="!package.isDownload &amp;&amp; !package.isEmail &amp;&amp; order.shippingProfile.country !== 'US'" data-selenium="shippingTo">
+                                                    to <span class="semibold ng-binding">@TempData["country"]</span>
+                                                </span>
+                                            </span>
+                                            <p class="right fs20 package-total-items relative ng-binding" data-selenium="packageTotalItems">
+                                                <span class="bold ng-binding">1 </span>item
+                                            </p>
+                                            <div ng-show="order.shippingProfile.country === 'US'" class="ng-hide">
+                                                <!-- ngIf: package.SignatureWillBeRequired --><div ng-if="package.SignatureWillBeRequired" class="shipping-package-message ng-scope" data-selenium="signatureWillBeRequired">
+                                                    <span class="inlineBlock fs14 light">
+                                                        Signature will be required upon delivery.
+                                                    </span>
+                                                </div><!-- end ngIf: package.SignatureWillBeRequired -->
+                                                <!-- ngIf: package.SignatureMayBeRequired -->
+                                            </div>
+                                            <!-- ngIf: package.isEmail -->
+                                            <div class="break"></div>
+                                        </h2>
+                                    </div>
+                                </div>
+                                <div class="shipping-bucket clearfix" data-selenium="shippingBucket">
+                                    <!-- items list for shipping -->
+                                    <div class="relative shipping-bucket-items-container" data-selenium="shippingBucketItemsContainer">
+                                        <div class="fs13 bold shipping-item-header" data-selenium="shippingItemHeader">
+                                            <div class="break"></div>
+                                            <span class="c35 inlineBlock shipping-item-img-link"></span>
+                                            <span class="c35 inlineBlock shipping-item-name"></span>
+                                            <span class="c35 inlineBlock center-align shipping-item-stock" data-selenium="shippingItemStockHeader">STOCK</span>
+                                            <span class="c35 inlineBlock center-align shipping-item-qty" data-selenium="shippingItemQtyHeader">QTY</span>
+                                            <span class="c35 inlineBlock center-align shipping-item-total" data-selenium="shippingItemTotalHeader">SUBTOTAL</span>
+                                        </div>
+                                       @{ var item = (List<Item>)Session["cart"];
+                                           float subTot = 0; }
+
+                                    @if (item != null)
+                                    {
+                                        foreach (Item itemPro in (List<Item>)Session["cart"])
+                                        {
+                                            float price = Convert.ToSingle(@itemPro.Pro.Price) * itemPro.Quantity;
+                                            subTot = subTot + price;
+
+                                        <div class="fs14 shipping-item ng-scope" ng-repeat="item in package.items | orderBy : 'inStock' : !isShipAllLater()" ng-controller="ItemController" data-selenium="shippingItem">
+
+                                            <a class="inlineBlock center-align relative shipping-item-img-link" 
+                                               data-selenium="shippingItemImgLink">
+                                                <img class="shipping-item-img" ng-src="@itemPro.Pro.Image" 
+                                                     data-selenium="shippingItemImg" src="@itemPro.Pro.Image">
+                                            </a>
+                                            <a class="shipping-item-name c1 noUnderline inlineBlock relative" 
+                                               data-selenium="shippingItemName">
+                                                <span class="inlineBlock ng-binding" popover="" popover-trigger="hover" 
+                                                      popover-placement="top">@itemPro.Pro.Name </span>
+                                                <span class="shipping-item-price bold c4 inlineBlock ng-binding" 
+                                                      data-selenium="shippingItemPrice"><span class="fs12 ng-hide" 
+                                   ng-show="!order.currency.isUSD &amp;&amp; item.price.replace(',','') > 0">USD </span>@itemPro.Pro.Price</span>
+                                               
+                                            </a>
+                                            <span ng-class="item.inStock? 'c2' : 'c16'" class="semibold inlineBlock center-align shipping-item-stock c2" data-selenium="shippingItemStock">
+                                                <span ng-class="package.isDownload?'c16 upper':''" class="ng-binding">In Stock</span>
+                                                <!-- ngIf: item.shipTime -->
+                                            </span>
+                                            <span class="inlineBlock center-align shipping-item-qty ng-binding" data-selenium="shippingItemQty">1</span>
+                                            <span class="c13 inlineBlock center-align shipping-item-total ng-binding" data-selenium="shippingItemTotal"><span class="fs12 ng-hide" ng-show="!order.currency.isUSD &amp;&amp; item.totalPrice.replace(',','') > 0">USD </span>@itemPro.Pro.Price</span>
+                                            <div class="break ng-hide" ng-show="!$last"></div>
+                                            <div class="break ng-hide" ng-show="!$last"></div>
+                                        </div><!-- end ngRepeat: item in package.items | orderBy : 'inStock' : !isShipAllLater() -->
+                                        }
+                                    }
+                                    </div>
+                                </div>
+                                <div class="show-all-items c5 semibold ng-hide" ng-show="package.items.length > 6" ng-click="package.showAllItems = !package.showAllItems">
+                                    <span ng-hide="package.showAllItems" class="ng-binding">Show All 1 items</span>
+                                    <span ng-show="package.showAllItems" class="ng-hide">Show less</span>
+                                </div>
+                            </div>
+
+
+                            <!-- methods list -->
+                            <div class="shipping-package-right-container table-cell shipping-bucket-options-container" data-selenium="shippingBucketOptionsContainer">
+
+                                <div class="package-status js-package-status c1" style="height: 74px;">
+                                    <p class="fs18">
+                                        <span ng-show="!package.hasStockAndNoStockItems || (package.hasStockAndNoStockItems &amp;&amp; isShipAllLater())">Estimated Delivery:</span>
+                                        <span ng-show="package.hasStockAndNoStockItems &amp;&amp; !isShipAllLater()" class="ng-hide"><strong>In-stock</strong> items, estimated Delivery:</span>
+                                        <span ng-show="package.type === 'ship'" class="package-status-message bold block ng-binding">3-5 Business Day                                                                           </span>
+                                        <span ng-show="(package.hasOutStock() &amp;&amp; !package.hasStockAndNoStockItems) || (package.hasOutStock() &amp;&amp; isShipAllLater())" class="c16 fs14 semibold ng-hide">When all items are in stock</span>
+                                    </p>
+                                    <!-- <p class="fs14 light selenium sel-packageStatusInner">{{package.selected.isBetterMethod? 'Expedited Delivery' : package.selected.name}}</p> -->
+                                </div>
+
+
+                                <div class="shipping-options" ng-class="{'show-all-options':package.showAllOptions}">
+                                    <!-- ngRepeat: option in package.methodsToShow() track by $index --><div class="c2 noUnderline cursor-pointer relative saved-item shipping-option option-index-0 selected" bh-ship-method="" ng-repeat="option in package.methodsToShow() track by $index" ng-click="selectMethod();" ng-class="{'last':$last,'selected':package.selected.id === option.id}">
+                                        <!-- ngIf: !package.isDownload --><div ng-if="!package.isDownload" class="btn-select semibold inlineBlock center-align shipping-option-select-selected ng-scope">
+                                            <svg class="bh-icon bh-icon-check displayNone" style="height:20px; width:20px; fill:#fff;" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg>
+                                        </div><!-- end ngIf: !package.isDownload -->
+                                        <!-- ngIf: package.isDownload -->
+                                        <!-- <div class="shipping-option-name inlineBlock fs14 center-align {{option.carrier}}">
+                                            {{option.carrier ? option.name : ''}}
+                                        </div> -->
+
+                                        <div class="shipping-option-description-container inlineBlock">
+                                            <div class="fs16 c2 clearfix">
+                                                <span class="shipping-option-description left  ng-binding">FedEx International Priority                      </span>
+                                                <span ng-hide="hideCost">
+                                                    <span ng-hide="option.cost === '0.00'" class="shipping-option-cost shipping-option-without-discount right c1 fs16 semibold ng-binding">
+                                                        $100
+                                                    </span>
+                                                    <span ng-show="option.cost === '0.00' &amp;&amp; package.type === 'ship'" class="shipping-option-cost shipping-option-without-discount right c40 fs16 semibold ng-hide">
+                                                        FREE
+                                                    </span>
+                                                </span>
+                                            </div>
+                                            <div ng-show="package.type === 'ship'" class="fs14 c1">
+                                                <!-- <span ng-show="!package.hasOutStock()">Estimated Delivery:</span> -->
+                                                <!-- <span ng-show="(package.hasOutStock() && !package.hasStockAndNoStockItems) || (package.hasOutStock() && isShipAllLater())" class="c16">When all items are in stock:</span> -->
+                                                <!-- <span ng-show="package.hasStockAndNoStockItems && !isShipAllLater()"><strong>In-stock</strong> items, estimated Delivery:</span>  -->
+                                                <span class="semibold ng-binding">3-5 Business Day                                                                            </span>
+                                            </div>
+                                        </div>
+
+                                        <!-- <div class="shipping-option-cost shipping-option-without-discount inlineBlock fs20 semibold absolute">
+                                            {{(option.cost === '0.00' ? 'FREE' : '$'+option.cost)}}
+                                        </div> -->
+                                        <!-- ngIf: isUsingShipAccount() -->
+                                    </div><!-- end ngRepeat: option in package.methodsToShow() track by $index --><div class="c2 noUnderline cursor-pointer relative saved-item shipping-option option-index-1 last" bh-ship-method="" ng-repeat="option in package.methodsToShow() track by $index" ng-click="selectMethod();" ng-class="{'last':$last,'selected':package.selected.id === option.id}">
+                                        <!-- ngIf: !package.isDownload --><div ng-if="!package.isDownload" class="btn-select semibold inlineBlock center-align shipping-option-select-selected ng-scope">
+                                            <svg class="bh-icon bh-icon-check displayNone" style="height:20px; width:20px; fill:#fff;" data-selenium="check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg>
+                                        </div><!-- end ngIf: !package.isDownload -->
+                                        <!-- ngIf: package.isDownload -->
+                                        <!-- <div class="shipping-option-name inlineBlock fs14 center-align {{option.carrier}}">
+                                            {{option.carrier ? option.name : ''}}
+                                        </div> -->
+
+                                        <div class="shipping-option-description-container inlineBlock">
+                                            <div class="fs16 c2 clearfix">
+                                                <span class="shipping-option-description left  ng-binding">UPS Worldwide Saver                               </span>
+                                                <span ng-hide="hideCost">
+                                                    <span ng-hide="option.cost === '0.00'" class="shipping-option-cost shipping-option-without-discount right c1 fs16 semibold ng-binding">
+                                                        $100
+                                                    </span>
+                                                    <span ng-show="option.cost === '0.00' &amp;&amp; package.type === 'ship'" class="shipping-option-cost shipping-option-without-discount right c40 fs16 semibold ng-hide">
+                                                        FREE
+                                                    </span>
+                                                </span>
+                                            </div>
+                                            <div ng-show="package.type === 'ship'" class="fs14 c1">
+                                                <!-- <span ng-show="!package.hasOutStock()">Estimated Delivery:</span> -->
+                                                <!-- <span ng-show="(package.hasOutStock() && !package.hasStockAndNoStockItems) || (package.hasOutStock() && isShipAllLater())" class="c16">When all items are in stock:</span> -->
+                                                <!-- <span ng-show="package.hasStockAndNoStockItems && !isShipAllLater()"><strong>In-stock</strong> items, estimated Delivery:</span>  -->
+                                                <span class="semibold ng-binding">3-5 Business Days                                                                           </span>
+                                            </div>
+                                        </div>
+
+                                        <!-- <div class="shipping-option-cost shipping-option-without-discount inlineBlock fs20 semibold absolute">
+                                            {{(option.cost === '0.00' ? 'FREE' : '$'+option.cost)}}
+                                        </div> -->
+                                        <!-- ngIf: isUsingShipAccount() -->
+                                    </div><!-- end ngRepeat: option in package.methodsToShow() track by $index -->
+                                </div>
+                                <div class="break"></div>
+                                <div class="center-align cursor-pointer ng-hide" ng-show="package.availableOptions.length > 2">
+                                    <div class="see-more-available-shipping-options">
+
+                                        <span class="c5 semibold block" ng-hide="package.showAllOptions" ng-click="package.showAllOptions = true">
+                                            Show more shipping options
+                                            <br>
+                                            <svg class="bh-icon bh-icon-arrow-down-light relative" style="height:12px; width:14px; fill:#165485;" data-selenium="arrow-down-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-down-light"></use></svg>
+                                        </span>
+                                        <span class="c5 semibold block ng-hide" ng-show="package.showAllOptions" ng-click="package.showAllOptions = false">
+                                            <svg class="bh-icon bh-icon-arrow-up-light relative" style="height:12px; width:14px; fill:#165485;" data-selenium="arrow-up-light"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-up-light"></use></svg>
+                                            <br>
+                                            Hide more shipping options
+                                        </span>
+                                    </div>
+                                    <div class="break"></div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="clearfix"></div>
+
+                            <!-- ngIf: false -->
+                        </div><!-- end ngRepeat: package in packages -->
+                    </div><!-- end ngIf: !isStorePickup() && !order.isNonShipOrder -->
+                    <!-- ngIf: isStorePickup() || order.isNonShipOrder -->
+                </div>
+
+            </div>
+
+            <!-- ngIf: !isStorePickup() -->
+            <div class="center-align ng-scope" ng-if="!isStorePickup()" stick-to-bottom="">
+                <br>
+           <a href="/Home/Payment" ng-if="order.shippingData.packages.length" ng-show="showNextButton()" bh-continue-from-shipping="" ng-click="vm.continueFromShipping()" class="fs24 cursor-pointer c18 noUnderline center-align next-btn ng-binding ng-scope" data-selenium="continueFromShipping">
+                    Continue to Payment
+                </a><!-- end ngIf: order.shippingData.packages.length -->
+                <br>
+            </div><!-- end ngIf: !isStorePickup() -->
+        </div>
+
+        <!-- ngIf: isStorePickup() -->
+
+        <div class="ng-scope" bh-order-restrictions="shipping" data-selenium="bhOrderRestrictions">
+            <!-- ngRepeat: inlineRestriction in restrictions -->
+        </div>
+
+    </div>
+                                           }
+                                           else
+                                           {
+                                            <h1 style="padding:100px;font-size:xx-large">Your Cart is Empty<a href="/"> Go Home</a> </h1>
+
+
+                                           }

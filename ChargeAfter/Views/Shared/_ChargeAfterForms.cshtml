@@ -1,0 +1,892 @@
+﻿@using ChargeAfter.ViewModel;
+@{
+    Layout = null;
+}
+
+@{
+    var item = (List<Item>)Session["cart"];
+    float subTot = 0;
+    float pay = 0;
+    if (item != null)
+    {
+        foreach (Item itemPro in (List<Item>)Session["cart"])
+        {
+            float price = Convert.ToSingle(@itemPro.Pro.Price) * 1;
+            subTot = subTot + price;
+            Session["Subtotal"] = subTot;
+
+        }
+        pay = 100 + subTot;
+    }
+}
+<div class="left view-container relative" data-selenium="viewContainer">
+    <!-- uiView:  --><div id="ng-view" ui-view="" class="parent-ui-view ng-scope payment" ng-class="$state.current.name | slugify" data-selenium="ngView">
+        <h2 class="c1 header ng-scope" bh-mlt="" data-selenium="paymentHeader">Select a Payment Method</h2>
+
+        <div class="clearfix payment-options ng-scope ng-isolate-scope" bh-payment-nav="" data-selenium="paymentOptions">
+            <div ng-click="preferredMethod('CC')" class="payment-options-button fs16 upper center-align light c36 cursor-pointer creditCard" ng-class="{'selected':preferredMethod() === 'CC' || preferredMethod() === 'BHC'}" data-selenium="creditCard">
+                <svg class="bh-icon bh-icon-creditCard inlineBlock" data-selenium="creditCard"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#creditCard"></use></svg>
+                <span class="inlineBlock">Credit / Debit Card</span>
+            </div>
+            <div ng-click="!hasAuthorizedAndInvalidCards() &amp;&amp; preferredMethod('PP')" class="payment-options-button fs16 upper center-align light c36 cursor-pointer ng-isolate-scope selected" ng-class="{'selected':preferredMethod() === 'PP'}" data-selenium="payPal">
+                <svg class="bh-icon bh-icon-payPal inlineBlock" data-selenium="payPal">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#payPal"></use>
+                </svg>
+                <span class="inlineBlock" style="font-size:18px;">Flexible payment plans</span>
+            </div>
+        </div>
+        <div class="break ng-scope"></div>
+        <div class="break ng-scope"></div>
+
+        <div class="payment-container relative clearfix ng-scope" bh-payment-container="" ng-class="{'showSplitBalance':showSplitBalance()}" data-selenium="paymentContainer">
+
+            <div style="height:800px" class="non-bhc-methods relative" ng-class="{
+			'section':!state.isAddingOrCreatingMethod() &amp;&amp; methods().length === 1,
+			'shrink-width':showSplitBalance()
+		}" data-selenium="nonBhcMethods">
+                <div class="payment-methods-list payment-methods relative section clearfix ng-hide" ng-show="showAddedArea()" data-selenium="paymentMethods">
+                    <div class="payment-method-list" ng-show="!state.isCreatingMethod()" data-selenium="paymentMethodList">
+                        <!-- ngIf: showCupMessage() -->
+                        <div class="ng-hide" ng-show="splitListHasBHC() &amp;&amp; hasNonBHCMethods()" data-selenium="splitListHasBhcAndhasNonBhcMethods">
+                            <h3 class="fs24 light upper">Credit/Debit Cards</h3>
+                            <div class="break"></div>
+                            <div class="devider"></div>
+                        </div>
+                        <!-- ngRepeat: method in methods() | filter:{type:preferredMethod()} track by $index | orderBy : 'statusSort' -->
+                    </div>
+                    <!-- ngIf: preferredMethod() === 'CC' && !state.isCreatingAndNotAddingMethod() -->
+
+
+
+                </div>
+
+                <div class="relative section add-payment-method-area ng-scope showFormInAddingArea" ng-class="{
+				'creatingLayer':state.isCreatingAndNotAddingMethod(),
+				'showFormInAddingArea':showFormInAddingArea(method)
+			}" ng-if="showAddingArea()" bh-payment-method="" data-selenium="addPaymentMethodArea" style="height:800px">
+
+                    <div class="ng-scope ng-hide" ng-show="showListInAddingArea(method)" ng-include="'payment-method-tpl_CC_SAVED-LIST'" data-selenium="showListInAddingArea">
+                        <h3 class="c1 fs26 light displayNone ng-scope" data-selenium="selectCardSplitPaymentHeader">SELECT A CARD FOR SPLIT PAYMENT</h3>
+                        <div bh-saved-cards="" class="saved-payment-method-list ng-scope" data-selenium="savedPaymentMethodList">
+                            <p class="tax-exemt-billing-cc-only ng-hide" ng-show="order.isUsingTaxExempt" data-selenium="taxExemtBillingCcOnly">Due to the Tax Exempt status of your account, purchases can only be made with credit cards associated with your tax exempt Billing Address on file.</p>
+                            <div class="fs18 center-align cursor-pointer add-new-card" ng-show="!state.isCreatingMethod()" ng-click="newMethod()" data-selenium="addNewCard">
+                                <svg class="bh-icon bh-icon-plus" style="height:16px; width:16px; fill:#595959;" data-selenium="plus"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#plus"></use></svg> New Card
+                            </div>
+                            <!-- ngRepeat: savedMethod in savedMethodsOfPreferred() -->
+                            <svg class="bh-icon bh-icon-x cursor-pointer icon-close displayNone absolute" style="height:18px; width:18px; fill:#b0b0b0;" ng-click="state.cancel()" data-selenium="x"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#x"></use></svg>
+                        </div>
+                    </div>
+                    <div name="methodform" class="section ng-pristine ng-valid ng-scope" ng-if="showFormInAddingArea(method)" ng-include="formTemplate()" ng-submit="createMethod()" ng-model-options="{allowInvalid: true}" bh-payment-form="inAddingArea" ng-class="{
+					'cc-error-row-one-visible': vm.ccIframeStatus.visibleErrorRows[0],
+					'cc-error-row-two-visible': vm.ccIframeStatus.visibleErrorRows[1]
+				}" novalidate="" data-selenium="formInAddingArea">
+                        <div id="JAfinancingPane" style="display: block;">
+                            <!--?xml version="1.0" encoding="utf-16"?-->
+                            <span id="BreadCrumbsPane" class="BreadCrumbs"></span>
+                            <div style="">
+
+                                @{
+                                            var name = TempData["name"];
+                                            var email = TempData["email"];
+                                            var address = TempData["address"];
+                                            var city = TempData["city"];
+                                            var state = TempData["state"];
+                                            var zip = TempData["country"];
+                                            var phone = TempData["phone"];
+                                    }
+
+                                <form id="msform" action="/Home/Payment" method="post">
+                                    <!-- progressbarr -->
+                                    <ul id="progressbarr">
+                                        <li class="active">PERSONAL Info</li>
+                                        <li>More Details</li>
+                                        <li id="offerLine">Offers</li>
+                                        <li id="ConfimeLine">Confirm</li>
+                                    </ul>
+                                    @if (ViewData["message"] != null)
+                                    {
+                                        <p>@ViewData["message"]</p>
+                                    }
+                                    <fieldset style="margin-left:auto; margin-right:auto">
+                                        <div>
+                                            <link href="/Content/Style.css" rel="stylesheet">
+
+                                            @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">*@
+                                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+                                            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+                                            <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+                                            <!-- Isolated Version of Bootstrap, not needed if your site already uses Bootstrap -->
+                                            <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css">
+
+                                            <!-- Bootstrap Date-Picker Plugin -->
+                                            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+                                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css">
+                                            <div id="partial1" ng-hide="order.isUsingTaxExempt" class="ng-scope" data-selenium="isNotUsingTaxExempt">
+
+                                                <div class="break"></div>
+                                                <div style="margin-left:auto; margin-right:auto">
+                                                    <div style="width:65%; height:100%; margin-left:auto; margin-right:auto">
+                                                        <div style="padding:10px; text-align:center">
+                                                            <b style="">B&H Financing Application Powered by ChargeAfter</b>
+                                                            <p style="font-size:initial;  text-align:center; padding:0; padding:5px">
+                                                                Pay over time for your purchase.<br>
+
+                                                            </p>
+                                                        </div>
+
+                                                        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+                                                        <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+                                                        <script type="text/javascript">
+                                        function Validate() {
+                                            var mobile = document.getElementById("ssn").value;
+                                            var pattern = /^\d{9}$/;
+                                            if (pattern.test(mobile)) {
+                                                $("#ssnError").text("");
+                                                $("#ssnErrorS").text("Just Perfect!");
+
+                                                return true;
+                                            }
+                                            else {
+                                                $("#ssnErrorS").text("");
+                                                $("#ssnError").text("It is not valid Social Security number.input 9 digits number!");
+                                            }
+                                            return false;
+                                        }
+                                                        </script>
+
+
+                                                        <div style="padding:20px; background-color:rgba(193, 193, 193, 0.38); padding-bottom:30px; padding-top:30px">
+
+
+                                                            <div class="form-group" style="padding:5px; margin-bottom:5px">
+                                                                <input type="text" class="form-control" placeholder="John Doe" value="@name" title="Your Name" name="name" id="name" style="height: 40px; padding: 0 0 0 10px; border: 1px solid #ddd; border-radius: 4px; color: #4c4c4c;">
+                                                            </div>
+                                                            <div class="form-group" style="padding:5px; margin-bottom:5px">
+                                                                <input type="email" title="Email" value="@email"  placeholder="johndoe@gmail.com" name="email" class="form-control" id="mail" style="height: 40px; padding: 0 0 0 10px; border: 1px solid #ddd; border-radius: 4px; color: #4c4c4c;">
+                                                            </div>
+                                                            <div class="form-group" style="padding:5px; margin-bottom:5px">
+                                                                <input type="text"  title="Phone Number" style="height: 40px; padding: 0 0 0 10px; border: 1px solid #ddd; border-radius: 4px; color: #4c4c4c;" name="mobile" required="" min="10" placeholder="Mobile Phone Number" maxlength="10" pattern="[1-9]{1}[0-9]{9}" minlength="10" value="@phone" class="form-control" id="mobile">
+                                                            </div>
+                                                            <div class="form-group input-append date" style="padding:5px; margin-bottom:5px" id="dateRangePicker">
+                                                                <input type="text" required="" name="dob" title="Date of Birth" onfocus="(this.type='date')" onblur="(this.type='text')" id="date" placeholder="Birthday(mm/dd/yyyy)" class="form-control" style="height: 40px; padding: 0 0 0 10px; border: 1px solid #ccc; border-radius: 4px; color: #4c4c4c;
+height: 40px;padding: 0 0 0 10px;border: 1px solid #ddd;border-radius: 4px;color: #4c4c4c;width: 100%;">
+                                                                <span id="dateError" style="font:bold;color:red"></span>
+                                                            </div>
+                                                            <script>
+                                                                $('input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="time"], input[type="week"]').each(function () {
+                                                            var el = this, type = $(el).attr('type');
+                                                            if ($(el).val() == '') $(el).attr('type', 'text');
+                                                            $(el).focus(function () {
+                                                                $(el).attr('type', type);
+                                                                el.click();
+                                                            });
+                                                            $(el).blur(function () {
+                                                                if ($(el).val() == '') $(el).attr('type', 'text');
+                                                            });
+                                                        });
+                                                            </script>
+
+                                                            <div class="form-group" style="padding:5px; margin-bottom:5px">
+                                                                <input type="text" name="ssn" placeholder="Social Security Number(XXX-XXX-XXX)" class="form-control" id="ssn" data-validation-required-error-msg="Please Enter Your Social Security Number." title="Social Security Number" required="" maxlength="9" minlength="9" pattern="\d{9}" onkeyup="return Validate()" style="height: 40px; padding: 0 0 0 10px; border: 1px solid #ddd; border-radius: 4px; color: #4c4c4c;">
+                                                                <span id="ssnError" style="font:bold;color:red"></span>
+                                                                <span id="ssnErrorS" style="font:bold;color:green"></span>
+                                                            </div>
+                                                        </div>
+                                                        <div style="padding-left:20px;padding-right:20px; font-size:14px; padding-bottom:10px">
+                                                            <p style="text-align: center;margin-top:20px !important;">
+                                                                Please ensure that all the information provided is your own. It will be used to verify
+                                                                your Identity.
+                                                            </p>
+                                                            <p style="text-align:center;">
+                                                                By creating an account. I authorize ChargeAfter to obtain my credit reports, and I
+                                                                agree to the <a style="color:blue;">ChargeAfter Terms of Service and Electronic Disclosures.</a>
+                                                            </p>
+                                                        </div>
+                                                        <p style="font-size:16px; text-align:center; padding-top:10px; padding-bottom:10px; font-weight:700">
+                                                            <b> Checking your eligibility will not effect your credit score.</b>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <script>
+    $(document).ready(function(){
+        var date_input = $('input[name="dob"]'); //our date input has the name "date"
+      var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+      var options={
+          format: 'mm/dd/yyyy',
+          placeholder:"8uwyuewyu",
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+      };
+      date_input.datepicker(options);
+    })
+                                            </script>
+                                        </div>
+
+
+                                        <input type="button" name="next" class="next action-button fs18 cursor-pointer c18 noUnderline center-align next-btn" style="padding: 20px; padding-left:30px; padding-right:30px; background: #0692CC; margin-bottom:30px" value="Create Account">
+                                        <br>
+                                    </fieldset>
+                                   
+                                    <fieldset style="background-color:#fff; width:100% !important" id="Offers">
+                                       
+                                            <div name="methodform" class="section ng-pristine ng-valid ng-scope" ng-if="showFormInAddingArea(method)" ng-include="formTemplate()" ng-submit="createMethod()" ng-model-options="{allowInvalid: true}" bh-payment-form="inAddingArea" ng-class="{
+					'cc-error-row-one-visible': vm.ccIframeStatus.visibleErrorRows[0],
+					'cc-error-row-two-visible': vm.ccIframeStatus.visibleErrorRows[1]
+				}" novalidate="" data-selenium="formInAddingArea" style="margin-bottom:20px">
+                                                <div style="padding:10px; text-align:center; padding-bottom:0px; margin-top:30px; margin-bottom:30px">
+                                                    <b style="padding:5px">B&H Financing Application Powered by ChargeAfter</b>
+
+                                                    <h3 style="font-size:x-large; font-weight:bold; text-align:center">Easy Monthly Payments</h3>
+
+                                                </div>
+                                                <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+                                                <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+                                                <div ng-hide="order.isUsingTaxExempt" class="ng-scope" data-selenium="isNotUsingTaxExempt">
+                                                    <div style="padding:0px; padding-bottom:30px;padding-top:20px; margin-bottom:70px; margin-top:35px; ">
+                                                        <div style="width:50%; float:left; margin-bottom:20px">
+
+
+                                                            <div style="padding:20px; padding-right:0px; background-color:rgba(193, 193, 193, 0.38); padding-bottom:30px; padding-top:30px">
+                                                                
+                                                                <div class="form-group">
+                                                                    <select class="form-control" title="Employment Status" id="employmentStatus" name="employmentStatus" data-validation-required-error-msg="Please select your employment status." selection-colorid="" gateway-required="" aria-required="true" style="height: 40px; padding: 0 0 0 10px; border: 1px solid #ccc; border-radius: 4px; color: #4c4c4c;">
+                                                                        <option selected="" disabled="" value="">Employment Status</option>
+                                                                        <option value="EMPLOYED">Employed</option>
+                                                                        <option value="NOT_EMPLOYED">Unemployed</option>
+                                                                        <option value="SELF_EMPLOYED">Self Employed</option>
+                                                                        <option value="MILITARY">Military</option>
+                                                                        <option value="RETIRED_BENEFITS">Retired Benefits</option>
+                                                                        <option value="OTHER">Other</option>
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <select class="form-control" title="Estimated Credit Range" id="creditRange" name="CreditScore" data-validation-required-error-msg="Please select your credit score." selection-colorid="" gateway-required="" aria-required="true" style="height: 40px; padding: 0 0 0 10px; border: 1px solid #ccc; border-radius: 4px; color: #4c4c4c;">
+                                                                        <option selected="" disabled="" value="">Estimated Credit Range</option>
+                                                                        <option value=">720">&gt; 720</option>
+                                                                        <option value="680-720">680 - 720</option>
+                                                                        <option value="640-679">640 - 679</option>
+                                                                        <option value="550-639">550 - 639</option>
+                                                                        <option value="<550">&lt; 550</option>
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <select class="form-control" title="Housing Status" name="housingType" id="housingType" data-validation-required-error-msg="Please select your home type." selection-colorid="" gateway-required="" aria-required="true" style="height: 40px; padding: 0 0 0 10px; border: 1px solid #ccc; border-radius: 4px; color: #4c4c4c;">
+                                                                        <option selected="" disabled="" value="">Housing Status</option>
+                                                                        <option value="RENT">Rent</option>
+                                                                        <option value="MORTGAGE">Mortgage</option>
+                                                                        <option value="FULLYOWN">Fully Own</option>
+                                                                        <option value="PARTIALLYOWN">Partially Own</option>
+                                                                        <option value="OTHER">Other</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group left-inner-addon" style="text-align:left">
+                                                                    <span>$ </span>
+                                                                    <input type="text" onkeyup="javascript:this.value=Comma(this.value);" placeholder="Gross Annual Individual Income" id="GAI" maxlength="10" class="form-control number-format tooltipstered" title="Gross Annual Individual Income" name="grossIncome" autocomplete="off" data-validation-required-error-msg="Please enter your estimated annual gross revenue." aria-required="true" aria-invalid="false" style="height: 40px; padding: 0 0 0 10px; border: 1px solid #ccc; border-radius: 4px; color: #4c4c4c; padding-left: 25px;">
+                                                                </div>
+
+                                                                <div class="form-group left-inner-addon" style="text-align:left">
+                                                                    <span>$</span>
+                                                                    <input type="text" onkeyup="javascript:this.value=Comma(this.value);" name="netMonthly" id="netMonthly" placeholder="Net Monthly Income" maxlength="10" class="form-control" autocomplete="off" title="Net Monthly Income" data-validation-required-error-msg="Please enter your net monthly income." aria-required="true" aria-invalid="false" required="" style="height: 40px; padding: 0 0 0 10px; border: 1px solid #ccc; border-radius: 4px; color: #4c4c4c; padding-left: 25px;">
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <select class="form-control" title="Salary Frequency" name="salaryFrequency" id="salaryFrequency" data-validation-required-error-msg="Please select your salary frequency." selection-colorid="" gateway-required="" aria-required="true" style="height: 40px; padding: 0 0 0 10px; border: 1px solid #ccc; border-radius: 4px; color: #4c4c4c;">
+                                                                        <option selected="" disabled="" value="">Salary Frequency</option>
+                                                                        <option value="WEEKLY">Weekly</option>
+                                                                        <option value="BIWEEKLY">Bi-Weekly</option>
+                                                                        <option value="TWICEMONTHLY">Twice Monthly</option>
+                                                                        <option value="MONTHLY">Monthly</option>
+                                                                        <option value="YEARLY">Yearly</option>
+                                                                        <option value="OTHER">Other</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <script>
+                                                            function Comma(Num) { //function to add commas to textboxes
+                                                                Num += '';
+                                                                Num = Num.replace(',', ''); Num = Num.replace(',', ''); Num = Num.replace(',', '');
+                                                                Num = Num.replace(',', ''); Num = Num.replace(',', ''); Num = Num.replace(',', '');
+                                                                x = Num.split('.');
+                                                                x1 = x[0];
+                                                                x2 = x.length > 1 ? '.' + x[1] : '';
+                                                                var rgx = /(\d+)(\d{3})/;
+                                                                while (rgx.test(x1))
+                                                                    x1 = x1.replace(rgx, '$1' + ',' + '$2');
+                                                                return x1 + x2;
+                                                            }
+                                                        </script>
+                                                        <div style="width:50%; float:right; margin-bottom:20px">
+
+                                                            <div style="padding:20px; padding-left:0px; background-color:rgba(193, 193, 193, 0.38); padding-top:30px;">
+                                                                <div class="form-group" style="">
+                                                                    <input type="text" class="form-control" placeholder="" value="@address" title="Street Address" id="address" name="name" style="height: 40px; padding: 0 0 0 10px; border: 1px solid #ccc; border-radius: 4px; color: #4c4c4c;">
+                                                                </div>
+                                                                <div class="form-group" style="">
+                                                                    <input type="text" class="form-control" placeholder="" value="@city" title="City" id="city" name="name" style="width:50%; height: 40px; float:left; padding: 0 0 0 10px; border: 1px solid #ccc; border-radius: 4px; color: #4c4c4c;">
+                                                                    
+                                                                    <select name="state" id="state1" style="width:50%">
+                                                                        <option value="@state">@state</option>
+                                                                        <option value="AL">Alabama</option>
+                                                                        <option value="AK">Alaska</option>
+                                                                        <option value="AZ">Arizona</option>
+                                                                        <option value="AR">Arkansas</option>
+                                                                        <option value="CA">California</option>
+                                                                        <option value="CO">Colorado</option>
+                                                                        <option value="CT">Connecticut</option>
+                                                                        <option value="DE">Delaware</option>
+                                                                        <option value="DC">District of Columbia</option>
+                                                                        <option value="FL">Florida</option>
+                                                                        <option value="GA">Georgia</option>
+                                                                        <option value="HI">Hawaii</option>
+                                                                        <option value="ID">Idaho</option>
+                                                                        <option value="IL">Illinois</option>
+                                                                        <option value="IN">Indiana</option>
+                                                                        <option value="IA">Iowa</option>
+                                                                        <option value="KS">Kansas</option>
+                                                                        <option value="KY">Kentucky</option>
+                                                                        <option value="LA">Louisiana</option>
+                                                                        <option value="ME">Maine</option>
+                                                                        <option value="MD">Maryland</option>
+                                                                        <option value="MA">Massachusetts</option>
+                                                                        <option value="MI">Michigan</option>
+                                                                        <option value="MN">Minnesota</option>
+                                                                        <option value="MS">Mississippi</option>
+                                                                        <option value="MO">Missouri</option>
+                                                                        <option value="MT">Montana</option>
+                                                                        <option value="NE">Nebraska</option>
+                                                                        <option value="NV">Nevada</option>
+                                                                        <option value="NH">New Hampshire</option>
+                                                                        <option value="NJ">New Jersey</option>
+                                                                        <option value="NM">New Mexico</option>
+                                                                        <option value="NY">New York</option>
+                                                                        <option value="NC">North Carolina</option>
+                                                                        <option value="ND">North Dakota</option>
+                                                                        <option value="OH">Ohio</option>
+                                                                        <option value="OK">Oklahoma</option>
+                                                                        <option value="OR">Oregon</option>
+                                                                        <option value="PA">Pennsylvania</option>
+                                                                        <option value="RI">Rhode Island</option>
+                                                                        <option value="SC">South Carolina</option>
+                                                                        <option value="SD">South Dakota</option>
+                                                                        <option value="TN">Tennessee</option>
+                                                                        <option value="TX">Texas</option>
+                                                                        <option value="UT">Utah</option>
+                                                                        <option value="VT">Vermont</option>
+                                                                        <option value="VA">Virginia</option>
+                                                                        <option value="WA">Washington</option>
+                                                                        <option value="WV">West Virginia</option>
+                                                                        <option value="WI">Wisconsin</option>
+                                                                        <option value="WY">Wyoming</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group" style="">
+                                                                    <input type="text" id="yearResi" class="form-control" placeholder="Years at current Residence" value="" title="Years at current Residence" name="name" style="height:40px; padding: 0 0 0 10px; border: 1px solid #ccc; border-radius: 4px; color: #4c4c4c;">
+                                                                </div>
+                                                                <div class="form-group left-inner-addon" style="text-align:left">
+                                                                    <span>$ </span>
+                                                                    <input type="text" onkeyup="javascript:this.value=Comma(this.value);" id="monthlyRent" placeholder="Monthly Rent/Mortgage" maxlength="10" class="form-control number-format tooltipstered" title="Monthly Rent/Mortgage" autocomplete="off" data-validation-required-error-msg="Please enter your Monthly Rent/Mortgage." aria-required="true" aria-invalid="false" style="height: 40px; padding: 0 0 0 10px; border: 1px solid #ccc; border-radius: 4px; color: #4c4c4c; padding-left: 25px;">
+                                                                </div>
+                                                                <style>
+                                                                    .dateclass{
+    width:100%;
+}
+
+.dateclass.placeholderclass::before{
+    width:100%;
+    content:attr(placeholder);
+    background-color:#FFFFFF;
+}
+
+.dateclass.placeholderclass:hover::before{
+    width:0%;
+    content:"";
+}
+                                                                </style>
+                                                                
+                                                                <div class="form-group" style="margin-bottom:15px">
+                                                                    <input type="text" class="form-control" id="driverLicense" placeholder="Drivers License Number" value="" title="Drivers License Number" name="name" style="width:50%; height: 40px; float:left; margin-bottom:15px; padding: 0 0 0 10px; border: 1px solid #ccc; border-radius: 4px; color: #4c4c4c;">
+                                                                    <select name="state" id="driverstate" style="width:50%">
+                                                                        <option>Drivers License State</option>
+                                                                        <option value="AL">Alabama</option>
+                                                                        <option value="AK">Alaska</option>
+                                                                        <option value="AZ">Arizona</option>
+                                                                        <option value="AR">Arkansas</option>
+                                                                        <option value="CA">California</option>
+                                                                        <option value="CO">Colorado</option>
+                                                                        <option value="CT">Connecticut</option>
+                                                                        <option value="DE">Delaware</option>
+                                                                        <option value="DC">District of Columbia</option>
+                                                                        <option value="FL">Florida</option>
+                                                                        <option value="GA">Georgia</option>
+                                                                        <option value="HI">Hawaii</option>
+                                                                        <option value="ID">Idaho</option>
+                                                                        <option value="IL">Illinois</option>
+                                                                        <option value="IN">Indiana</option>
+                                                                        <option value="IA">Iowa</option>
+                                                                        <option value="KS">Kansas</option>
+                                                                        <option value="KY">Kentucky</option>
+                                                                        <option value="LA">Louisiana</option>
+                                                                        <option value="ME">Maine</option>
+                                                                        <option value="MD">Maryland</option>
+                                                                        <option value="MA">Massachusetts</option>
+                                                                        <option value="MI">Michigan</option>
+                                                                        <option value="MN">Minnesota</option>
+                                                                        <option value="MS">Mississippi</option>
+                                                                        <option value="MO">Missouri</option>
+                                                                        <option value="MT">Montana</option>
+                                                                        <option value="NE">Nebraska</option>
+                                                                        <option value="NV">Nevada</option>
+                                                                        <option value="NH">New Hampshire</option>
+                                                                        <option value="NJ">New Jersey</option>
+                                                                        <option value="NM">New Mexico</option>
+                                                                        <option value="NY">New York</option>
+                                                                        <option value="NC">North Carolina</option>
+                                                                        <option value="ND">North Dakota</option>
+                                                                        <option value="OH">Ohio</option>
+                                                                        <option value="OK">Oklahoma</option>
+                                                                        <option value="OR">Oregon</option>
+                                                                        <option value="PA">Pennsylvania</option>
+                                                                        <option value="RI">Rhode Island</option>
+                                                                        <option value="SC">South Carolina</option>
+                                                                        <option value="SD">South Dakota</option>
+                                                                        <option value="TN">Tennessee</option>
+                                                                        <option value="TX">Texas</option>
+                                                                        <option value="UT">Utah</option>
+                                                                        <option value="VT">Vermont</option>
+                                                                        <option value="VA">Virginia</option>
+                                                                        <option value="WA">Washington</option>
+                                                                        <option value="WV">West Virginia</option>
+                                                                        <option value="WI">Wisconsin</option>
+                                                                        <option value="WY">Wyoming</option>
+                                                                    </select>
+                                                                    <input type="date"  onClick="$(this).removeClass('placeholderclass')"  required="" 
+                                                                           ="dob" title="Date of Birth" onfocus="(this.type='date')" onblur="(this.type='text')" 
+                                                                           onload="(this.type='text')" id="Driverdate" placeholder="Driver license expiration date"
+                                                                            class="form-control dateclass placeholderclass" style="height: 40px; padding: 0 0 0 10px; border: 1px solid #ccc; border-radius: 4px; color: #4c4c4c;
+height: 40px;padding: 0 0 0 10px;border: 1px solid #ccc;border-radius: 4px;color: #4c4c4c;width: 100%;">
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="break" style="margin-bottom:30px"></div>
+
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <br />
+                                            </div>
+                                            <input type="button" name="previous" id="Getoffer" style="padding: 20px; margin-top:20px; background: #0692CC; margin-bottom:20px; margin-top:20px; padding-left:40px; padding-right:40px" value="Back" bh-paypal-button="" class="previous action-button fs18 cursor-pointer c18 noUnderline center-align next-btn" data-selenium="bhPaypalButton">
+                                            <input type="submit" id="GetOffers" name="next" style="padding: 20px; margin-top:20px; background: #0692CC; margin-top:20px; margin-bottom:20px" value="Proceed to offers" bh-paypal-button="" class="next action-button fs18 cursor-pointer c18 noUnderline center-align next-btn" data-selenium="bhPaypalButton">
+                                        
+                                    </fieldset>
+                                        
+                                   
+                                </form>
+                                
+
+                                <!-- jQuery -->
+                                <script src="http://thecodeplayer.com/uploads/js/jquery-1.9.1.min.js" type="text/javascript"></script>
+                                <!-- jQuery easing plugin -->
+                                <script src="http://thecodeplayer.com/uploads/js/jquery.easing.min.js" type="text/javascript"></script>
+                                <style>
+                                    * {
+                                        margin: 0px;
+                                        padding: 0px;
+                                        padding-bottom: 10px;
+                                        font-family: 'Century Gothic';
+                                    }
+
+                                    .form-group {
+                                        padding: 5px;
+                                        margin-bottom: 5px;
+                                    }
+
+                                    .p {
+                                        margin-top: 30px;
+                                    }
+
+                                    #msform {
+                                        width: 700px;
+                                        margin: 50px auto;
+                                        text-align: center;
+                                        position: relative;
+                                        font-family: 'Century Gothic';
+                                    }
+
+                                        #msform fieldset {
+                                            margin-left: auto;
+                                            margin-right: auto;
+                                            /*stacking fieldsets above each other*/
+                                            position: absolute;
+                                        }
+                                            /*Hide all except first fieldset*/
+                                            #msform fieldset:not(:first-of-type) {
+                                                display: none;
+                                            }
+
+                                        #msform .action-button {
+                                            color: #000;
+                                            cursor: pointer;
+                                        }
+
+                                            #msform .action-button:hover, #msform .action-button:focus {
+                                                box-shadow: 0 0 0 2px white, 0 0 0 3px #0692CC;
+                                            }
+
+                                    /*progressbarrr*/
+                                    #progressbarr {
+                                        margin-bottom: 15px;
+                                        overflow: hidden;
+                                        /*CSS counters to number the steps*/
+                                        counter-reset: step;
+                                    }
+
+                                        #progressbarr li {
+                                            list-style-type: none;
+                                            color: #000;
+                                            text-transform: uppercase;
+                                            font-size: 12px;
+                                            width: 25%;
+                                            float: left;
+                                            position: relative;
+                                            position: relative !important;
+                                        }
+
+                                            #progressbarr li:before {
+                                                content: counter(step);
+                                                counter-increment: step;
+                                                width: 20px;
+                                                line-height: 20px;
+                                                display: block;
+                                                font-size: 10px;
+                                                color: #fff;
+                                                background: #ccc;
+                                                border-radius: 3px;
+                                                margin: 0 auto 5px auto;
+                                            }
+                                            /*progressbarr connectors*/
+                                            #progressbarr li:after {
+                                                content: '' !important;
+                                                width: 100% !important;
+                                                height: 2px !important;
+                                                background: #ccc;
+                                                position: absolute !important;
+                                                left: -50% !important;
+                                                top: 9px !important;
+                                                margin-left: 10px;
+                                                margin-right: 10px;
+                                                /*z-index: -1 !important;*/ /*put it behind the numbers*/
+                                            }
+
+                                            #progressbarr li:first-child:after {
+                                                /*connector not needed before the first step*/
+                                                content: none !important;
+                                            }
+                                            /*marking active/completed steps green*/
+                                            /*The number of the step and the connector before it = green*/
+                                            #progressbarr li.active:before, #progressbarr li.active:after {
+                                                background: #0692CC;
+                                                color: white;
+                                            }
+
+                                    input[type="button"], input[type="submit"] {
+                                        background-color: #a6a6a6;
+                                        border: 0 none;
+                                        color: #fff;
+                                        font-family: CenturyGothic;
+                                        font-size: 14px;
+                                        letter-spacing: .5px;
+                                        padding-bottom: 2px;
+                                        cursor: pointer;
+                                        -webkit-appearance: none !important;
+                                        border-radius: 0;
+                                        color: #fff !important;
+                                        padding-left: 10px;
+                                        padding-right: 10px;
+                                    }
+                                </style>
+                                <script>
+                            //jQuery time
+                            var current_fs, next_fs, previous_fs; //fieldsets
+                            var left, opacity, scale; //fieldset properties which we will animate
+                            var animating; //flag to prevent quick multi-click glitches
+
+                            $(".next").click(function () {
+                                
+                                var dob = $("#date").val();
+                                
+                                if (dob == "")
+                                {
+                                    $("#dateError").text("This field is required !!");
+                                    return false;
+                                }
+                                if (animating) return false;
+                                animating = true;
+
+                                current_fs = $(this).parent();
+                                next_fs = $(this).parent().next();
+
+                                //activate next step on progressbarr using the index of next_fs
+                                $("#progressbarr li").eq($("fieldset").index(next_fs)).addClass("active");
+
+                                //show the next fieldset
+                                next_fs.show();
+                                //hide the current fieldset with style
+                                current_fs.animate({ opacity: 0 }, {
+                                    step: function (now, mx) {
+                                        //as the opacity of current_fs reduces to 0 - stored in "now"
+                                        //1. scale current_fs down to 80%
+                                        scale = 1 - (1 - now) * 0.2;
+                                        //2. bring next_fs from the right(50%)
+                                        left = (now * 50) + "%";
+                                        //3. increase opacity of next_fs to 1 as it moves in
+                                        opacity = 1 - now;
+                                        current_fs.css({ 'transform': 'scale(' + scale + ')' });
+                                        next_fs.css({ 'left': left, 'opacity': opacity });
+                                    },
+                                    duration: 800,
+                                    complete: function () {
+                                        current_fs.hide();
+                                        animating = false;
+                                    },
+                                    //this comes from the custom easing plugin
+                                    easing: 'easeInOutBack'
+                                });
+                            });
+
+                            $(".previous").click(function () {
+                                if (animating) return false;
+                                animating = true;
+
+                                current_fs = $(this).parent();
+                                previous_fs = $(this).parent().prev();
+
+                                //de-activate current step on progressbarr
+                                $("#progressbarr li").eq($("fieldset").index(current_fs)).removeClass("active");
+
+                                //show the previous fieldset
+                                previous_fs.show();
+                                //hide the current fieldset with style
+                                current_fs.animate({ opacity: 0 }, {
+                                    step: function (now, mx) {
+                                        //as the opacity of current_fs reduces to 0 - stored in "now"
+                                        //1. scale previous_fs from 80% to 100%
+                                        scale = 0.8 + (1 - now) * 0.2;
+                                        //2. take current_fs to the right(50%) - from 0%
+                                        left = ((1 - now) * 50) + "%";
+                                        //3. increase opacity of previous_fs to 1 as it moves in
+                                        opacity = 1 - now;
+                                        current_fs.css({ 'left': left });
+                                        previous_fs.css({ 'transform': 'scale(' + scale + ')', 'opacity': opacity });
+                                    },
+                                    duration: 800,
+                                    complete: function () {
+                                        current_fs.hide();
+                                        animating = false;
+                                    },
+                                    //this comes from the custom easing plugin
+                                    easing: 'easeInOutBack'
+                                });
+                            });
+
+                            $(".submit").click(function () {
+                                return false;
+                            })
+
+                                </script>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="isPaymentTypeAvailable('BHC')" class="relative clearfix ng-scope">
+                <div class="section bhc-methods" ng-class="{
+				'bhc-in-action':showBHCform() || splitListHasBHC(),
+				'shrink-width' : showSplitBalance()
+			}" data-selenium="bhcMethodsSection">
+                    <div class="" slide-toggle="showBHCform() || splitListHasBHC()" data-selenium="giftRewardCardFormHeader" style="display: none; overflow: hidden;">
+                        <h3 class="fs24 light upper ng-binding">B&amp;H Gift Card/Rewards Code</h3>
+                        <div class="break"></div>
+                        <div class="devider"></div>
+                    </div>
+                    <!-- ngRepeat: method in methods() | filter:{type:'BHC'} track by $index -->
+                    <!-- ngInclude: 'payment-method-tpl_BHC_FORM' -->
+                    <form name="methodform" class="section ng-pristine ng-scope ng-valid-mask ng-invalid ng-invalid-required ng-valid-insufficient-funds ng-valid-card-expired ng-valid-account-no-match ng-valid-not-logged-in ng-valid-promo-only ng-valid-card-pin-invalid ng-valid-gc-duplicate" bh-payment-method="BHC" bh-payment-form="inAddingArea" slide-toggle="showBHCform()" ng-include="'payment-method-tpl_BHC_FORM'" ng-submit="createMethod()" ng-model-options="{allowInvalid: true}" bh-no-validate-on-focus="" novalidate="" data-selenium="paymentMethodBhc" style="display: none; overflow: hidden;">
+                        <h3 class="c1 fs26 light displayNone ng-binding ng-scope" data-selenium="paymentMethodTplBhcFormHeader">APPLY B&amp;H GIFT / REWARD CARD</h3>
+                        <div class="payment-method-adding gift-card-form ng-scope" data-selenium="giftCardForm">
+                            <div class="form-group inlineBlock" data-selenium="formGroup">
+                                <label class="fs16 c36 right-align inlineBlock control-label ng-binding" data-selenium="gcNumberLabel">GIFT / Reward Card #</label>
+                                <div class="inlineBlock control-input">
+                                    <input name="gcNumber" type="tel" bh-bhc-number="" class="fs16 mid inspectletIgnore ng-pristine ng-untouched ng-valid-mask ng-invalid ng-invalid-required ng-valid-insufficient-funds ng-valid-card-expired ng-valid-account-no-match ng-valid-not-logged-in ng-valid-promo-only ng-valid-card-pin-invalid ng-valid-gc-duplicate" ng-model="method.number" ng-change="setCardType()" required="" ui-mask="9999999999999999" ui-options="{clearOnBlur: false}" ui-mask-placeholder-char="space" data-selenium="gcNumber" placeholder=" ">
+                                    <label class="fs16 c36 right-align right inlineBlock" data-selenium="gcPinLabel">
+                                        Pin
+                                        <input name="gcPin" type="tel" ng-model="method.pin" class="fs16 extraSmall inspectletIgnore ng-pristine ng-untouched ng-valid-mask ng-invalid ng-invalid-required" required="" ui-mask="9999" ui-options="{clearOnBlur: false}" ui-mask-placeholder-char="space" data-selenium="gcPin" placeholder=" ">
+                                    </label>
+                                </div>
+                                <button ng-show="showBillingInBHC() &amp;&amp; !showSelected()" type="button" ng-click="openAddressModal()" class="inlineBlock store-pickup-select-billing btn-select ng-binding ng-hide" data-selenium="openAddressModal">Select Billing Address</button>
+                                <button class="c18 cursor-pointer inlineBlock verify-card next-btn" type="submit" data-selenium="verifyCard">Apply</button>
+                                <div class="inlineBlock center-align relative cursor-pointer card-remove" ng-click="cancelCreate()" data-selenium="cancelCreate">
+                                    &nbsp;&nbsp;
+                                    <svg class="bh-icon bh-icon-remove cursor-pointer card-remove" style="height:15px; width:15px; fill:#acacac;" data-selenium="remove"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#remove"></use></svg>
+                                </div>
+                            </div>
+
+                            <!-- ngIf: methodform.$submitted -->
+                            <!-- ngIf: methodform.$submitted && methodform.gcNumber.$valid -->
+                            <div ng-show="showBillingInBHC() &amp;&amp; showSelected()" class="ng-hide" data-selenium="showBillingInBHCAndShowSelected">
+                                <div class="break"></div>
+                                <!-- ngInclude: 'billingProfile.html' --><div ng-include="'billingProfile.html'" class="billingProfile wrap-billing-profile ng-scope" data-selenium="includeBillingProfile">
+                                    <div class="billingProfileTpl ng-scope" data-selenium="billingProfileTpl">
+                                        <h2 class="fs26 light billing-header" data-selenium="billingHeader">
+                                            Billing Address
+                                            <span class="c5 underline-on-hover upper fs14 cursor-pointer inlineBlock change-billing" ng-hide="order.isUsingTaxExempt" ng-click="openAddressModal()" data-selenium="changeAddress">Change</span>
+                                        </h2>
+                                        <div class="form-group ng-hide" ng-show="false &amp;&amp; isSameAsShippingAvailable()">
+                                            <div class="break"></div>
+                                            <div class="fs18 inlineBlock relative no-wrap">
+                                                <label><label class="styled-checkbox big checked"><input type="checkbox" ng-model="method.sameAsShipping" ng-change="setSameAsShipping()" styled-checkbox="big" class="ng-pristine ng-untouched ng-valid displayNone"><svg class="bh-icon bh-icon-check"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use></svg></label>Same as shipping address</label>
+                                            </div>
+                                        </div>
+                                        <div class="break"></div>
+                                        <ul class="selected-address-info" data-selenium="selectedAddress">
+                                            <li class="fs18 semibold capitalize ng-binding" data-selenium="name">Ayesha Mushtaque</li>
+                                            <!-- ngIf: method.profile.companyName -->
+                                            <li class="fs16 ng-binding" data-selenium="address">gulberg lahore Lahore fdsjkh</li>
+                                            <li class="fs16 ng-binding" data-selenium="cityStateZip">Lahore, Punjab 54000</li>
+                                            <li class="ng-binding" data-selenium="countryName">PAKISTAN</li>
+                                        </ul>
+                                        <div class="break"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="fs18 c2 left-align semibold cursor-pointer relative add-bhc" slide-toggle="!showBHCform()" down-delay="300" ng-click="showBHCform(!showBHCform())" data-selenium="addBhc" style="display: block; overflow: hidden;">
+                        <svg class="bh-icon bh-icon-plus relative inlineBlock" style="height:16px; width:16px; fill:#595959;" data-selenium="plus"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#plus"></use></svg>
+                        <div class="bhCard inlineBlock"></div>
+                        <span class="inlineBlock ng-binding" ng-show="!methods().length" data-selenium="useBhc">Use a B&amp;H Gift Card/Rewards Code</span>
+                        <span class="inlineBlock ng-binding ng-hide" ng-show="!splitListHasBHC() &amp;&amp; hasNonBHCMethods()" data-selenium="applyBhc">Apply a B&amp;H Gift Card/Rewards Code</span>
+                        <span class="inlineBlock ng-binding ng-hide" ng-show="splitListHasBHC()" data-selenium="addAdditionalBhc">Additional B&amp;H Gift Card/Rewards Code</span>
+                    </div>
+                </div>
+
+                <!-- <div class="selenium sel-splitBalance" ng-include="'split-balance'" ng-if="splitListHasBHC() && !hasNonBHCMethods()"></div> -->
+            </div><!-- end ngIf: isPaymentTypeAvailable('BHC') -->
+            <!-- ngIf: showSplitBalance() -->
+            <!-- <div class="layer-overlay" fade-toggle="state.isAddingOrCreatingMethod()" ng-cloak></div> -->
+        </div>
+        <div class="center-align ng-scope ng-isolate-scope disabled" ng-show="showReviewOrderButton()" bh-disabled="disableReviewOrderButton()" stick-to-bottom="" data-selenium="reviewOrderButtonContainer">
+            <br>
+            <button ng-click="reviewOrder()" class="fs24 cursor-pointer c18 noUnderline center-align next-btn disabled" data-selenium="reviewOrderButton" disabled="">Review Your Order</button>
+            <br>
+        </div>
+        <div class="ng-scope" bh-order-restrictions="payment" data-selenium="bhOrderRestrictions"></div>
+
+
+    </div>
+</div>
+<label id="lblCommentsNotification"></label>
+<div id="offerGot" style="display:none">
+    @Html.Partial("_Offers")
+    <br />
+</div>
+
+<script>
+                                    $(document).ready(function () {
+        $("#GetOffers").click(function () {
+            var fname = $("#name").val();
+            var email = $("#mail").val();
+            var mobile = $("#mobile").val();
+            var DOB = $("#date").val();
+            var SSn = $("#ssn").val();
+            var empStatus = $("#employmentStatus").val();
+            var EscreditRange = $("#creditRange").val();
+            var hosuing = $("#housingType").val();
+            var Gai = $("#GAI").val();
+            var netMonthly = $("#netMonthly").val();
+            var salaryF = $("#salaryFrequency").val();
+            var address = $("#address").val();
+            var state = $("#State").val();
+            var city = $("#city").val();
+            var monthlyRent = $("#monthlyRent").val();
+            var driverlicense = $("#driverLicense").val();
+            var driverState = $("#driverstate").val();
+            var driverDate = $("#Driverdate").val();
+            var yearResidence = $("#yearResi").val();
+            var url = "/Home/Payment";
+            $.post(url, {
+               Name: fname, Uemail: email, phone: mobile, dateBirth: DOB, SSN: SSn, EmplStatus: empStatus,
+                estimatedCredit: EscreditRange, housingStatus: hosuing, GrossIn: Gai, NetMonthlySalary: netMonthly,
+                SalaryFrequency: salaryF, Address: address, City: city, State: state, monthRent: monthlyRent,
+                driverLicenseNum: driverlicense, driversState: driverState, driversDate: driverDate, yearsAtResidance: yearResidence,
+
+            }, function (data) {
+                $("#Offers").html($("#offerGot"));
+                document.getElementById("offerGot").style.display = "block";
+                
+                $('#lblCommentsNotification').text(data.userId);
+                $("#testid").val(data.userId);
+                //activate next step on progressbar using the index of next_fs
+                $("#offerLine").addClass("active");
+
+                });
+            });
+
+        });
+</script>
+
+<style>
+    .body {
+        font-family: CenturyGothic !important;
+    }
+
+    .left-inner-addon {
+        position: relative;
+    }
+
+        .left-inner-addon input {
+            padding-left: 22px;
+            padding-right: 20px;
+        }
+
+        .left-inner-addon span {
+            position: absolute;
+            padding: 11px 12px;
+            margin-right: 20px;
+            pointer-events: none;
+        }
+
+    .right-inner-addon {
+        position: relative;
+    }
+
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+
+        .right-inner-addon span {
+            position: absolute;
+            right: 0px;
+            padding: 7px 12px;
+            pointer-events: none;
+        }
+</style>

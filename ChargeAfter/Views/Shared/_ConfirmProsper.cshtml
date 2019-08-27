@@ -1,0 +1,98 @@
+﻿
+<div style="padding:10px; text-align:center">
+ 
+    <b style="padding:5px">B&H Financing Application</b>
+
+</div>
+<!-- ngIf: order.isUsingTaxExempt -->
+<div ng-hide="order.isUsingTaxExempt" class="ng-scope" data-selenium="isNotUsingTaxExempt">
+
+    <div class="break"></div>
+
+    <div style="margin-left:auto; margin-right:auto">
+        <div style="width:70%; margin-left:auto; margin-right:auto">
+
+            <p style="text-align: center;">You are approved for <strong>$899!</strong></p>
+
+            <br>
+
+            <div ng-hide="order.isUsingTaxExempt" class="ng-scope" data-selenium="isNotUsingTaxExempt">
+
+                <div class="break"></div>
+
+                <div style="">
+                    <div style="text-align:center">
+
+                        <img class="img-responsive" src="https://www.prosper.com/web-borrower/assets/images/shared/themes/lumberjack/logo_prosper_color_gray-679c7f8b2684072b6e03ca0ed655a6aa.svg" style="width:150px;height:auto;margin-left:auto; margin-right:auto;  text-align:center; ">
+                        <br />
+                        <div class="table-responsive" style="background-color:rgba(238, 238, 238, 0.36); margin-top:30px">
+                            <table class="table table-bordered">
+                                <thead style="border:1px solid #f3f3f3;">
+                                    <tr>
+                                        <th colspan="2">
+                                            <h5 style="text-align:center;margin-top:5%;margin-bottom:5%;">
+                                                <strong>$81/mo</strong> for <strong>12 months</strong>
+                                            </h5>
+                                        </th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="border:1px solid #f3f3f3;">
+                                            <p style="text-align:center;margin-top:5%;margin-bottom:5%;">Interest (8% APR)</p>
+                                            <h5 style="text-align:center;margin-top:5%;margin-bottom:5%;"><strong>$72</strong></h5>
+                                        </td>
+                                        <td style="border:1px solid #f3f3f3;">
+                                            <p style="text-align:center;margin-top:5%;margin-bottom:5%;">Total of Payment</p>
+                                            <h5 style="text-align:center;margin-top:5%;margin-bottom:5%;"><strong>$971</strong></h5>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                        <p style="text-align: center;padding-top:3%; margin-top:30px">Your Payments will be due each month starting on or after @DateTime.Now.Date.AddMonths(1) </p>
+
+                      
+
+
+                        <div style="padding-left:0px;padding-right:0px; font-size:small; margin-top:20px; margin-bottom:20px">
+
+                            <p>
+                                <label class="form-check-label">
+
+                                    <input type="checkbox" required="" class="form-check-input" name="terms-and-conditions" data-validation-required-message="You must agree to the terms and conditions">
+                                </label>
+                                I have reviewed and agree to the <a href="#">Truth in Lending Disclosure and loan Agreement</a> and the refund policy provided
+                                by James Allen and have received the <a href="#">Credit Score Disclosure</a>
+                                your Identity.
+                            </p>
+
+                            <br>
+                        </div>
+                        @{
+                                int id = 140;
+                                if (TempData["id"] != null)
+                                {
+                                    id = Convert.ToInt32(TempData["id"]);
+                                }
+                                if (Session["idU"] != null)
+                                {
+                                    id = Convert.ToInt32(Session["idU"]);
+                                }
+                            <a href="/Home/OfferProsper/@id" value="Confirm Loan" style="text-align:center; padding: 20px; font-size:small; background: #0692CC; margin-left:auto; margin-right:auto; border-radius:0px; text-decoration:none"
+                               class="next-btn fs26 c18 bold cursor-pointer place-order checkout-option ng-binding ng-isolate-scope" ng-click="placeOrder()" bh-disabled="!isReadyToPlaceOrder() || !reviewPage()" data-selenium="placeOrder">Confirm Loan</a>
+
+                        }
+                       
+                        <br /><br /><br /><br /><br /><br />
+                    </div>
+                </div>
+                <div class="break"></div>
+
+            </div>
+        </div>
+    </div>
+</div>

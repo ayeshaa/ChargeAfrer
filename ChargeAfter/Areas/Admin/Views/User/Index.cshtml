@@ -1,0 +1,338 @@
+﻿@model IEnumerable<ChargeAfter.ViewModel.TBL>
+
+
+    @{
+    ViewBag.Title = "B&H Transactions";
+    }
+    @{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    }
+
+
+                    <div class="page-content">
+                        @if (TempData["message"] != null)
+                        {
+                            <div class="alert alert-dismissable alert-success">
+                                <i class="ti ti-check"></i>&nbsp; <strong style="font-size:18px">@TempData["message"]</strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            </div>
+                        }
+
+                        @if (TempData["error"] != null)
+                        {
+                            <div class="alert alert-dismissable alert-danger">
+                                <i class="ti ti-close"></i>&nbsp; <strong>Oh snap!</strong> @TempData["error"]
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            </div>
+                        }
+                        <ol class="breadcrumb">
+
+                            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                            <li><a href="#">Transactions</a></li>
+                            <li class="active"><a href="#">report</a></li>
+                        </ol>
+   
+                        <div class="container-fluid">
+
+                            <div data-widget-group="group1">
+                                
+                                
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="panel panel-default" data-widget='{"draggable": "false"}'>
+                                            <div class="panel-heading">
+                                                <h2>Transactions</h2>
+                                                <div class="panel-ctrls" data-actions-container="" data-action-collapse='{"target": ".panel-body"}'></div>
+                                                <div class="options">
+                                                </div>
+                                            </div>
+                                            <div class="panel-body">
+                                               
+                                                <table class="table table-bordered table-striped table-hover table-fixed-header m-n dataTable" cellspacing="0">
+                                                    <thead>
+                                                        <tr role="row">
+                                                            <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column descending" aria-sort="ascending">Transaction Id</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Borrower Name</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Date </th>
+                                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Amount</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Lender Name</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Status </th>
+                                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending"></th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+@foreach (var item in Model)
+{
+    <tr role="row" class="odd">
+@if (item.lender == "Prosper")
+{
+        <td>200-P000-@item.Id</td>
+}
+@if (item.lender == "Fortiva")
+{
+    <td>100-F000-@item.Id</td>
+}
+@if (item.lender == null)
+{
+    <td>900-1111-@item.Id</td>
+}
+        <td>@item.FirstName @item.LastName</td>
+        <td>@item.rDate</td>
+        @if (item.Amount != null)
+        {
+        <td>@item.Amount</td>
+        }
+        else
+        {
+            <td>899</td>
+        }
+        <td class="sorting_1">@item.lender</td>
+        @if (item.Status == "Refunded")
+        {
+            <td><b style="background-color:#cddc39; color:#fff; padding:3px; border-radius:2px;"> @item.Status</b></td>
+        }
+        else
+        {
+        <td>@item.Status</td>
+        }
+
+
+        <td><a href="javascript:DetailWorker(@item.Id)" class=""><i class="fa fa-eye fa-2x"></i></a></td>
+
+    </tr>
+}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                </div>
+                            </div>
+                        </div> 
+
+              
+  
+
+<div id="DetailWorker" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="width:850px">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body" id="data">
+                <section class="content padding-top-50" style="background-color:gainsboro; padding:20px; padding-bottom:0 ; min-height:665px">
+                    <div class="col-md-12" style="padding:0">
+                        <div class="nav-tabs-custom" style="background-color:#fff; border-top-color:none; box-shadow:none; border-radius:0; padding:20px;">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="">
+                                        <label style="display:inline-block">Transaction #</label>
+                                        <h5 style="display:inline-block" id="tid"></h5>
+                                    </div>
+                                    <div class="">
+                                        <label style="display:inline-block">Name: </label>
+                                        <h5 style="display:inline-block" id="DName"></h5>
+                                    </div>
+                                    <div class="">
+                                        <label style="display:inline-block">Email: </label>
+                                        <h5 style="display:inline-block" id="rEmail"></h5>
+                                    </div>
+                                    <div class="">
+                                        <label style="display:inline-block">Social Security Number: </label>
+                                        <h5 style="display:inline-block" id="ssn"></h5>
+                                    </div>
+                                    <div class="">
+                                        <label style="display:inline-block">Status: </label>
+                                        <h5 style="display:inline-block" id="status"></h5>
+                                    </div>
+                                    <div class="">
+                                        <label style="display:inline-block">Approved Ammount: $</label>
+                                        <h5 style="display:inline-block; margin-left:-3px" id="approvamt"></h5>
+                                    </div>
+
+                                    <div class="">
+                                        <label style="display:inline-block">MonthlyAmount: $</label>
+                                        <h5 style="display:inline-block; margin-left:-3px" id="MonthlyAmount">$</h5>
+                                    </div>
+                                    <div class="">
+                                        <label style="display:inline-block">MonthCount: </label>
+                                        <h5 style="display:inline-block" id="MonthCount"></h5>
+                                    </div>
+                                    <div class="">
+                                        <label style="display:inline-block">Years at Residence: </label>
+                                        <h5 style="display:inline-block" id="residence"></h5>
+                                    </div>
+                                    <div class="">
+                                        <label style="display:inline-block">Monthly Rent: $</label>
+                                        <h5 style="display:inline-block; margin-left:-3px" id="monthlyRent"></h5>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="">
+                                        <label style="display:inline-block">Employement Status: </label>
+                                        <h5 style="display:inline-block" id="empS"></h5>
+                                    </div>
+                                    <div class="">
+                                        <label style="display:inline-block">Housing Status: </label>
+                                        <h5 style="display:inline-block" id="HousingS"></h5>
+                                    </div>
+                                    <div class="">
+                                        <label style="display:inline-block">GrossAnnualIndividual: $</label>
+                                        <h5 style="display:inline-block; margin-left:-3px" id="gaIndivial"></h5>
+                                    </div>
+                                    <div class="">
+                                        <label style="display:inline-block">NetMonthlyIncome: $</label>
+                                        <h5 style="display:inline-block; margin-left:-3px" id="NetIncom"></h5>
+                                    </div>
+                                    <div class="">
+                                        <label style="display:inline-block">SalaryFrequency: </label>
+                                        <h5 style="display:inline-block" id="salary"></h5>
+                                    </div>
+                                    <div class="">
+                                        <label style="display:inline-block">IncreasePercent: </label>
+                                        <h5 style="display:inline-block" id="IncreasePercent"></h5>
+                                    </div>
+                                    <div class="">
+                                        <label style="display:inline-block">TotalPayback: </label>
+                                        <h5 style="display:inline-block" id="TotalPayback"></h5>
+                                    </div>
+                                    <div class="">
+                                        <label style="display:inline-block">Driving License: </label>
+                                        <h5 style="display:inline-block" id="dl"></h5>
+                                    </div>
+                                    <div class="">
+                                        <label style="display:inline-block">Driving License State: </label>
+                                        <h5 style="display:inline-block" id="ds"></h5>
+                                    </div>
+                                    <div class="">
+                                        <label style="display:inline-block">Address: </label>
+                                        <h5 style="display:inline-block" id="rAddress"></h5>
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                            <div class="row" style="padding:inherit">
+                                
+                                    <form action="/Admin/User/Refund" method="post">
+                                        <input type="hidden" name="rid" value="" id="rid" />
+                                        <div class="form-group">
+                                            <input type="submit" class="btn brn-primary" value="Refund" />
+                                        </div>
+                                    </form>
+                               
+                            </div>
+                    </div>
+                        </div>
+                    
+                </section>
+
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+
+    </div>
+</div>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script>
+        function DetailWorker(id) {
+            $.ajax({
+                url: "@Url.Action("Details", "User")",
+                type: 'GET',
+            data: {
+                id: id,
+                },
+            dataType: "text json",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                if (data.query.lender == "Prosper")
+                {
+                    $('#tid').text("200-P000-" + data.query.Id);
+                }
+                if (data.query.lender == "Fortiva") {
+                    $('#tid').text("100-F000-" + data.query.Id);
+                }
+                if (data.query.lender == null) {
+                    $('#tid').text("900-1111-" + data.query.Id);
+                }
+                $('#DetailWorker').modal('show');
+                $('#DName').text(data.query.FirstName);
+                
+                $('#rEmail').text(data.query.Email);
+                $('#ssn').text(data.query.socialSecurity);
+                $('#status').text(data.query.Status);
+                $("#empS").text(data.query.EmpStatus);
+                $("#HousingS").text(data.query.HousingStatus);
+                $("#gaIndivial").text(data.query.GrossIndividual);
+                $("#NetIncom").text(data.query.NetIncom);
+                $("#salary").text(data.query.SalaryFrequency);
+                $("#rAddress").text(data.query.address + " " + data.query.city + " "  + data.query.country + " " + data.query.zip);
+                $("#approvamt").text(data.query.ApprovedAmmount);
+                $("#MonthlyAmount").text(data.query.MonthlyAmount);
+                $("#MonthCount").text(data.query.MonthCount);
+                $("#IncreasePercent").text(data.query.IncreasePercent);
+                $("#residence").text(data.query.YearsAtResidance);
+                $("#monthlyRent").text(data.query.monthlyRent);
+                $("#ds").text(data.query.DRiveState);
+                $("#dl").text(data.query.DriverLicense);
+                $("#ReqID").text(data.query.ReqID);
+                document.getElementById("rid").value = data.query.Id;
+                $("#TotalPayback").text(data.query.TotalPayback);
+            },
+            error: function (xhr) {
+                alert("fail");
+            }
+        });
+        }
+
+    $(function () {
+        $(".jjjanchorDetail").click(function () {
+            debugger;
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: '/Admin/User/Details',
+                contentType: "application/json; charset=utf-8",
+                data: { "Id": id },
+                datatype: "json",
+                success: function (data) {
+                    $('#DetailWorker').modal('show');
+                    $('#DName').text(data.query.FirstName);
+                    $('#tid').text("10000-" + data.query.Id);
+                    $('#rEmail').text(data.query.Email);
+                    $('#amount').text(data.query.Amount)
+                    $('#status').text(data.query.Status);
+                    $("#empS").text(data.query.EmpStatus);
+                    $("#HousingS").text(data.query.HousingStatus);
+                    $("#gaIndivial").text(data.query.GrossIndividual);
+                    $("#NetIncom").text(data.query.NetIncom);
+                    $("#salary").text(data.query.SalaryFrequency);
+                    $("#rAddress").text(data.query.address + " " + data.query.city + " " + data.query.state + " " + data.query.country + " " + data.query.zip);
+                   
+                },
+                error: function () {
+                   
+                    alert("Dynamic content load failed.");
+                }
+            });
+        });
+        //$("#closebtn").on('click',function(){
+        //    $('#myModal').modal('hide');
+
+        $("#closbtn").click(function () {
+            $('#myModal').modal('hide');
+        });
+    });
+
+
+    </script>

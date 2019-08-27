@@ -1,0 +1,881 @@
+﻿@{
+    Layout = "/Views/Shared/Layouts.cshtml";
+}
+    <script src="//399-ct.c3tag.com/c3metrics-399.js"></script>
+    <script type="text/javascript" src="https://js.appboycdn.com/web-sdk/latest/appboy.min.js"></script>
+    <script type="text/javascript" async="" src="//platform.twitter.com/oct.js"></script>
+    <script type="text/javascript" async="" src="//bat.bing.com/bat.js"></script>
+    <script type="text/javascript" async="" src="https://static.criteo.net/js/ld/ld.js"></script>
+    <script async="" src="//connect.facebook.net/en_US/fbevents.js"></script>
+    <script type="text/javascript" async="" src="//www.googleadservices.com/pagead/conversion_async.js"></script>
+    <script type="text/javascript" async="" src="https://www.google-analytics.com/plugins/ua/linkid.js"></script>
+    <script type="text/javascript" async="" src="https://www.google-analytics.com/plugins/ua/ec.js"></script>
+    <script async="" src="https://www.google-analytics.com/analytics.js"></script>
+    <script type="text/javascript" async="" src="//www.googleadservices.com/pagead/conversion_async.js"></script>
+    <script src="https://nexus.ensighten.com/bhfoto/prod/code/eba38b4487dbd690018de6093d9f032d.js?conditionId0=421854"></script>
+    <script src="https://nexus.ensighten.com/bhfoto/prod/code/8cbc2c83e5117452f883bfaaa21040c1.js?conditionId0=478815"></script>
+    <script src="https://nexus.ensighten.com/bhfoto/prod/code/31823e71e3efc21ccedb2cf002e8d198.js?conditionId0=360095"></script>
+    <script src="https://nexus.ensighten.com/bhfoto/prod/code/c690115b2e8864cac6f2b41501b3c176.js?conditionId0=380898&amp;conditionId1=375435"></script>
+    <script async="" src="//www.googletagmanager.com/gtm.js?id=GTM-S4J6"></script>
+    <script type="text/javascript" async="" src="https://nexus.ensighten.com/bhfoto/prod/code/d975ddb921af7b435554b9a4a51b6518.js?conditionId0=383797&amp;conditionId1=385508&amp;conditionId2=456517"></script>
+    <script src="https://nexus.ensighten.com/bhfoto/prod/serverComponent.php?r=99.37056745472037&amp;ClientID=1084&amp;PageID=https%3A%2F%2Fwww.bhphotovideo.com%2Fc%2Fbrowse%2FComputers-Solutions%2Fci%2F9581%2FN%2F4294542559"></script>
+    <!--<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> -->
+    <title>  Computers, Laptops, Tablets and  Desktop Computers - B&amp;H Photo</title>
+    <meta name="apple-itunes-app" content="app-id=390928219">
+    <meta name="Description" content="Shop B&amp;amp;H for a huge array of Computers, Desktops, Workstations, Laptops, iPads, Tablets, Networking, and all Peripherals and Accessories. at Amazing prices">
+    <meta name="keywords" content="Computers, Desktops, Workstations, Laptops, iPads">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script async="" src="https://www.fullstory.com/s/fs.js"></script>
+    <script>
+(function() {
+	var _onDemandHash = {}, _onDemandURL;
+
+	// status codes - based on XMLHttpRequest.readyState ( see: https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties)
+	var UNSENT = 0,
+		LOADING = 3,
+		DONE = 4;
+
+
+	var lazyLoad = {
+		js : function(url,main,cb){
+
+
+			var isMainJs = (main === true);
+			if(!isMainJs){
+				cb = main;
+				if(document.jsState === "loading"){
+					setTimeout(function(){
+						lazyLoad.js(url,cb);
+					},5);
+					return;
+				}
+			}else{
+				document.jsState = "loading";
+			}
+
+			lazyLoad.appendScript(url, cb, isMainJs);
+		},
+		jsOnReady: function(url, cb) {
+			lazyLoad.onLoad(function(){
+				lazyLoad.appendScript(url, cb);
+			})
+		},
+		css : function(url){
+			var link = document.createElement("link");
+			link.href=url;
+			link.rel="stylesheet";link.type="text/css";
+			var a = document.getElementsByTagName("link")[0];
+			a.parentNode.insertBefore(link,a);
+		},
+		onLoad : function(cb){
+			if(document.readyState == "complete"){
+				cb();
+			}else{
+				if(window.addEventListener)window.addEventListener("load",cb,false);
+				else window.attachEvent("onload",cb);
+			}
+		},
+		lazyJs : function(url,main,cb){
+			if(main === true)document.jsState = "loading";
+			lazyLoad.onLoad(function(){
+				lazyLoad.js(url,main,cb);
+			});
+		},
+		lazyCss : function(url, delay){
+			delay = delay || 0;
+			lazyLoad.onLoad(function(){
+				setTimeout(function(){
+					lazyLoad.css(url);
+				}, delay)
+			});
+		},
+		lazyRunJs : function(func){
+			var callOnTime = function(){
+				if(document.jsState === "loading"){
+					setTimeout(function(){
+						lazyLoad.lazyRunJs(func);
+					},5);
+					return;
+				}else{
+					func();
+				}
+			}
+
+			lazyLoad.onLoad(callOnTime);
+		},
+		appendScript: function(url, cb, isMainJs) {
+			var h=document.getElementsByTagName("head")[0],d=false,s=document.createElement("script");
+
+			s.src=url;
+			s.onload=s.onreadystatechange=function(){
+				if(!d&&(!this.readyState||this.readyState=="loaded"||this.readyState=="complete")){
+					d=true;
+					if(isMainJs) document.jsState = "complete";
+					if(typeof cb==='function'){
+						cb();
+					}
+				}
+			};
+			h.appendChild(s);
+		},
+		setOdUrl : function(url) {
+			_onDemandURL = url;
+		},
+		onDemand : function(moduleName) {
+
+			// fail if _onDemandURL is undefined
+			if(!_onDemandURL){
+				throw "_onDemandURL in not yet defined";
+			}
+
+			var record = _onDemandHash[moduleName];
+
+			//create a record if it doesn't exist
+			if(! record){
+				record = _onDemandHash[moduleName] = {
+					"readyState" : UNSENT
+				};
+				this.js( _onDemandURL + moduleName , function() {
+					record.readyState = DONE;
+					if(record.deferred){
+						record.deferred.resolve();
+					}
+				});
+				record.readyState = LOADING;
+			}
+
+
+			// if jQuery.Deferred is available; use it.
+			if( !record.deferred && jQuery && jQuery.Deferred ){
+				record.deferred = new jQuery.Deferred;
+				/*
+					It is possible (however unlikely) that jQuery.Deferred will become
+					available between the first and second requests for the same module.
+					In that case we want to resolve the deferred immidiately
+				*/
+				if(record.readyState === DONE){
+					record.deferred.resolve();
+				}
+			}
+
+			return record.deferred || null;
+		},
+		prefetch : function(urls){
+			if(!urls || !urls.length)return;
+			if(typeof urls === "string")urls = [urls];
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState === 4){
+					loader.prefetch(urls);
+				}
+			}
+			xhr.open("GET",urls.splice(0,1),true);
+			xhr.send();
+		}
+	}
+
+	if(! window.lazyLoad){
+		window.lazyLoad = lazyLoad;
+	}
+
+})();
+    </script>
+
+
+
+    <link href="https://www.bhphotovideo.com/find/stylesheet.jsp?currPage=categoryLanding&amp;loadon=bottom&amp;lang=en&amp;site=reg&amp;min=Y&amp;vr=1584503092" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="https://www.bhphotovideo.com/find/stylesheet.jsp?currPage=categoryLanding&amp;loadon=top&amp;lang=en&amp;site=reg&amp;min=Y&amp;vr=-349468012">
+
+
+
+
+
+
+    <link rel="canonical" href="https://www.bhphotovideo.com/c/browse/Computers-Solutions/ci/9581/N/4294542559">
+
+
+
+    <script>
+        var BH = BH || {};
+        BH.globals = BH.globals || {};
+        BH.globals.parameters = {"Q":[""],"A":["endecaCategory"],"catName":["Computers-Solutions"],"ci":["9581"],"N":["4294542559"],"O":[""]};
+		BH.mainCategoryId = 9581;
+		BH.displayPhoneNumber = "800.606.6969";
+		BH.isLiveChatActive = false;
+    </script>
+
+
+
+
+
+
+    <link rel="stylesheet" type="text/css" href="https://www.bhphotovideo.com/find/stylesheet.jsp?files=expertsWidget/expertsWidget_category.css&amp;min=Y&amp;vr=12834751">
+
+
+    <script type="text/javascript" src="/otohphnbwwwtbeervuuuvzxvdqrfwd.js" defer=""></script>
+    <style type="text/css">
+        #d__fFH {
+            position: absolute;
+            top: -5000px;
+            left: -5000px;
+        }
+
+        #d__fF {
+            font-family: serif;
+            font-size: 200px;
+            visibility: hidden;
+        }
+
+        #qquxfstt {
+            display: none !important;
+        }
+    </style>
+    <script type="text/javascript">
+var SS_DL = "25671:784569";
+    </script>
+    <script src="//nexus.ensighten.com/bhfoto/Bootstrap.js"></script>
+    <script src="https://www.bhphotovideo.com/find/javascripts.jsp?currPage=categoryLanding&amp;loadon=lazy&amp;lang=en&amp;ssc=gdt-Top&amp;min=Y&amp;vr=-1300773680"></script>
+    <script src="https://www.bhphotovideo.com/find/javascripts.jsp&amp;min=Y&amp;v=release20161222v10t125543125543&amp;module=expertsWidget"></script>
+    <script src="//tags.crwdcntrl.net/c/9048/cc.js?ns=_cc9048" id="LOTCC_9048"></script>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="stylesheet" href="https://js.appboycdn.com/web-sdk/latest/appboy.min.css">
+    <style type="text/css">
+#oo_company_logo img { max-height: 100%; max-width: 100%; height: auto; width: auto\9; /* ie8 */ }
+#oo_feedback_fl_spacer { display: block; height: 1px; position: absolute; top: 0; width: 100px; }
+.oo_feedback_float { width: 100px; height: 50px; overflow: hidden; font: 12px Tahoma, Arial, Helvetica, sans-serif; text-align: center; color: #252525; cursor: pointer; z-index: 999997; position: fixed; bottom: 5px; border: 1px solid #cccccc; border-radius: 9px; -moz-border-radius: 9px; -webkit-border-radius: 9px; right: 10px; -webkit-transition: -webkit-transform 0.3s ease; }
+.oo_feedback_float .screen_reader { position: absolute; clip: rect(1px 1px 1px 1px); /* for Internet Explorer */ clip: rect(1px, 1px, 1px, 1px); padding: 0; border: 0; height: 1px; width: 1px; overflow: hidden; }
+.oo_feedback_float .olUp { width: 100%; height: 100%; background: url(/FrameWork/js/opinionLab/onlineopinionV5/oo_float_icon.gif) center 10px no-repeat; text-align: center; padding: 31px 0 5px 0; position: relative; z-index: 2; filter: alpha(opacity=100); opacity: 1; transition: opacity .5s; -moz-transition: opacity .5s; -webkit-transition: opacity .5s; -o-transition: opacity .5s; }
+.oo_feedback_float .olUp img { margin-bottom: 5px; }
+.oo_feedback_float .oo_transparent { display: block; background: white; position: absolute; top: 0; left: 0; height: 100%; width: 100%; z-index: 1; opacity: 0.8; filter: alpha(opacity=80); border-radius: 8px; -moz-border-radius: 8px; -webkit-border-radius: 8px; }
+.oo_feedback_float:hover .oo_transparent { opacity: 1.0; filter: alpha(opacity=100); }
+.oo_feedback_float:hover .olUp { display: block; opacity: 0; filter: alpha(opacity=0); }
+.oo_feedback_float .fbText { display: block; }
+.oo_feedback_float .olOver { display: block; height: 100%; width: 100%; position: absolute; top: 0; left: 0; min-height: 50px; z-index: 2; opacity: 0; filter: alpha(opacity=0); transition: opacity .5s; -moz-transition: opacity .5s; -webkit-transition: opacity .5s; -o-transition: opacity .5s; }
+.oo_feedback_float .olOver span { display: block; padding: 10px 5px; }
+.oo_feedback_float:hover .olOver { opacity: 1.0; filter: alpha(opacity=100); top: 0; }
+.oo_cc_wrapper { left: 0; padding: 0; position: fixed; text-align: center; top: 50%; left:50%;transform:translate(-49%,-50%); z-index: 999999; }
+.oo_cc_wrapper .screen_reader { position: absolute; clip: rect(1px 1px 1px 1px); /* for Internet Explorer */ clip: rect(1px, 1px, 1px, 1px); padding: 0; border: 0; height: 1px; width: 1px; overflow: hidden; }
+.oo_cc_wrapper span { width: 100%; height: 100%; position: absolute; left: -14px; top: 7px; z-index: 1;color:white;font-size:19px; z-index:1; }
+.oo_cc_wrapper .iwrapper { background-color: white; margin: 0 auto; position: relative; width: 535px; z-index: 2; box-shadow: 0px 1px 3px 0px rgba(102, 102, 102, 0.3); -moz-box-shadow: 0px 1px 3px 0px rgba(102, 102, 102, 0.3); -webkit-box-shadow: 0px 1px 3px 0px rgba(102, 102, 102, 0.3); }
+.oo_cc_wrapper iframe { position: relative; border: none; width: 100%; z-index: 4; }
+.oo_cc_wrapper .oo_cc_close { position: absolute; display: block; right: 20px; top: 5px; font: 1em/1.5em 'HelveticaNeue-Medium', Helvetica, Arial, sans-serif; text-align: center; z-index: 5; color: black; text-decoration: none; cursor: pointer; }
+#oo_bar { padding: 10px 35px; cursor: pointer; color: white; border-top: 1px solid white; background-color: black; bottom: 0; display: block; font: 16px 'HelveticaNeue-Medium', Helvetica, Arial, sans-serif; left: 0; text-decoration: none; line-height: 16px; position: fixed; text-align: left; width: 100%; z-index: 999997; box-shadow: rgba(0, 0, 0, 0.5) 0px -1px 2px; -moz-box-shadow: rgba(0, 0, 0, 0.5) 0px -1px 2px; -webkit-box-shadow: rgba(0, 0, 0, 0.5) 0px -1px 2px; }
+#oo_bar span.icon { background-image: url(/FrameWork/js/opinionLab/onlineopinionV5/oo_bar_icon.gif); background-repeat: no-repeat; position: absolute; left: 8px; top: 9px; width: 19px; height: 17px; }
+#oo_bar .screen_reader { position: absolute; clip: rect(1px 1px 1px 1px); /* for Internet Explorer */ clip: rect(1px, 1px, 1px, 1px); padding: 0; border: 0; height: 1px; width: 1px; overflow: hidden; }
+#oo_bar:focus { outline: 3px solid #51ace9; }
+.oo_bar { padding-bottom: 37px; }
+#oo_tab { background-color: #769e2d; border: 1px solid #cccccc; display: block; position: fixed; top: 40%; padding: 55px 0px 55px 0px; width: 35px; z-index: 999995; cursor: pointer; }
+#oo_tab span { bottom: 15px; display: block; background: url(/FrameWork/js/opinionLab/onlineopinionV5/oo_tab_icon_fff.gif) no-repeat; height: 9px; position: absolute; width: 9px; }
+#oo_tab div { background-image: url(/FrameWork/js/opinionLab/onlineopinionV5/oo_tab_fff.png); background-repeat: no-repeat; position: absolute; display: block; height: 100%; left: 0; top: 0; width: 100%; }
+#oo_tab.wcag a { background: url(/FrameWork/js/opinionLab/onlineopinionV5/oo_tab_icon_fff.gif) no-repeat; background-repeat: no-repeat; background-position: center bottom; border: none; outline: none; position: absolute; display: block; bottom: 14px; left: -6px; top: 0; width: 100%; }
+#oo_tab.wcag img { border: none; outline: none; display: block; position: absolute; left: -6px; top: -10px; }
+#oo_tab .screen_reader { position: absolute; clip: rect(1px 1px 1px 1px); /* for Internet Explorer */ clip: rect(1px, 1px, 1px, 1px); padding: 0; border: 0; height: 1px; width: 1px; overflow: hidden; }
+.oo_tab_left { left: -13px; border-radius: 0px 9px 9px 0px; -moz-border-radius: 0px 9px 9px 0px; -webkit-border-radius: 0px 9px 9px 0px; transition: left .5s; -moz-transition: left .5s; -webkit-transition: left .5s; -o-transition: left .5s; background-image: -webkit-gradient(linear, 0% 100%, 0% 0%, from(#eeeeee), to(#ffffff)); background-image: -webkit-linear-gradient(left, #eeeeee, #ffffff); background-image: -moz-linear-gradient(left, #eeeeee, #ffffff); background-image: -ms-linear-gradient(left, #eeeeee, #ffffff); background-image: -o-linear-gradient(left, #eeeeee, #ffffff); background-image: linear-gradient(left, #eeeeee, #ffffff); }
+.oo_tab_left span { right: 6px; }
+.oo_tab_left div { background-position: 6px -10px; }
+.oo_tab_left:hover { left: -5px; }
+.oo_tab_right { right: -13px; border-radius: 9px 0px 0px 9px; -moz-border-radius: 9px 0px 0px 9px; -webkit-border-radius: 9px 0px 0px 9px; transition: right .5s; -moz-transition: right .5s; -webkit-transition: right .5s; -o-transition: right .5s; background-image: -webkit-gradient(linear, 0% 100%, 0% 0%, from(#769e2d), to(#769e2d)); background-image: -webkit-linear-gradient(left, #769e2d, #769e2d); background-image: -moz-linear-gradient(left, #769e2d, #769e2d); background-image: -ms-linear-gradient(left, #769e2d, #769e2d); background-image: -o-linear-gradient(left, #769e2d, #769e2d); background-image: linear-gradient(left, #769e2d, #769e2d); }
+.oo_tab_right span { left: 7px; }
+.oo_tab_right div { background-position: -6px -10px; }
+.oo_tab_right:hover { right: -5px; }
+#oo_tab_1 { background-color: black; border: 1px solid #ffffff; display: block; position: fixed; top: 40%; padding: 10px 0px 10px 0px; width: 124px; z-index: 999995; cursor: pointer; text-decoration: none; text-align: left; font-family: 'HelveticaNeue-Medium', Helvetica, Arial, sans-serif; line-height: 16px; font-size: 16px; color: #fff; }
+#oo_tab_1:focus { outline: 3px solid #51ace9; }
+#oo_tab_1 span.screen_reader { position: absolute; clip: rect(1px 1px 1px 1px); /* for Internet Explorer */ clip: rect(1px, 1px, 1px, 1px); padding: 0; border: 0; height: 1px; width: 1px; overflow: hidden; }
+#oo_tab_1.oo_tab_right_1 { right: -9px; transition: right 1.5s; -moz-transition: right 1.5s; -webkit-transition: right 1.5s; padding: 10px 0px 10px 35px; box-shadow: rgba(0, 0, 0, 0.5) 1px 1px 2px; -moz-box-shadow: rgba(0, 0, 0, 0.5) 1px 1px 2px; -webkit-box-shadow: rgba(0, 0, 0, 0.5) 1px 1px 2px; width: 89px; }
+#oo_tab_1.oo_tab_right_1 span.icon { background-image: url(/FrameWork/js/opinionLab/onlineopinionV5/oo_tab_icon_1.gif); background-repeat: no-repeat; position: absolute; left: 8px; top: 9px; width: 19px; height: 17px; }
+#oo_tab_1.oo_tab_right_1.small { right: -90px; }
+#oo_tab_1.oo_tab_right_1.small:hover { right: -9px; }
+#oo_tab_1.oo_tab_left_1 { left: -9px; transition: left 1.5s; -moz-transition: left 1.5s; -webkit-transition: left 1.5s; padding: 10px 0px 10px 15px; box-shadow: rgba(0, 0, 0, 0.5) -1px 1px 2px; -moz-box-shadow: rgba(0, 0, 0, 0.5) -1px 1px 2px; -webkit-box-shadow: rgba(0, 0, 0, 0.5) -1px 1px 2px; width: 109px; }
+#oo_tab_1.oo_tab_left_1 span.icon { background-image: url(/FrameWork/js/opinionLab/onlineopinionV5/oo_tab_icon_1.gif); background-repeat: no-repeat; position: absolute; right: 8px; top: 9px; width: 19px; height: 17px; }
+#oo_tab_1.oo_tab_left_1.small { left: -90px; }
+#oo_tab_1.oo_tab_left_1.small:hover { left: -9px; }
+#oo_container { position: fixed; height: 100%; width: 100%; top: 0; left: 0; z-index: 999999; }
+#oo_invitation_prompt { background: #fff; box-shadow: 0px 1px 3px 0px rgba(102, 102, 102, 0.3); -moz-box-shadow: 0px 1px 3px 0px rgba(102, 102, 102, 0.3); -webkit-box-shadow: 0px 1px 3px 0px rgba(102, 102, 102, 0.3); margin: 5% auto; text-align: left; position: relative; width: 500px; z-index: 999999; }
+#oo_invitation_prompt #oo_company_logo { width: 100%; height: 120px; background: black; }
+#oo_invitation_prompt #oo_company_logo img { height: 100%; }
+#oo_invitation_prompt #oo_invite_content { width: 80%; padding: 40px 10% 20px 10%; box-shadow: inset 0px 0px 0px 1px #ccc; -webkit-box-shadow: inset 0px 0px 0px 1px #ccc; -moz-box-shadow: inset 0px 0px 0px 1px #ccc; }
+#oo_invitation_prompt #oo_invite_content p { color: black; font: 1em/1.5em 'HelveticaNeue-Medium', Helvetica, Arial, sans-serif; margin: 0; padding: 0 0 20px 0; }
+#oo_invitation_prompt #oo_invite_content p.prompt_button a { text-align: center; color: white; text-decoration: none; font-size: 1.5em; line-height: 1.2em; padding: 12px 0 13px 0; display: block; height: 25px; }
+#oo_invitation_prompt #oo_invite_content a { cursor: pointer; }
+#oo_invitation_prompt #oo_invite_content a:focus { outline: 3px solid #51ace9; }
+#oo_invitation_prompt #oo_invite_content a#oo_launch_prompt { background: #cb352d; }
+#oo_invitation_prompt #oo_invite_content a#oo_no_thanks { background: #707070; }
+#oo_invitation_prompt #oo_invite_content #ol_brand_logo { text-align: center; border-top: 1px solid #ccc; line-height: 1.5em; margin: 20px 0 0 0; padding: 20px 0 0 0; }
+#oo_invitation_prompt #oo_invite_content #ol_brand_logo img { height: 25px; width: 146px; border: 0px; }
+#oo_invitation_prompt #oo_invite_content #ol_brand_logo a { display: block; height: 25px; }
+#oo_invitation_prompt #oo_close_prompt { position: absolute; display: block; right: 13px; top: 13px; line-height: 1em; font-size: 1em; color: white; text-decoration: none; }
+#oo_invitation_prompt #oo_close_prompt:focus { outline: none; }
+#oo_invitation_prompt #oo_close_prompt:focus span { outline: 3px solid #51ace9; }
+#oo_invitation_prompt .screen_reader { position: absolute; clip: rect(1px 1px 1px 1px); /* for Internet Explorer */ clip: rect(1px, 1px, 1px, 1px); padding: 0; border: 0; height: 1px; width: 1px; overflow: hidden; }
+media only screen and (max-device-width: 480px), screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) { #oo_invitation_prompt { width: 90%; } #oo_invitation_prompt #oo_company_logo { height: 80px; } }
+media only screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2), screen and (device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2) { #oo_invitation_prompt { width: 90%; height: 90%; overflow-y: scroll; overflow-x: hidden; } #oo_invitation_prompt #oo_company_logo { height: 80px; } #oo_invitation_prompt #oo_invite_content { padding: 20px 10% 20px 10%; } #oo_invitation_prompt #oo_invite_content #ol_brand_logo { margin: 0 0 0 0; } }
+media screen and (device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2) { #oo_invitation_prompt #oo_close_prompt { right: -70px; } }
+#oo_waypoint_container { position: fixed; height: 100%; width: 100%; top: 0; left: 0; z-index: 999999; }
+#oo_waypoint_prompt { background: #fff; box-shadow: 0px 1px 3px 0px rgba(102, 102, 102, 0.3); -moz-box-shadow: 0px 1px 3px 0px rgba(102, 102, 102, 0.3); -webkit-box-shadow: 0px 1px 3px 0px rgba(102, 102, 102, 0.3); margin: 5% auto; text-align: left; position: relative; width: 500px; z-index: 999999; }
+#oo_waypoint_prompt #oo_company_logo { width: 100%; height: 120px; background: black; }
+#oo_waypoint_prompt #oo_company_logo img { height: 100%; }
+#oo_waypoint_prompt #oo_waypoint_content { width: 80%; padding: 30px 10% 20px 10%; box-shadow: inset 0px 0px 0px 1px #ccc; -webkit-box-shadow: inset 0px 0px 0px 1px #ccc; -moz-box-shadow: inset 0px 0px 0px 1px #ccc; }
+#oo_waypoint_prompt #oo_waypoint_content a { cursor: pointer; }
+#oo_waypoint_prompt #oo_waypoint_content a:focus { outline: 3px solid #51ace9; }
+#oo_waypoint_prompt #oo_waypoint_content p { color: black; font: 1em/1.5em 'HelveticaNeue-Medium', Helvetica, Arial, sans-serif; margin: 0; padding: 0 0 20px 0; text-align: center; }
+#oo_waypoint_prompt #oo_waypoint_content p#oo_waypoint_message { font-size: 1.2em; }
+#oo_waypoint_prompt #oo_waypoint_content a.waypoint_icon { cursor: pointer; text-decoration: none; font-size: 1.5em; line-height: 1.2em; padding: 12px 0 13px 0; display: block; height: 25px; color: white; margin-bottom: 20px; background-color: #cb352d; text-align: center; }
+#oo_waypoint_prompt #oo_waypoint_content a.waypoint_icon.last { margin-bottom: 0; }
+#oo_waypoint_prompt #oo_waypoint_content #ol_brand_logo { border-top: 1px solid #ccc; line-height: 1.5em; margin: 10px 0 0 0; padding: 20px 0 0 0; }
+#oo_waypoint_prompt #oo_waypoint_content #ol_brand_logo img { height: 25px; width: 146px; border: 0px; }
+#oo_waypoint_prompt #oo_waypoint_content #ol_brand_logo a { display: block; height: 25px; }
+#oo_waypoint_prompt #oo_close_prompt { position: absolute; display: block; right: 13px; top: 13px; line-height: 1em; font-size: 1em; color: white; text-decoration: none; }
+#oo_waypoint_prompt #oo_close_prompt:focus { outline: none; }
+#oo_waypoint_prompt #oo_close_prompt:focus span { outline: 3px solid #51ace9; }
+#oo_waypoint_prompt .screen_reader { position: absolute; clip: rect(1px 1px 1px 1px); /* for Internet Explorer */ clip: rect(1px, 1px, 1px, 1px); padding: 0; border: 0; height: 1px; width: 1px; overflow: hidden; }
+#oo_tab div.screen_reader { display:none; }
+media only screen and (max-device-width: 480px), screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) { #oo_waypoint_prompt { width: 90%; } #oo_waypoint_prompt #oo_company_logo { height: 80px; } }
+media only screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2), screen and (device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2) { #oo_waypoint_prompt { width: 90%; height: 90%; overflow-y: scroll; overflow-x: hidden; } #oo_waypoint_prompt #oo_company_logo { height: 80px; } #oo_waypoint_prompt #oo_waypoint_content { padding: 20px 10% 20px 10%; } #oo_waypoint_prompt #oo_waypoint_content #ol_brand_logo { margin: 0 0 0 0; } }
+media screen and (device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2) { #oo_waypoint_prompt #oo_close_prompt { right: -70px; } }
+#oo_overlay, #oo_invitation_overlay, #oo_waypoint_overlay { background: black url(/FrameWork/js/opinionLab/onlineopinionV5/oo_loading.gif) 50% 275px no-repeat; display: block; height: 1000%; left: 0; position: fixed; top: 0; width: 100%; z-index: 999998; opacity: 0.5; filter: alpha(opacity=50); }
+#oo_overlay.no_loading, #oo_invitation_overlay.no_loading, #oo_waypoint_overlay.no_loading { background: black; opacity: 0.65; filter: alpha(opacity=50); }
+media print { #oo_bar, .oo_feedback_float, #oo_tab { display: none; } }</style>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<div id="categoryLandingContent" class="clp-hasCategoryImage
+		clp-lightBreadcrumbs clp-lightPageTitle
+		 clp-condensableTopBanner clp-ExpertsWidget">
+    <div class="clp-topBannerArea">
+
+
+        <div class="clp-pageImage clp-lowResImage" style="background-image: url('https://static.bhphoto.com/bimages/HeaderBG_Computers_mini.jpg')"></div>
+        <div class="clp-pageImage js-pageImage" style="background-image: url('https://static.bhphoto.com/bimages/HeaderBG_Computers.jpg')"></div>
+
+
+
+
+
+
+
+    </div>
+
+    <div class="clp-content clearfix">
+        <div class="new-page-width">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <ul id="breadcrumbs" class="page-width">
+                <li class="first"><a href="/Home">Home</a></li>
+
+
+
+                <li>
+                    <a href="/Home/Computer">
+                        Computers &amp; Solutions
+                    </a>
+                </li>
+
+            </ul>
+            <h1 class="clp-pageTitle">Computers</h1>
+
+            <section id="expertsWidget"> <div class="experts-widget"> <div class="experts-widget-contact"> 
+                <div class="expert-widget-title-wrapper"> <div class="contact-expert-title">Speak to an expert now:</div> 
+                <div class="contact-expert-title-short">Get Advice:</div> </div> <div class="expert-widgets-contact-wrapper"> 
+                <a class="contact-expert-livechat disabled" href="#" target="livechat"><span>
+                    <svg class="experts-list-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chat-square"></use>
+                    </svg></span>Live Chat</a> <a class="contact-expert-telephone"><span>
+                <svg class="experts-list-svg"><use xmlns:xlink="" xlink:href="#phone-light">
+                    </use></svg></span>800.606.6969</a> <a class="contact-expert-email js-openSlideInTray js-slideInTray-graybkg" 
+                                                           href="#"><span><svg class="experts-list-svg">
+                <use xmlns:xlink="#" xlink:href="#envelope-light"></use></svg></span>Email</a> </div> </div> 
+                <div class="experts-widget-title"><div>True</div><div>Know-How</div></div>
+                 <div class="experts-widget-profile"> <div class="experts-widget-gettoknow"> 
+                     <div class="experts-widget-gettoknowlabel">Get to know our</div> 
+                     <div class="experts-widget-category-experts">Computers Experts</div> </div> </div> 
+                <div class="experts-widget-headshots">  <div class="experts-widget-img-circle"> 
+                    <img class="experts-widget-headshot" src="https://static.bhphotovideo.com/explora/sites/default/files/styles/exp_expert/public/exp/sherman-bryce.png?itok=oOEKBxTM" alt="Sherman Bryce, B&amp;H Computer Expert" title="Sherman Bryce, B&amp;H Computer Expert"> </div>  <div class="experts-widget-img-circle"> <img class="experts-widget-headshot" src="https://static.bhphotovideo.com/explora/sites/default/files/styles/exp_expert/public/exp/jim-bevard.png?itok=6CUs-At9" alt="Jim Bevard, B&amp;H Computer Expert" title="Jim Bevard, B&amp;H Computer Expert"> </div>  <div class="experts-widget-img-circle"> <img class="experts-widget-headshot" src="https://static.bhphotovideo.com/explora/sites/default/files/styles/exp_expert/public/exp/boruch-berman.png?itok=zrKxo4W1" alt="Boruch Berman, B&amp;H Expert" title="Boruch Berman, B&amp;H Expert"> </div>  </div> <a class="experts-widget-page-link" href="https://www.bhphotovideo.com/find/shared/experts-profiles.jsp?ci=9581"><span>See All</span><span><svg class="experts-list-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#right-arrow"></use></svg></span></a> </div> </section>
+
+
+        </div><!-- /new-page-width -->
+
+
+        <div class="clp-sectionWrapper">
+            <div class="new-page-width clearfix ">
+
+                <div class="clp-categoryGroups">
+
+                    <div data-selenium="mainCategories">
+
+                        <div class="clp-sectionContainer js-category-wrapper" data-selenium="categoriesSection">
+                            <a style="position:absolute;" name="Computers &amp; Tablets"></a>
+                            <h2 class="clp-sectionTitle">Computers &amp; Tablets</h2>
+                            <ul class="clp-gridItemsContainer">
+                                <li class="clp-category" data-selenium="category">
+
+                                    <a class="overlay-on-hover" href="/Home/Laptop" id="Laptops" data-selenium="categoryLink">
+
+
+                                        <img class="clp-150CatImg" src="https://static.bhphoto.com/images/images150x150/1202579.jpg" alt="Laptops">
+
+                                        <div class="clp-categoryName">Laptops</div>
+                                    </a>
+                                </li>
+                                <li class="clp-category" data-selenium="category">
+
+                                    <a class="overlay-on-hover" href="#" id="iPads   Tablets" data-selenium="categoryLink">
+
+
+                                        <img class="clp-150CatImg" src="https://static.bhphoto.com/images/images150x150/1241236.jpg" alt="iPads &amp; Tablets">
+
+                                        <div class="clp-categoryName">iPads &amp; Tablets</div>
+                                    </a>
+                                </li>
+                                <li class="clp-category" data-selenium="category">
+
+                                    <a class="overlay-on-hover" href="#" id="Desktops   Workstations" data-selenium="categoryLink">
+
+
+                                        <img class="clp-150CatImg" src="https://static.bhphoto.com/images/images150x150/1067738.jpg" alt="Desktops &amp; Workstations">
+
+                                        <div class="clp-categoryName">Desktops &amp; Workstations</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div><!--end.categoriesSection-->
+
+
+
+
+
+                        <div class="clp-sectionContainer js-category-wrapper" data-selenium="categoriesSection">
+                            <a style="position:absolute;" name="Hardware &amp; Software"></a>
+                            <h2 class="clp-sectionTitle">Hardware &amp; Software</h2>
+                            <ul class="clp-gridItemsContainer">
+                                <li class="clp-category" data-selenium="category">
+
+                                    <a class="overlay-on-hover" href="#" id="Drives   Storage" data-selenium="categoryLink">
+
+                                        <img class="clp-150CatImg js-clp-unveil" src="https://static.bhphoto.com/images/images150x150/1077554.jpg" data-src="https://static.bhphoto.com/images/images150x150/1077554.jpg" alt="Drives &amp; Storage">
+
+
+                                        <div class="clp-categoryName">Drives &amp; Storage</div>
+                                    </a>
+                                </li>
+                                <li class="clp-category" data-selenium="category">
+
+                                    <a class="overlay-on-hover" href="#" id="Networking" data-selenium="categoryLink">
+
+                                        <img class="clp-150CatImg js-clp-unveil" src="https://static.bhphoto.com/images/images150x150/1194741.jpg" data-src="https://static.bhphoto.com/images/images150x150/1194741.jpg" alt="Networking">
+
+
+                                        <div class="clp-categoryName">Networking</div>
+                                    </a>
+                                </li>
+                                <li class="clp-category" data-selenium="category">
+
+                                    <a class="overlay-on-hover" href="#" id="Monitors   Displays" data-selenium="categoryLink">
+
+                                        <img class="clp-150CatImg js-clp-unveil" src="https://static.bhphoto.com/images/images150x150/829236.jpg" data-src="https://static.bhphoto.com/images/images150x150/829236.jpg" alt="Monitors &amp; Displays">
+
+
+                                        <div class="clp-categoryName">Monitors &amp; Displays</div>
+                                    </a>
+                                </li>
+                                <li class="clp-category" data-selenium="category">
+
+                                    <a class="overlay-on-hover" href="https://www.bhphotovideo.com/c/browse/computer-peripherals/ci/22339/N/4005352863" id="Computer Peripherals" data-selenium="categoryLink">
+
+                                        <img class="clp-150CatImg js-clp-unveil" src="https://static.bhphoto.com/images/images150x150/1135884.jpg" data-src="https://static.bhphoto.com/images/images150x150/1135884.jpg" alt="Computer Peripherals">
+
+
+                                        <div class="clp-categoryName">Computer Peripherals</div>
+                                    </a>
+                                </li>
+                                <li class="clp-category" data-selenium="category">
+
+                                    <a class="overlay-on-hover" href="#" id="Printers" data-selenium="categoryLink">
+
+                                        <img class="clp-150CatImg js-clp-unveil" src="https://static.bhphoto.com/images/images150x150/914202.jpg" data-src="https://static.bhphoto.com/images/images150x150/914202.jpg" alt="Printers">
+
+
+                                        <div class="clp-categoryName">Printers</div>
+                                    </a>
+                                </li>
+                                <li class="clp-category" data-selenium="category">
+
+                                    <a class="overlay-on-hover" href="#" id="Gaming" data-selenium="categoryLink">
+
+                                        <img class="clp-150CatImg js-clp-unveil" src="https://static.bhphoto.com/images/images150x150/1013715.jpg" data-src="https://static.bhphoto.com/images/images150x150/1013715.jpg" alt="Gaming">
+
+
+                                        <div class="clp-categoryName">Gaming</div>
+                                    </a>
+                                </li>
+                                <li class="clp-category" data-selenium="category">
+
+                                    <a class="overlay-on-hover" href="#" id="Computer Components" data-selenium="categoryLink">
+
+                                        <img class="clp-150CatImg js-clp-unveil" src="https://static.bhphoto.com/images/images150x150/1085232.jpg" data-src="https://static.bhphoto.com/images/images150x150/1085232.jpg" alt="Computer Components">
+
+
+                                        <div class="clp-categoryName">Computer Components</div>
+                                    </a>
+                                </li>
+                                <li class="clp-category" data-selenium="category">
+
+                                    <a class="overlay-on-hover" href="#" id="Scanners" data-selenium="categoryLink">
+
+                                        <img class="clp-150CatImg js-clp-unveil" src="https://static.bhphoto.com/images/images150x150/647187.jpg" data-src="https://static.bhphoto.com/images/images150x150/647187.jpg" alt="Scanners">
+
+
+                                        <div class="clp-categoryName">Scanners</div>
+                                    </a>
+                                </li>
+                                <li class="clp-category" data-selenium="category">
+
+                                    <a class="overlay-on-hover" href="#" id="Software   Tutorials" data-selenium="categoryLink">
+
+                                        <img class="clp-150CatImg js-clp-unveil" src="https://static.bhphoto.com/images/images150x150/1132136.jpg" data-src="https://static.bhphoto.com/images/images150x150/1132136.jpg" alt="Software &amp; Tutorials">
+
+
+                                        <div class="clp-categoryName">Software &amp; Tutorials</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div><!--end.categoriesSection-->
+
+
+                        <div class="clp-sectionContainer js-category-wrapper" data-selenium="categoriesSection">
+                            <a style="position:absolute;" name="Accessories"></a>
+                            <h2 class="clp-sectionTitle">Accessories</h2>
+                            <ul class="clp-gridItemsContainer">
+                                <li class="clp-category" data-selenium="category">
+
+                                    <a class="overlay-on-hover" href="#" id="Monitor   Display Accessories" data-selenium="categoryLink">
+
+                                        <img class="clp-150CatImg js-clp-unveil" src="https://static.bhphoto.com/images/images150x150/886240.jpg" data-src="https://static.bhphoto.com/images/images150x150/886240.jpg" alt="Monitor &amp; Display Accessories">
+
+
+                                        <div class="clp-categoryName">Monitor &amp; Display Accessories</div>
+                                    </a>
+                                </li>
+                                <li class="clp-category" data-selenium="category">
+
+                                    <a class="overlay-on-hover" href="#" id="Tablet   Computer Cases" data-selenium="categoryLink">
+
+                                        <img class="clp-150CatImg js-clp-unveil" src="https://static.bhphoto.com/images/images150x150/859709.jpg" data-src="https://static.bhphoto.com/images/images150x150/859709.jpg" alt="Tablet &amp; Computer Cases">
+
+
+                                        <div class="clp-categoryName">Tablet &amp; Computer Cases</div>
+                                    </a>
+                                </li>
+                                <li class="clp-category" data-selenium="category">
+
+                                    <a class="overlay-on-hover" href="#" id="Computer Cables   Adapters" data-selenium="categoryLink">
+
+                                        <img class="clp-150CatImg js-clp-unveil" src="https://static.bhphoto.com/images/images150x150/1120810.jpg" data-src="https://static.bhphoto.com/images/images150x150/1120810.jpg" alt="Computer Cables &amp; Adapters">
+
+
+                                        <div class="clp-categoryName">Computer Cables &amp; Adapters</div>
+                                    </a>
+                                </li>
+                                <li class="clp-category" data-selenium="category">
+
+                                    <a class="overlay-on-hover" href="#" id="Power Accessories" data-selenium="categoryLink">
+
+                                        <img class="clp-150CatImg js-clp-unveil" src="https://static.bhphoto.com/images/images150x150/867851.jpg" data-src="https://static.bhphoto.com/images/images150x150/867851.jpg" alt="Power Accessories">
+
+
+                                        <div class="clp-categoryName">Power Accessories</div>
+                                    </a>
+                                </li>
+                                <li class="clp-category" data-selenium="category">
+
+                                    <a class="overlay-on-hover" href="#" id="Furniture" data-selenium="categoryLink">
+
+                                        <img class="clp-150CatImg js-clp-unveil" src="https://static.bhphoto.com/images/itemImgPlaceholder.jpg" data-src="https://static.bhphoto.com/images/images150x150/850250.jpg" alt="Furniture">
+
+
+                                        <div class="clp-categoryName">Furniture</div>
+                                    </a>
+                                </li>
+                                <li class="clp-category" data-selenium="category">
+
+                                    <a class="overlay-on-hover" href="#" id="Tablet Accessories" data-selenium="categoryLink">
+
+                                        <img class="clp-150CatImg js-clp-unveil" src="https://static.bhphoto.com/images/itemImgPlaceholder.jpg" data-src="https://static.bhphoto.com/images/images150x150/867335.jpg" alt="Tablet Accessories">
+
+
+                                        <div class="clp-categoryName">Tablet Accessories</div>
+                                    </a>
+                                </li>
+                                <li class="clp-category" data-selenium="category">
+
+                                    <a class="overlay-on-hover" href="#" id="Notebook Accessories" data-selenium="categoryLink">
+
+                                        <img class="clp-150CatImg js-clp-unveil" src="https://static.bhphoto.com/images/itemImgPlaceholder.jpg" data-src="https://static.bhphoto.com/images/images150x150/971289.jpg" alt="Notebook Accessories">
+
+
+                                        <div class="clp-categoryName">Notebook Accessories</div>
+                                    </a>
+                                </li>
+                                <li class="clp-category" data-selenium="category">
+
+                                    <a class="overlay-on-hover" href="#" id="Tools   Cleaning" data-selenium="categoryLink">
+
+                                        <img class="clp-150CatImg js-clp-unveil" src="https://static.bhphoto.com/images/itemImgPlaceholder.jpg" data-src="https://static.bhphoto.com/images/images150x150/1009856.jpg" alt="Tools &amp; Cleaning">
+
+
+                                        <div class="clp-categoryName">Tools &amp; Cleaning</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div><!--end.categoriesSection-->
+
+
+                    </div><!--end#pageBody-->
+
+
+
+
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="clp-sidebar has-item" data-selenium="sideContent">
+                    <div class="clp-sectionContainer">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        <div class="js-externalAdContainer js-externalImageAdContainer clp-sidebarAdsContainer clp-gridItemsContainer" data-targets="{&quot;category&quot;:&quot;9581&quot;}" data-count="2" data-slot="1130" data-size="category_sidebar"><div class="externalAd"> <a href="https://ad.tagdelivery.com/click?id=df5e03d1-6f80-47b5-8f22-07dc0d74db45&amp;redirect=https://www.bhphotovideo.com/c/search?Ntt=Padcaster&amp;N=0&amp;InitialSearch=yes&amp;sts=ma&amp;typedValue=&amp;Top+Nav-Search=" class="overlay-on-hover" style="text-align: center"> <img src="https://pubads.global.ssl.fastly.net/prmt/dd3dc7b6209e47faf6a6be81b84bc51e" alt="ad" style="vertical-align: bottom; max-width: 100%"> </a> </div> <div style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><img src="https://ad.tagdelivery.com/impression?id=df5e03d1-6f80-47b5-8f22-07dc0d74db45"></div><div class="externalAd"> <a href="https://ad.tagdelivery.com/click?id=7bbb33d2-9507-42aa-875f-55a0f6ff2864&amp;redirect=https://www.bhphotovideo.com/c/buy/items/ci/33763/N/3591445688" class="overlay-on-hover" style="text-align: center"> <img src="https://pubads.global.ssl.fastly.net/prmt/00e24e70c614a43ae9bb1bc4a3a6a252" alt="ad" style="vertical-align: bottom; max-width: 100%"> </a> </div> <div style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><img src="https://ad.tagdelivery.com/impression?id=7bbb33d2-9507-42aa-875f-55a0f6ff2864"></div></div>
+
+
+
+
+
+
+
+
+
+                        <span class="clp-sidebarItemDivider"></span>
+
+
+
+                        <div>
+                            <a href="#" class="clp-textSidebarBanner overlay-on-hover js-exploraLink">
+                                <div class="clp-sidebarImgHelper">
+                                    <img class="clp-sidebarBannerImg js-clp-unveil" src="https://static.bhphotovideo.com/explora/sites/default/files/csmain2wf.jpg" data-src="https://static.bhphotovideo.com/explora/sites/default/files/csmain2wf.jpg">
+                                </div>
+                                <div class="clp-sidebarBanner-text clp-sidebarBanner-textWithHeading">
+                                    <h6>Tips and Solutions</h6>
+                                    <div class="ellipsizer">
+                                        <p>Why Doesn't Your Wi-Fi Fly? Tips and Tricks to Power up Your Home Wi-Fi</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div>
+                            <a href="#" class="clp-textSidebarBanner overlay-on-hover js-exploraLink">
+                                <div class="clp-sidebarImgHelper">
+                                    <img class="clp-sidebarBannerImg js-clp-unveil" src="https://static.bhphotovideo.com/explora/sites/default/files/cs1_9.jpg" data-src="https://static.bhphotovideo.com/explora/sites/default/files/cs1_9.jpg">
+                                </div>
+                                <div class="clp-sidebarBanner-text clp-sidebarBanner-textWithHeading">
+                                    <h6>Buying Guide</h6>
+                                    <div class="ellipsizer">
+                                        <p>Photography Accessories for Your iPad</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div>
+                            <a href="#" class="clp-textSidebarBanner overlay-on-hover js-exploraLink">
+                                <div class="clp-sidebarImgHelper">
+                                    <img class="clp-sidebarBannerImg js-clp-unveil" src="https://static.bhphotovideo.com/explora/sites/default/files/drobocs.png" data-src="https://static.bhphotovideo.com/explora/sites/default/files/drobocs.png">
+                                </div>
+                                <div class="clp-sidebarBanner-text clp-sidebarBanner-textWithHeading">
+                                    <h6>News</h6>
+                                    <div class="ellipsizer">
+                                        <p>Upload and Organize Mobile Photos and Videos with the DroboPix App</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div>
+                            <a href="#" class="clp-textSidebarBanner overlay-on-hover js-exploraLink">
+                                <div class="clp-sidebarImgHelper">
+                                    <img class="clp-sidebarBannerImg js-clp-unveil" src="https://static.bhphotovideo.com/explora/sites/default/files/cs-canon-prixma-printers_ts9020_ts6020_ts5020.jpg" data-src="https://static.bhphotovideo.com/explora/sites/default/files/cs-canon-prixma-printers_ts9020_ts6020_ts5020.jpg">
+                                </div>
+                                <div class="clp-sidebarBanner-text clp-sidebarBanner-textWithHeading">
+                                    <h6>Hands-on Review</h6>
+                                    <div class="ellipsizer">
+                                        <p>Canon Releases PIXMA TS All-in-One Printer Lineup</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div>
+                            <a href="#" class="clp-textSidebarBanner overlay-on-hover js-exploraLink">
+                                <div class="clp-sidebarImgHelper">
+                                    <img class="clp-sidebarBannerImg js-clp-unveil" src="https://static.bhphotovideo.com/explora/sites/default/files/cs1_0.jpg" data-src="https://static.bhphotovideo.com/explora/sites/default/files/cs1_0.jpg">
+                                </div>
+                                <div class="clp-sidebarBanner-text clp-sidebarBanner-textWithHeading">
+                                    <h6>Buying Guide</h6>
+                                    <div class="ellipsizer">
+                                        <p>Recommended Keyboards and Mice for Serious Gamers</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        <span class="clp-sidebarItemDivider"></span>
+
+
+                        <div>
+                            <a href="#" class="clp-textSidebarBanner clp-overlayOnHover" style="background-color: #fff;">
+                                <img class="clp-sidebarBannerImg" src="https://www.bhphotovideo.com/bimages/appleimg.jpg">
+                                <div class="clp-sidebarBanner-text">
+                                    <p>Visit the B&amp;H Apple Store</p>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div>
+                            <a href="#" class="clp-textSidebarBanner clp-overlayOnHover" style="background-color: #fff;">   <img class="clp-sidebarBannerImg" src="https://www.bhphotovideo.com/bimages/cablefinderimg123456789.jpg">   <div class="clp-sidebarBanner-text">      <p>Quickly find the cables you need</p>   </div></a>
+                        </div>
+
+                        <div>
+                            <a href="//www.bhphotovideo.com/videos" class="clp-textSidebarBanner clp-overlayOnHover" style="background-color: #fff;">
+                                <img class="clp-sidebarBannerImg" src="//www.bhphotovideo.com/bimages/videoimg.jpg">
+                                <div class="clp-sidebarBanner-text">
+                                    <p>Watch tutorials, reviews and more</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="#" class="clp-textSidebarBanner clp-overlayOnHover" style="background-color: #fff;">   
+                            <img class="clp-sidebarBannerImg" src="//www.bhphotovideo.com/bimages/22442-inkimg.jpg">   
+                            <div class="clp-sidebarBanner-text">      
+                                <p>INK &amp; TONER FINDER <br>Find yours fast &gt;</p>   </div></a>
+                        </div>
+
+                    </div>
+                </div> 
+            </div>
+
+            <div class="clp-long-description-wrapper">
+                <div class="clp-long-description new-page-width">
+                    <h2>Computers</h2>
+                    <p>Let's face it: we’re living in the age of the computer. From big business to everyday 
+                    social interactions, these “calculating machines” have evolved into tools and solutions for every 
+                    conceivable human activity. From kids to seniors, casual users to business owners, everyone can 
+                    benefit from owning a computer.</p><p>And whether you’ve been living digitally all your life or you’re 
+                    new to the world of megabytes and gigabytes, RAM and CPUs, chances are you’ve had to familiarize yourself 
+                    with the myriad of selections involved in buying a new computer. Desktop or laptop? iOS vs. Windows? 
+                    The choices can be dizzying.</p><p>Luckily, B&amp;H can take all the guesswork off your hands. Just tell our trained sales professionals your needs, and we’ll make custom recommendations to suit your specifications and budget. If you’re just looking, that’s ok too; we don’t work on commission, and our experts are only too happy to share knowledge for its own sake. B&amp;H will never pressure you into making a purchase you don’t need or truly desire.</p><p>Whether you plan on using your computer for basic tasks like checking emails, surfing the web or word processing, or more exacting endeavors like gaming, video editing, graphic design or running a business, we’ll quickly locate the best, most affordable options for you. And if you’ve dreamt up a computer configuration that doesn’t exist on the shelf, B&amp;H can also build a custom workstation to precisely meet your requirements.</p><p>On any given day, B&amp;H has as many as 1200+ different types of computers for sale, not to mention computer accessories, parts and peripherals like monitors, mice, keyboards, power cords, webcams and more. We also have an entire Used Department specializing in open box computer deals, like-new returns and refurbished computers that can save you a bundle.</p><p>Want to hone up on the newest computer tech? Browse the latest computer news, tips and reviews by category or in-depth on our Explora blog… or just “window shop” — you’re always welcome!</p>
+                </div>
+            </div>
+
+
+
+
+
+
+        </div>
+
+
+
+
+    </div>
+</div>

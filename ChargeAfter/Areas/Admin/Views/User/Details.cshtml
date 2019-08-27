@@ -1,0 +1,160 @@
+﻿@*@model IEnumerable<ChargeAfter.Models.User>*@
+@model IEnumerable<ChargeAfter.ViewModel.TBL>
+<div>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h1 class="modal-title" id="myModalLabel" style="text-align:center">Transaction Info</h1>
+    </div>
+    <hr />
+    <h3>User Details</h3>
+    <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+        <thead>
+            <tr role="row">
+                <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column descending" aria-sort="ascending">@Html.DisplayNameFor(model => model.FirstName)</th>
+                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">@Html.DisplayNameFor(model => model.LastName)</th>
+                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">@Html.DisplayNameFor(model => model.Username)</th>
+                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">@Html.DisplayNameFor(model => model.Email)</th>
+                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">@Html.DisplayNameFor(model => model.Phone)</th>
+                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">@Html.DisplayNameFor(model => model.Mobile)</th>
+                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">@Html.DisplayNameFor(model => model.DOB)</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+
+                <tr role="row" class="odd">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Username)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Phone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Mobile)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DOB)
+                    </td>
+                </tr>
+
+
+            }
+        </tbody>
+    </table>
+
+    <h3>Request Details</h3>
+    <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+        <thead>
+            <tr role="row">
+                <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column descending" aria-sort="ascending">@Html.DisplayNameFor(model => model.ReqID)</th>
+                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">@Html.DisplayNameFor(model => model.RequestDate)</th>
+                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">@Html.DisplayNameFor(model => model.RequestAmount)</th>
+                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">@Html.DisplayNameFor(model => model.RequestStatus)</th>
+                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">@Html.DisplayNameFor(model => model.RequestOffers)</th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+
+                <tr role="row" class="odd">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ReqID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RequestDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RequestAmount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RequestStatus)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OffID)
+                    </td>
+
+                </tr>
+
+
+            }
+        </tbody>
+
+    </table>
+    <h3>Approval Details</h3>
+
+    <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+        <thead>
+            <tr role="row">
+                <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column descending" aria-sort="ascending">@Html.DisplayNameFor(model => model.ApprovedAmmount)</th>
+                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">@Html.DisplayNameFor(model => model.MonthlyAmount)</th>
+                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">@Html.DisplayNameFor(model => model.MonthCount)</th>
+                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">@Html.DisplayNameFor(model => model.IncreasePercent)</th>
+                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">@Html.DisplayNameFor(model => model.TotalPayback)</th>
+
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+
+                <tr role="row" class="odd">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ApprovedAmmount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MonthlyAmount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MonthCount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IncreasePercent)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalPayback)
+                    </td>
+
+
+
+                </tr>
+
+
+            }
+        </tbody>
+    </table>
+
+
+
+</div>
+
+
+
+<div id='myModal' class='modal'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+
+</div>
+
+
+
